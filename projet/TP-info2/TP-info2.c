@@ -1,6 +1,6 @@
 /*
  * IUT de Nantes
- * Created by : Mr. Métayer Simon & Mr. Bizon Alexis
+ * Created by : Mr. MÃ©tayer Simon & Mr. Bizon Alexis
  */ 
 
 #include "define.h"
@@ -19,7 +19,7 @@ int main(void)
 	{
 		//freq=getFreq();
 		note = noteSolver(freq);
-		degre = degreSolver(freq);
+		degre = degreSolver(freq);//Valeur contenant le degre de la note
 		char acc = accord(note, degre, freq, plage);
 		switch (acc){
 			case LOW_FREQ:
@@ -45,5 +45,5 @@ int main(void)
 		displayDegre(degre);
 	}
 	
-	return 0;//Le programme renvoit 0x0000 si l'execution c'est correctement terminée
+	return 0;//Le programme renvoit 0x0000 si l'execution c'est correctement terminÃ©e
 }
