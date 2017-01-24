@@ -12,7 +12,7 @@
 int main(void)//fonction principale du programme
 {
 	float freq = 394;//contient la fréquence mesurée de la note
-	char note = 0;//contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define.h
+	char note = 0;//contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define_notes.h
 	char degre = 0;//contient le degré, ou l'octave de la note calculée à partir de la fréqence
 	float plage = 1.0;//spécifie l'erreur autorisée en hertz entre la fréquence mesurée et la fréquence réelle correspondant à la note
 	setup();//Fonction d'initialisation
