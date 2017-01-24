@@ -1,9 +1,9 @@
 /*
- * note.h
- *
- * Created: 23/01/2017 09:14:27
- *  Author: simon
- */ 
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 23/01/17
+* Version : 1.0
+*/
 
 
 #ifndef NOTE_H_
