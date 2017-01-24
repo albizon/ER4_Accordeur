@@ -1,0 +1,20 @@
+
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "TP-info2", "TP-info2\TP-info2_6_2.cproj", "{5FB841FF-D94B-4382-A2E6-F2E48B3C5A79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Release|ARM = Release|ARM
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FB841FF-D94B-4382-A2E6-F2E48B3C5A79}.Debug|ARM.ActiveCfg = Debug|ARM
+		{5FB841FF-D94B-4382-A2E6-F2E48B3C5A79}.Debug|ARM.Build.0 = Debug|ARM
+		{5FB841FF-D94B-4382-A2E6-F2E48B3C5A79}.Release|ARM.ActiveCfg = Release|ARM
+		{5FB841FF-D94B-4382-A2E6-F2E48B3C5A79}.Release|ARM.Build.0 = Release|ARM
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
