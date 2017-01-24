@@ -1,10 +1,10 @@
   #ifndef DEFINE_NOTE_H
   #define DEFINE_NOTE_H
   
+  	#include <math.h>
   
   
-  
-  #define LA_440_FREQ 440
+  	#define LA_440_FREQ 440
 	
 	#define DO_3_FREQ		(LA_440_FREQ * pow(2.00, ((-9)/12)))
 	#define REb_3_FREQ		(LA_440_FREQ * pow(2.00, ((-8)/12)))
@@ -45,6 +45,6 @@
 	#define NUM_LAb		9
 	#define NUM_LA		10
 	#define NUM_SIb		11
-  #define NUM_SI	12
+  	#define NUM_SI	12
   
   #endif
