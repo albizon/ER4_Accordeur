@@ -19,6 +19,7 @@
 	#include "freq.h"
 	#include "user_init.h"
 	#include "note.h"
+	#include "define_note.h"
 	
 	#define LA_440_FREQ 440
 	
