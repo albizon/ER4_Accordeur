@@ -1,9 +1,9 @@
 /*
- * IUT de Nantes
- * Created by : Mr. Métayer Simon & Mr. Bizon Alexis
- * Date : 23/01/17
- * Version : 1.0
- */ 
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 23/01/17
+* Version : 1.0
+*/  
 
 #include "define.h"
 
