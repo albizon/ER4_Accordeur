@@ -1,5 +1,6 @@
 cd /git/ER4_Accordeur
 git add .
-git commit -m "new commit"
+set /p dl=Description du Commit: 
+git commit -m "dl"
 git push origin master
 pause
