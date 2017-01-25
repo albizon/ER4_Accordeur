@@ -1,6 +1,9 @@
 #ifndef __INSTRUMENTS_H__
 #define __INSTRUMENTS_H__
 
+#include <vector.h>
+#include <string.h>
+
 
 #define DELAY 1
 #define ATTACK 2
@@ -11,7 +14,7 @@
 
 struct Instrument
 {
-	char name[50];//Nom de l'instrument
+	string name;//Nom de l'instrument
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
 	char codeMIDI;//Code MIDI de l'instrument
 	float H0 = 0;//Amplitude relative de la valeure moyenne du signal par rapport au fondamental en %
@@ -40,11 +43,11 @@ struct Instrument
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde
 };
 
-struct Instrument getInstru(float *env, Instrument *listInstru);
+struct Instrument getInstru(vector<float> const& env, vector<struct Instrument> const& listInstru);
 
-float getFreqPlay(float *env, struct Instrument instru);
+float getFreqPlay(vector<float> const& env, struct Instrument instru);
 
-void getEnveloppe(float freqNote, struct Instrument instru, char mode, float *env);//à revoir
+vector<float> getEnveloppe(float freqNote, struct Instrument instru, char mode);//à revoir
 
 
 #endif
