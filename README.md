@@ -4,4 +4,4 @@
 ### METAYER Simon & BIZON Alexis
 
 Le projet consiste à réaliser un accordeur de guitare indiquant par l'intermédiaire de différentes leds si la note est trop haute, juste ou trop basse.
-La plateforme retenue pour réaliser cet accordeur est composée d'un SAMD21 de chez Atmel comportant un coeur arm cortex M0+
+La plateforme retenue pour réaliser cet accordeur est composée d'un SAMD21 de chez Atmel comportant un coeur arm cortex M0+, elle se nomme SAMD21 Xplained Pro
