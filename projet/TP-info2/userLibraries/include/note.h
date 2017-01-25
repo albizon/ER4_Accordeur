@@ -15,7 +15,7 @@ double arrondi (double val);
 char noteSolver(float freq);
 char degreSolver(float freq);
 float getFreqNote(char note, char degre);
-char accord(char note, char degre, float freq, float plage);
+char accorder(char note, char degre, float freq, float plage);
 
 
 

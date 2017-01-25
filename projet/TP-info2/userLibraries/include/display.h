@@ -54,5 +54,12 @@ void displayNote(const char note);
 */
 void displayDegre(char degre);
 
+/*
+* Overview : Allume les leds en fonciton du de l'approche de la note
+* Author : METAYER Simon
+* Params :  char acc ->contien l'indicateur : trop bas / ok / trop haut
+* Return : none
+*/
+void diplayLedIndicator(char acc);
 
 #endif

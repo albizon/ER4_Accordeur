@@ -92,10 +92,10 @@ float getFreqNote(char note, char degre)
 	}
 }
 
-char accord(char note, char degre, float freq, float plage)
+char accorder(char note, char degre, float freq, float plage)
 {
 	float freq_calcul = getFreqNote(note, degre);
 	if(((freq_calcul-plage)<freq)&&(freq<(freq_calcul+plage))) return OK_FREQ;
-	else if(freq<(freq_calcul+plage)) return HIGH_FREQ;
-	else if((freq_calcul-plage)<freq) return LOW_FREQ;
+	else if(freq<(freq_calcul+plage)) return LOW_FREQ;
+	else if((freq_calcul-plage)<freq) return HIGH_FREQ;
 }

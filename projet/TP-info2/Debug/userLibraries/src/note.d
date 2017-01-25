@@ -92,7 +92,7 @@ userLibraries/src/note.d userLibraries/src/note.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\_ansi.h \
  ../userLibraries/include/fft.h ../userLibraries/include/display.h \
  ../userLibraries/include/freq.h ../userLibraries/include/user_init.h \
- ../userLibraries/include/note.h
+ ../userLibraries/include/note.h ../userLibraries/include/define_notes.h
 
 ../userLibraries/include/note.h:
 
@@ -295,3 +295,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../userLibraries/include/user_init.h:
 
 ../userLibraries/include/note.h:
+
+../userLibraries/include/define_notes.h:

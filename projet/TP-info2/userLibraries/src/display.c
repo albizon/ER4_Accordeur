@@ -26,7 +26,7 @@ void displayTitle()
 
 
 /*
-* Overview : Convertie un code représentant la note en un texte contenant le nom de la note
+* Overview : Converti un code représentant la note en un texte contenant le nom de la note
 * Author : BIZON Alexis
 * Params :  const char: note ->Le code de la note;
             char*: str ->La chaine de caractères du nom de la note
@@ -86,6 +86,7 @@ void noteToString(const char note, char* str)
 	default:
 		strcpy(str, "Inconnue");
 	break;	
+	}
 }
 
 
@@ -179,9 +180,36 @@ void displayFrequence(float freq)
 */
 void displayDegre(char degre)
 {
-	OLEDClearLine(2);//Efface la troisième ligne
-	OLEDSetLine(2);//Se place sur la troisième ligne
-	printf("Degre : %d   \n",degre);//Ecrit le degré envoyé
+	OLEDClearLine(2); //Efface la troisième ligne
+	OLEDSetLine(2); //Se place sur la troisième ligne
+	printf("Degre : %d   \n",degre); //Ecrit le degré envoyé
+}
+
+void diplayLedIndicator(char acc) // Allume les leds en fonciton de l'indicateur : trop bas / ok / trop haut
+{
+	switch (acc){//Test de la valeur renvoyée par la fonction précédente
+			case LOW_FREQ://Si la fréquence est trop basse
+				//On allume la première led de la carte d'extension et on éteind les autres
+				digitalWrite(PORTA, 12,0);
+				digitalWrite(PORTA, 13,1);
+				digitalWrite(PORTA, 15,1);
+			break;
+			case OK_FREQ://Si la fréquence est dans la plage d'erreur autorisée
+				//On allume la seconde led de la carte d'extension et on éteind les autres
+				digitalWrite(PORTA, 13,0);
+				digitalWrite(PORTA, 12,1);
+				digitalWrite(PORTA, 15,1);
+			break;
+			case HIGH_FREQ://Si la fréquence est trop haute
+				//On allume la troisième led de la carte d'extension et on éteind les autres
+				digitalWrite(PORTA, 15,0);
+				digitalWrite(PORTA, 12,1);
+				digitalWrite(PORTA, 13,1);
+			break;
+			default://par défaut on ne fait rien
+			break;
+		}
+
 }
 
 

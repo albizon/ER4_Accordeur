@@ -92,6 +92,7 @@ userLibraries/src/user_init.d userLibraries/src/user_init.o: \
  ../userLibraries/include/fft.h ../userLibraries/include/display.h \
  ../userLibraries/include/freq.h ../userLibraries/include/user_init.h \
  ../userLibraries/include/note.h ../userLibraries/include/define.h \
+ ../userLibraries/include/define_notes.h \
  ../userLibraries/include/user_init.h
 
 ../userLibraries/include/define.h:
@@ -295,5 +296,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../userLibraries/include/note.h:
 
 ../userLibraries/include/define.h:
+
+../userLibraries/include/define_notes.h:
 
 ../userLibraries/include/user_init.h:

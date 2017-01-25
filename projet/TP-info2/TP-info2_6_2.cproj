@@ -243,6 +243,9 @@
     <Compile Include="userLibraries\include\define.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="userLibraries\include\define_notes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="userLibraries\include\display.h">
       <SubType>compile</SubType>
     </Compile>
