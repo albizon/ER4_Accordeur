@@ -16,6 +16,7 @@ struct Instrument
 {
 	string name;//Nom de l'instrument
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
+	char haveOtherFrequency;//Dit si l'instrument contient des fréquences n'appartenants pas aux harmoniques
 	char codeMIDI;//Code MIDI de l'instrument
 	float H0 = 0;//Amplitude relative de la valeure moyenne du signal par rapport au fondamental en %
 	float H1 = 100;//Amplitude relative du fondamental du signal par rapport au fondamental en %
@@ -35,6 +36,8 @@ struct Instrument
 	float H15;//Amplitude relative du quinzième harmonique du signal par rapport au fondamental en %
 	float H16;//Amplitude relative du seizième harmonique du signal par rapport au fondamental en %
 	
+	vector<float> otherFrequency[2];//Contient les amplitudes relatives des fréquences n'étant pas des harmoniques en %
+	
 	float delay = 0;//durée entre le début de la note et le début de l'attaque en seconde
 	float attack;//durée de la montée de la note jusqu'à so maximum en seconde
 	float hold = 0;//durée où la note reste à son maximum en seconde
@@ -47,7 +50,7 @@ struct Instrument getInstru(vector<float> const& env, vector<struct Instrument> 
 
 float getFreqPlay(vector<float> const& env, struct Instrument instru);
 
-vector<float> getEnveloppe(float freqNote, struct Instrument instru, char mode);//à revoir
+vector<float> getEnveloppe(float freqNote, struct Instrument instru,);
 
 
 #endif
