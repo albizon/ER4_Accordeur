@@ -22,7 +22,7 @@ int main(void)//fonction principale du programme
 		//freq=getFreq();//Récupère la fréquence mesurée par le fréquencemètre
 		note = noteSolver(freq);//permet de déterminer la note correspondant à la fréquence mesurée
 		degre = degreSolver(freq);//permet de déterminer le degré ou l'octave correspondant à la fréquence mesurée
-		char acc = accorder(note, degre, freq, calcAbsError(plage, freq));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
+		char acc = accorder(note, degre, freq, calculAbsError(plage, freq));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
 		diplayLedIndicator(acc); // Allume les leds en fonciton de l'indicateur : trop bas / ok / trop haut
 		displayFrequence(freq);//On affiche la fréquence sur l'afficheur OLED
 		displayNote(note);//On affiche la note sur l'afficheur OLED
