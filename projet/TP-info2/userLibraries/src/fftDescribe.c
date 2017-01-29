@@ -8,6 +8,7 @@
 
 
 #include "fftDescribe.h"
+#include <math.h>
 
 
 
@@ -22,7 +23,19 @@
 */
 void complexLinearToComplexExponential(const vector<float> real, const vector<float> imag, vector<float> *mod, vector<float> *arg)
 {
-
+	
+	if(sizeof(real)>sizeof(imag)) int size = sizeof(imag);
+	else int size = sizeof(real);
+	float module=0;
+	float argument=0;
+	for(int i=0; i<size; i++)
+	{
+		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
+		argument = imag[i]/real[i];
+		argument = arctan(argument);
+		&mod.pushback(module);
+		&arg.pushback(argument);
+	}
 }
 
 /*
