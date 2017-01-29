@@ -21,11 +21,22 @@
 *			-vector<float> *arg -> argument du nombre complexe traité
 * Return : none
 */
-void complexLinearToComplexExponential(const vector<float> real, const vector<float> imag, vector<float> *mod, vector<float> *arg)
+void complexLinearToComplexExponential(const float *real, const float *imag, float *mod, float *arg)
 {
 	
-	if(sizeof(real)>sizeof(imag)) int size = sizeof(imag);
-	else int size = sizeof(real);
+	if(sizeof(&real)>sizeof(&imag)) int size = sizeof(&imag);
+	else int size = sizeof(&real);
+	
+	float *tempPtr;
+	
+	tempPtr = realloc(mod, size);
+	if(tempPtr == NULL)free(mod);
+	else mod = tempPtr;
+	
+	tempPtr = realloc(arg, size);
+	if(tempPtr == NULL)free(arg);
+	else arg = tempPtr;
+
 	float module=0;
 	float argument=0;
 	for(int i=0; i<size; i++)
@@ -33,8 +44,8 @@ void complexLinearToComplexExponential(const vector<float> real, const vector<fl
 		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
 		argument = imag[i]/real[i];
 		argument = arctan(argument);
-		&mod.pushback(module);
-		&arg.pushback(argument);
+		&mod[i]=module;
+		&arg[i]=argument;
 	}
 }
 
@@ -47,7 +58,7 @@ void complexLinearToComplexExponential(const vector<float> real, const vector<fl
 *			-vector<float> *imag -> partie imaginaire du nombre complexe traité
 * Return : none
 */
-void complexExponentialToComplexLinear(const vector<float> mod, const vector<float> arg, vector<float> *real, vector<float> *imag)
+void complexExponentialToComplexLinear(const float *mod, const float *arg, float *real, float *imag)
 {
 
 }
@@ -60,7 +71,7 @@ void complexExponentialToComplexLinear(const vector<float> mod, const vector<flo
 *			-vector<vector<float>> *envs -> tableau des enveloppes différenciées par leur argument
 * Return : none
 */
-void extractEnveloppes(const vector<float> mod, const vector<float> arg, vector<vector<float>> *envs)
+void extractEnveloppes(const float *mod, const float *arg, float **envs)
 {
 
 }
