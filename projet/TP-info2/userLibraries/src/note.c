@@ -102,5 +102,5 @@ char accorder(char note, char degre, float freq, float plage)
 
 float calculAbsError(float relativeError, float noteFreq)
 {
-	return noteFreq*relativeError/100;
+	return noteFreq*relativeError POURCENT_TO_SCALAIRE;
 }
