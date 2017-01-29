@@ -24,5 +24,8 @@
 	#define LOW_FREQ	1
 	#define OK_FREQ		2
 	#define HIGH_FREQ	3
+
+	#define POURCENT_TO_SCALAIRE /100
+	#define SCALAIRE_TO_POURCENT *100
 	
 #endif
