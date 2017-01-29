@@ -15,10 +15,10 @@
 /*
 * Overview : Conversion d'un nombre complexe de la forme a + j*b vers la forme mod*exp(j*arg)
 * Author : BIZON Alexis
-* Params :  -const vector<float> real -> partie réelle du nombre complexe à traiter
-*			-const vector<float> imag -> partie imaginaire du nombre complexe à traiter
-*			-vector<float> *mod -> module du nombre complexe traité
-*			-vector<float> *arg -> argument du nombre complexe traité
+* Params :  -const float *real -> partie réelle du nombre complexe à traiter
+*			-const float *imag -> partie imaginaire du nombre complexe à traiter
+*			-float *mod -> module du nombre complexe traité
+*			-float *arg -> argument du nombre complexe traité
 * Return : none
 */
 void complexLinearToComplexExponential(const float *real, const float *imag, float *mod, float *arg)
@@ -29,16 +29,17 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 	
 	float *tempPtr;
 	
-	tempPtr = realloc(mod, size);
-	if(tempPtr == NULL)free(mod);
+	tempPtr = malloc(size * sizeof(*mod));
+	if(tempPtr == NULL) free(mod);
 	else mod = tempPtr;
 	
-	tempPtr = realloc(arg, size);
-	if(tempPtr == NULL)free(arg);
+	tempPtr = malloc(size * sizeof(*arg));
+	if(tempPtr == NULL) free(arg);
 	else arg = tempPtr;
 
 	float module=0;
 	float argument=0;
+	
 	for(int i=0; i<size; i++)
 	{
 		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
@@ -52,26 +53,88 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 /*
 * Overview : Conversion d'un nombre complexe de la forme mod*exp(j*arg) vers la forme a + j*b
 * Author : BIZON Alexis
-* Params :  -const vector<float> mod -> module du nombre complexe à traiter
-*			-const vector<float> arg -> argument du nombre complexe à traiter
-*			-vector<float> *real -> partie réelle du nombre complexe traité 
-*			-vector<float> *imag -> partie imaginaire du nombre complexe traité
+* Params :  -const float mod -> module du nombre complexe à traiter
+*			-const float arg -> argument du nombre complexe à traiter
+*			-float *real -> partie réelle du nombre complexe traité 
+*			-float *imag -> partie imaginaire du nombre complexe traité
 * Return : none
 */
 void complexExponentialToComplexLinear(const float *mod, const float *arg, float *real, float *imag)
 {
+	if(sizeof(&mod)>sizeof(&arg)) int size = sizeof(&arg);
+	else int size = sizeof(&mod);
+	
+	float *tempPtr;
+	
+	tempPtr = malloc(size * sizeof(*real));
+	if(tempPtr == NULL) free(real);
+	else real = tempPtr;
+	
+	tempPtr = malloc(size * sizeof(*imag));
+	if(tempPtr == NULL) free(imag);
+	else imag = tempPtr;
 
+	float a=0;
+	float b=0;
+	
+	for(int i=0; i<size; i++)
+	{
+		a = mod[i]*cos(arg[i]);
+		b = mod[i]*sin(arg[i]);
+		&real[i]=a;
+		&imag[i]=b;
+	}
 }
 
 /*
 * Overview : Sépare les enveloppes spectrales présentent dans une fft en fonction de l'argument présent sur chaques raies
 * Author : BIZON Alexis
-* Params :  -const vector<float> mod -> module du nombre complexe à traiter
-*			-const vector<float> arg -> argument du nombre complexe à traiter
-*			-vector<vector<float>> *envs -> tableau des enveloppes différenciées par leur argument
+* Params :  -const float *mod -> module du nombre complexe à traiter
+*			-const float *arg -> argument du nombre complexe à traiter
+*			-float **envs -> tableau des enveloppes différenciées par leur argument
 * Return : none
 */
 void extractEnveloppes(const float *mod, const float *arg, float **envs)
 {
-
+	if(sizeof(&mod)>sizeof(&arg)) int size = sizeof(&arg);
+	else int size = sizeof(&mod);
+	
+	float *tempPtr;
+	
+	float *args;
+	
+	tempPtr = malloc(size * sizeof(*args));
+	if(tempPtr == NULL) free(args);
+	else args = tempPtr;
+	
+	int nbDiffArgs = 0;
+	
+	for(int i =0; i<size; i++)
+	{
+		int diff =TRUE;
+		for(int j =0; j<nbDiffArgs; j++) if (&arg== args[j]) diff=FALSE;
+		if(diff == TRUE)args[nbDiffArgs++] = &arg;
+	}
+	
+	
+	tempPtr = malloc(nbDiffArgs * sizeof(*envs));
+	if(tempPtr == NULL) free(envs);
+	else envs = tempPtr;
+	
+	for(int i=0 ; i < nbDiffArgs ; i++)
+	{
+		tempPtr[i] = malloc(size * sizeof(*(envs[i])));
+		if(tempPtr[i] == NULL)free(envs[i]);
+		else envs[i] = tempPtr;
+	}
+	
+	for(int i =0; i<nbDiffArgs; i++)
+	{
+		for(int j =0; j<size; j++)
+		{
+			if(arg[j] == args[i]) envs[i][j] = mod[j];
+			else envs[i][j] =0;
+		}
+	}
+	free(args);
 }
