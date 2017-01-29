@@ -1,3 +1,11 @@
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 25/01/17
+* Version : 1.0
+*/
+
+
 #ifndef __INSTRUMENTS_H__
 #define __INSTRUMENTS_H__
 
@@ -18,23 +26,10 @@ struct Instrument
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
 	char haveOtherFrequency;//Dit si l'instrument contient des fréquences n'appartenants pas aux harmoniques
 	char codeMIDI;//Code MIDI de l'instrument
-	float H0 = 0;//Amplitude relative de la valeure moyenne du signal par rapport au fondamental en %
-	float H1 = 100;//Amplitude relative du fondamental du signal par rapport au fondamental en %
-	float H2;//Amplitude relative du second harmonique du signal par rapport au fondamental en %
-	float H3;//Amplitude relative du troisième harmonique du signal par rapport au fondamental en %
-	float H4;//Amplitude relative du quatrième harmonique du signal par rapport au fondamental en %
-	float H5;//Amplitude relative du cinquième harmonique du signal par rapport au fondamental en %
-	float H6;//Amplitude relative du sixième harmonique du signal par rapport au fondamental en %
-	float H7;//Amplitude relative du septième harmonique du signal par rapport au fondamental en %
-	float H8;//Amplitude relative du huitième harmonique du signal par rapport au fondamental en %
-	float H9;//Amplitude relative du neuvième harmonique du signal par rapport au fondamental en %
-	float H10;//Amplitude relative du dizième harmonique du signal par rapport au fondamental en %
-	float H11;//Amplitude relative du onzième harmonique du signal par rapport au fondamental en %
-	float H12;//Amplitude relative du douzième harmonique du signal par rapport au fondamental en %
-	float H13;//Amplitude relative du treizième harmonique du signal par rapport au fondamental en %
-	float H14;//Amplitude relative du quatorzième harmonique du signal par rapport au fondamental en %
-	float H15;//Amplitude relative du quinzième harmonique du signal par rapport au fondamental en %
-	float H16;//Amplitude relative du seizième harmonique du signal par rapport au fondamental en %
+	char isKnowInstrument;//Définit si il s'agit d'un instrument connu ou non
+	
+	float harmoniquesAmplitudes[17]; //Amplitude relative des harmoniques du signal par rapport au fondamental en % ([0]-> Valeure moyenne; [1]-> fondammental)
+	
 	
 	vector<float> otherFrequency[2];//Contient les amplitudes relatives des fréquences n'étant pas des harmoniques en %
 	
@@ -46,11 +41,35 @@ struct Instrument
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde
 };
 
+
+/*
+* Overview : permet de reconnaitre un instrument à partir de son enveloppe spectrale
+* Author : BIZON Alexis
+* Params :  -vector<float> const& env -> enveloppe à étudier
+*			-vector<struct Instrument> const& listInstru -> liste des instruments connu
+* Return : struct Instrument -> instrument reconnu
+*/
 struct Instrument getInstru(vector<float> const& env, vector<struct Instrument> const& listInstru);
 
+
+/*
+* Overview : perment de reconnaitre la fréquence de la note jouée par un instrument
+* Author : BIZON Alexis
+* Params :  -vector<float> const& env -> enveloppe à étudier
+*			-struct Instrument instru -> instrument ayant été identifié comme étant la source de la note
+* Return : float -> fréquence de la note jouée
+*/
 float getFreqPlay(vector<float> const& env, struct Instrument instru);
 
-vector<float> getEnveloppe(float freqNote, struct Instrument instru,);
+
+/*
+* Overview : permet de créer l'enveloppe spectrale d'un instrument pour une note d'une certaine fréquence
+* Author : BIZON Alexis
+* Params :  -float freqNote -> fréquence de la note à jouer
+*			-struct Instrument instru -> instrument devant jouer la note
+* Return : vector<float> -> enveloppe spectrale à envoyer sur le DAC
+*/
+vector<float> getEnveloppe(float freqNote, struct Instrument instru);
 
 
 #endif
