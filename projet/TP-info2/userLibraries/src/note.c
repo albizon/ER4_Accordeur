@@ -56,7 +56,7 @@ char noteSolver(const float freq)
 * Overview : Conversion d'une fréquence vers la note correspondante
 * Author : METAYER Simon
 * Params : const float freq -> fréquence à étudier
-* Return : char -> Note trouvée (voir defineNote.h pour voir la correspondance des notes)
+* Return : char -> Degré/octave trouvé
 */
 char degreSolver(float freq)
 {
