@@ -52,7 +52,7 @@
       <ToolName>EDBG</ToolName>
     </com_atmel_avrdbg_tool_edbg>
     <avrtoolserialnumber>712056746</avrtoolserialnumber>
-    <avrdeviceexpectedsignature>0x10010000</avrdeviceexpectedsignature>
+    <avrdeviceexpectedsignature>0x10010300</avrdeviceexpectedsignature>
     <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
     <com_atmel_avrdbg_tool_samice>
       <ToolOptions>
@@ -65,6 +65,17 @@
       <ToolNumber>712056746</ToolNumber>
       <ToolName>J-Link</ToolName>
     </com_atmel_avrdbg_tool_samice>
+    <custom>
+      <ToolOptions xmlns="">
+        <InterfaceProperties>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+      </ToolOptions>
+      <ToolType xmlns="">custom</ToolType>
+      <ToolNumber xmlns="">
+      </ToolNumber>
+      <ToolName xmlns="">Custom Programming Tool</ToolName>
+    </custom>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -249,16 +260,7 @@
     <Compile Include="userLibraries\include\display.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userLibraries\include\fft.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="userLibraries\include\fftDescribe.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="userLibraries\include\freq.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="userLibraries\include\instruments.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\include\note.h">
@@ -270,16 +272,7 @@
     <Compile Include="userLibraries\src\display.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userLibraries\src\fft.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="userLibraries\src\fftDescribe.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="userLibraries\src\freq.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="userLibraries\src\instruments.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\src\note.c">

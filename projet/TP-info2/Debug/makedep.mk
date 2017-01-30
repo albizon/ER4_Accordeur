@@ -30,13 +30,7 @@ TP-info2.c
 
 userLibraries\src\display.c
 
-userLibraries\src\fft.c
-
-userLibraries\src\fftDescribe.c
-
 userLibraries\src\freq.c
-
-userLibraries\src\instruments.c
 
 userLibraries\src\note.c
 

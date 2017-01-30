@@ -69,7 +69,7 @@ char accorder(const char note, const char degre, const float freq, const float e
 *           -const float deltaFreq -> Espacement entre les raies de la fft en Hz
 * Return : float -> Erreur absolue autorisée
 */
-float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq=0);
+float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq);
 
 
 

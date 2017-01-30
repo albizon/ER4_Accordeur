@@ -14,7 +14,6 @@
 	#include "timer.h"
 	#include <math.h>
 	
-	#include "fft.h"
 	#include "display.h"
 	#include "freq.h"
 	#include "user_init.h"

@@ -74,7 +74,7 @@ char degreSolver(float freq)
 		 note  = (char)(0-note_tmp); // On prend la valeur absolue de la note
 		 return 4-(char)arrondi((note+10)/12); // Permet d'obtenir le degré/octave relatif à la note détecté
 	}
-	else if (tmp>=0) // Si la note est positive
+	else if (note_tmp>=0) // Si la note est positive
 	{
 		 note = (char)note_tmp; // On prend la valeur absolue de la note
 		 return (char)arrondi((note+10)/12)+3; // Permet d'obtenir le degré/octave relatif à la note détecté
@@ -167,7 +167,7 @@ char accorder(const char note, const char degre, const float freq, const float e
 *           -const float deltaFreq -> Espacement entre les raies de la fft en Hz
 * Return : float -> Erreur absolue autorisée
 */
-float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq=0)
+float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq)
 {
 	//L'erreur absolue vaut la fréquence multipliée par l'erreur relative en scalaire(erreur en % /100) + l'erreur introduite par l'imprésision de la fft
 	return (noteFreq*relativeError POURCENT_TO_SCALAIRE)+deltaFreq;

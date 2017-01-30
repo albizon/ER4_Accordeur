@@ -61,10 +61,7 @@ C_SRCS +=  \
 ../iutNantes/src/timer.c \
 ../TP-info2.c \
 ../userLibraries/src/display.c \
-../userLibraries/src/fft.c \
-../userLibraries/src/fftDescribe.c \
 ../userLibraries/src/freq.c \
-../userLibraries/src/instruments.c \
 ../userLibraries/src/note.c \
 ../userLibraries/src/user_init.c
 
@@ -90,10 +87,7 @@ iutNantes/src/serial.o \
 iutNantes/src/timer.o \
 TP-info2.o \
 userLibraries/src/display.o \
-userLibraries/src/fft.o \
-userLibraries/src/fftDescribe.o \
 userLibraries/src/freq.o \
-userLibraries/src/instruments.o \
 userLibraries/src/note.o \
 userLibraries/src/user_init.o
 
@@ -112,10 +106,7 @@ iutNantes/src/serial.o \
 iutNantes/src/timer.o \
 TP-info2.o \
 userLibraries/src/display.o \
-userLibraries/src/fft.o \
-userLibraries/src/fftDescribe.o \
 userLibraries/src/freq.o \
-userLibraries/src/instruments.o \
 userLibraries/src/note.o \
 userLibraries/src/user_init.o
 
@@ -134,10 +125,7 @@ iutNantes/src/serial.d \
 iutNantes/src/timer.d \
 TP-info2.d \
 userLibraries/src/display.d \
-userLibraries/src/fft.d \
-userLibraries/src/fftDescribe.d \
 userLibraries/src/freq.d \
-userLibraries/src/instruments.d \
 userLibraries/src/note.d \
 userLibraries/src/user_init.d
 
@@ -156,10 +144,7 @@ iutNantes/src/serial.d \
 iutNantes/src/timer.d \
 TP-info2.d \
 userLibraries/src/display.d \
-userLibraries/src/fft.d \
-userLibraries/src/fftDescribe.d \
 userLibraries/src/freq.d \
-userLibraries/src/instruments.d \
 userLibraries/src/note.d \
 userLibraries/src/user_init.d
 
@@ -181,12 +166,6 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
-
-
-
-
-
-
 
 
 

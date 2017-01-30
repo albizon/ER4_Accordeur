@@ -25,7 +25,7 @@ void initFreq()
 	pinMode(PORTB, 15, INPUT_PULLUP);//configuration de pb 15 en entrée
 	pinMux(PORTB, 15, CONFIG_A);// pb 15 sur l'eic
 	EICInitClock(F32KHZ);// initialisation de la source d'horloge pour l'eic à 32 kHz
-	EICConfig(15,1,LOW);// configuration de l'eic 15 en detection de niveau bas avec filtre
+	EICConfig(15,1,RISING);// configuration de l'eic 15 en detection de niveau bas avec filtre
 	NVIC_EnableIRQ(EIC_IRQn);// acivation des interuptions sur EIC
 	
 	// TIMER TC3 à 1MHz
