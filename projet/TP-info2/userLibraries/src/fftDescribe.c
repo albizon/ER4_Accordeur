@@ -23,6 +23,7 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 	int size=0;
 	if(sizeof(&real)>sizeof(&imag)) {size = sizeof(&imag);}
 	else {size = sizeof(&real);}
+	size/=sizeof(real[0]);
 	
 	float *tempPtr;
 	
