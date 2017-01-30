@@ -5,14 +5,43 @@
  *  Author: simon
  */ 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include "note.h"
 
-double arrondi (double val) // Fonction arrondi
+/*
+* Overview : Arrondi une variable de type double
+* Author : METAYER Simon
+* Params : const double val -> Valeur à arrondir
+* Return : double -> Valeur arrondie
+*/
+double arrondi (const double val)
 {
 	return floor (val+0.5);
 } 
 
-char noteSolver(float freq)
+
+/*
+* Overview : Conversion d'une fréquence vers la note corescpondante
+* Author : METAYER Simon
+* Params : const float freq -> fréquence à étudier
+* Return : char -> Note trouvée (voir defineNote.h pour voir la correspondance des notes)
+*/
+char noteSolver(const float freq)
 {
 	char rang;
 	double tmp = arrondi((log10( pow( ((double)freq/LA_440_FREQ) , 12 ) ) / log10(2)));
@@ -29,6 +58,13 @@ char noteSolver(float freq)
 	}
 }
 
+
+/*
+* Overview : Affichage du titre du projet sur la première ligne de l'afficheur
+* Author : METAYER Simon
+* Params : none
+* Return : none
+*/
 char degreSolver(float freq)
 {
 	char rang;
@@ -47,7 +83,16 @@ char degreSolver(float freq)
 	
 }
 
-float getFreqNote(char note, char degre)
+
+
+/*
+* Overview : renvoi la fréquence d'une note à un octave défini
+* Author : METAYER Simon
+* Params :  -const char note -> note à convertir
+*           -const char degre -> octave de la note à convertir
+* Return : float -> fréquence calculée
+*/
+float getFreqNote(const char note, const char degre)
 {
 	switch (note){
 		case NUM_DO :
@@ -92,7 +137,16 @@ float getFreqNote(char note, char degre)
 	}
 }
 
-char accorder(char note, char degre, float freq, float plage)
+/*
+* Overview : Permet de savoir si l'instrument est accordé à la note donnée
+* Author : METAYER SImon
+* Params :  -const char note -> note correspondante calculée
+*           -const char degre -> octave de la note correspondant calculé
+*           -const float freq -> fréquence mesurée
+*           -const float error -> erreur absolue autorisée entre la fréquence mesurée et la fréquence désirée en Hz
+* Return : char -> état de l'accord (soit trop haut, soit OK, soit trop bas)
+*/
+char accorder(const char note, const char degre, const float freq, const float error)
 {
 	float freq_calcul = getFreqNote(note, degre);
 	if(((freq_calcul-plage)<freq)&&(freq<(freq_calcul+plage))) return OK_FREQ;
@@ -100,7 +154,16 @@ char accorder(char note, char degre, float freq, float plage)
 	else if((freq_calcul-plage)<freq) return HIGH_FREQ;
 }
 
-float calculAbsError(float relativeError, float noteFreq, float deltaFreq=0)
+
+/*
+* Overview : Calcul l'erreur absolue autorisée à partir d'une erreur relative, de la fréquence de base et du delta de fréquence de la fft 
+* Author : BIZON Alexis
+* Params :  -const float relativeError -> Erreur relative autorisée
+*           -const float noteFreq -> Fréquence autour de laquelle l'erreur absolue sera calculée
+*           -const float deltaFreq -> Espacement entre les raies de la fft en Hz
+* Return : float -> Erreur absolue autorisée
+*/
+float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq=0)
 {
 	return (noteFreq*relativeError POURCENT_TO_SCALAIRE)+deltaFreq;
 }
