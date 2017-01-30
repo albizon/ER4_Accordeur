@@ -6,21 +6,6 @@
  */ 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #include "note.h"
 
 /*
@@ -36,48 +21,63 @@ double arrondi (const double val)
 
 
 /*
-* Overview : Conversion d'une fréquence vers la note corescpondante
+* Overview : Conversion d'une fréquence vers la note correspondante la plus proche
 * Author : METAYER Simon
 * Params : const float freq -> fréquence à étudier
 * Return : char -> Note trouvée (voir defineNote.h pour voir la correspondance des notes)
 */
 char noteSolver(const float freq)
 {
-	char rang;
-	double tmp = arrondi((log10( pow( ((double)freq/LA_440_FREQ) , 12 ) ) / log10(2)));
+	char note; // Initialisation de la variable contenant la note trouvée
+
+	/* Calcul de la note associé à la fréquence envoyée :
+	* f = 440 * 2^{note/12}  <=> n= log10( (f/440)^12 ) / log10(2)
+	* On obtient une "note à virgule" qu'il suffis d'arrondir à l'unité pour trouver de quelle note on est le plus proche
+	* En revanche la note peut etre négative ici car elle est centrée autour du LA 440
+	* Ex : un Ré 293,66Hz sera calculé comme étant un -7 
+	*/
+	double note_tmp = arrondi((log10( pow( ((double)freq/LA_440_FREQ) , 12 ) ) / log10(2)));
 	
-	if (tmp<0)
+	// On met en forme la valeur obtenur précédemment pour la rendre relative à un octave
+	if (note_tmp<0) // Si la note est négative
 	{
-		 rang = (char)(0-tmp);
-		 return rang =(char)((10-(rang % 12)));
+		 note = (char)(0-note_tmp); // On en prend la valeur absolue
+		 return note =(char)((10-(note % 12))); // Permet d'obtenir la note relative à un octave (du DO au SI)
 	}
-	else if (tmp>=0) 
+	else if (note_tmp>=0) // Si la note est positive
 	{
-		rang = (char)tmp;
-		return rang =(char)((((char)rang+10))%12);
+		note = (char)note_tmp; // On en prend la valeur absolue
+		return note =(char)((((char)note+10))%12); // Permet d'obtenir la note relative à un octave (du DO au SI)
 	}
 }
 
 
 /*
-* Overview : Affichage du titre du projet sur la première ligne de l'afficheur
+* Overview : Conversion d'une fréquence vers la note correspondante
 * Author : METAYER Simon
-* Params : none
-* Return : none
+* Params : const float freq -> fréquence à étudier
+* Return : char -> Note trouvée (voir defineNote.h pour voir la correspondance des notes)
 */
 char degreSolver(float freq)
 {
-	char rang;
-	double tmp = arrondi((log10( pow( ((double)freq/LA_440_FREQ) , 12 ) ) / log10(2)));
-	if (tmp<0)
+	char note;
+	/* Calcul de la note associé à la fréquence envoyée :
+	* f = 440 * 2^{note/12}  <=> n= log10( (f/440)^12 ) / log10(2)
+	* On obtient une "note à virgule" qu'il suffis d'arrondir à l'unité pour trouver de quelle note on est le plus proche
+	* En revanche la note peut etre négative ici car elle est centrée autour du LA 440
+	* Ex : un Ré 293,66Hz sera calculé comme étant un -7 
+	*/
+	double note_tmp = arrondi((log10( pow( ((double)freq/LA_440_FREQ) , 12 ) ) / log10(2)));
+	
+	if (note_tmp<0) // Si la note est négative
 	{
-		 rang  = (char)(0-tmp);
-		 return 4-(char)arrondi((rang+10)/12);
+		 note  = (char)(0-note_tmp); // On prend la valeur absolue de la note
+		 return 4-(char)arrondi((note+10)/12); // Permet d'obtenir le degré/octave relatif à la note détecté
 	}
-	else if (tmp>=0)
+	else if (tmp>=0) // Si la note est positive
 	{
-		 rang = (char)tmp;
-		 return (char)arrondi((rang+10)/12)+3;
+		 note = (char)note_tmp; // On prend la valeur absolue de la note
+		 return (char)arrondi((note+10)/12)+3; // Permet d'obtenir le degré/octave relatif à la note détecté
 	}
 	
 	
