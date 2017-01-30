@@ -100,7 +100,7 @@ char accorder(char note, char degre, float freq, float plage)
 	else if((freq_calcul-plage)<freq) return HIGH_FREQ;
 }
 
-float calculAbsError(float relativeError, float noteFreq)
+float calculAbsError(float relativeError, float noteFreq, float deltaFreq=0)
 {
-	return noteFreq*relativeError POURCENT_TO_SCALAIRE;
+	return (noteFreq*relativeError POURCENT_TO_SCALAIRE)+deltaFreq;
 }
