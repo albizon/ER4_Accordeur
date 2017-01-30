@@ -30,12 +30,37 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 * Overview : perment de reconnaitre la fréquence de la note jouée par un instrument
 * Author : BIZON Alexis
 * Params :  -const float *env -> enveloppe à étudier
-*			-const struct Instrument instru -> instrument ayant été identifié comme étant la source de la note
+*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const float *env, const struct Instrument instru)
+float getFreqPlay(const float *env, const float deltaFreq)
 {
-	
+	int delta=1;
+	int size = sizeof(env);
+	for(int i=1; i<size; i++)
+	{
+		if(env[i]==0) delta++;
+	}
+	return (float)delta*deltaFreq;	
+}
+
+
+/*
+* Overview : perment de récupérer l'amplitude de la note
+* Author : BIZON Alexis
+* Params :  -const float *env -> enveloppe à étudier
+*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
+* Return : float -> amplitude de la note en dB
+*/
+float getLevelPlay(const float *env, const float deltaFreq)
+{
+	int delta=1;
+	int size = sizeof(env);
+	for(int i=1; i<size; i++)
+	{
+		if(env[i]==0) delta++;
+	}
+	return 20*log10(env[delta]);	
 }
 
 
