@@ -20,6 +20,7 @@
 	#include "user_init.h"
 	#include "note.h"
 	#include "define_notes.h"
+	#include <stdlib.h>
 	
 	#define LOW_FREQ	1
 	#define OK_FREQ		2

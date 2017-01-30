@@ -8,7 +8,7 @@
 
 
 #include "fftDescribe.h"
-#include <math.h>
+
 
 
 
