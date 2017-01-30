@@ -16,7 +16,7 @@ char noteSolver(float freq);
 char degreSolver(float freq);
 float getFreqNote(char note, char degre);
 char accorder(char note, char degre, float freq, float plage);
-float calculAbsError(float relativeError, float noteFreq);
+float calculAbsError(float relativeError, float noteFreq, float deltaFreq=0);
 
 
 
