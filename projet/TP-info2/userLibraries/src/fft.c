@@ -25,7 +25,7 @@ void fft(const int N, int inverse, float *R, float *I)
       for (IJ=0; IJ<(N-1);IJ++)
       {
         R[IJ] := R[IJ]/N;
-			  I[IJ] := I[IJ]/N;
+	I[IJ] := I[IJ]/N;
       }
   }
   
@@ -36,36 +36,36 @@ void fft(const int N, int inverse, float *R, float *I)
   
   for (IJ=0; IJ<N1);IJ++)
   {
-  			 if (IJ<J)
+  	if (IJ<J)
          {
-				     T1 = R[J-1] ;
-				     T2 = I[J-1] ;
-				     R[J-1] = R[IJ-1] ;
-				     I[J-1] = I[IJ-1] ;
-				     R[IJ-1] = T1 ;
-				     I[IJ-1] = T2 ;
+		T1 = R[J-1] ;
+		T2 = I[J-1] ;
+		R[J-1] = R[IJ-1] ;
+		I[J-1] = I[IJ-1] ;
+		R[IJ-1] = T1 ;
+		I[IJ-1] = T2 ;
          }
          K = N2 ;
          do {
-				     J := J - K ;
-				     K:=K div 2 ;
+		J := J - K ;
+		K:=K div 2 ;
          } While (K<J);
          J := J+K ;
   }
   
   for  (L=1, L<M; L++ )
   {
-		       L1 := trunc(exp(L*ln(2))) ;
-		       L2 := L1 div 2 ;
-		       U1 := 1 ;
-		       U2 := 0 ;
-		       W1 := COS(PI/L2) ;
-		       W2 := -SIN(PI/L2) ;
-		       If inverse Then W2 := -W2 ;
-		       for (J=1; J<L2; J++ )
-           {
-			         IJ = J ;
-			          do{
+	L1 := trunc(exp(L*ln(2))) ;
+	L2 := L1 div 2 ;
+	U1 := 1 ;
+	U2 := 0 ;
+	W1 := COS(PI/L2) ;
+	W2 := -SIN(PI/L2) ;
+	if (inverse==TRUE)  W2 := -W2 ;
+	for (J=1; J<L2; J++ )
+	{
+		IJ = J ;
+		do{
                    I5 := IJ+L2 ;
                    T1 := R[I5-1]*U1-I[I5-1]*U2 ;
                    T2 := R[I5-1]*U2+I[I5-1]*U1 ;
@@ -86,23 +86,23 @@ void fft(const int N, int inverse, float *R, float *I)
              
                 if (abs(Z1)<UFL)
                 {
-                  Z1 := 0 ;
-                 	Z2 := U1*W2+U2*W1 ;
+			Z1 := 0 ;
+			Z2 := U1*W2+U2*W1 ;
                 }
              
-			          if (abs(Z2)>OVF) 
+		if (abs(Z2)>OVF) 
                 {
-                  if (Z2>0) Z2 := OVF;
-                  else Z2 = 0-OVF ;
+			if (Z2>0) Z2 := OVF;
+			else Z2 = 0-OVF ;
                 }
              
-		          	if (abs(Z2)<UFL) 
+		if (abs(Z2)<UFL) 
                 {
-                  Z1 := 0 ;
+			Z1 := 0 ;
                 	U1 := Z1 ;
                 }
              
-			          U2 := Z2 ;
+		U2 := Z2 ;
            }
   }  
 }
