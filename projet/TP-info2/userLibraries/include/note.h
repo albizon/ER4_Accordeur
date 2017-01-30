@@ -51,7 +51,7 @@ float getFreqNote(const char note, const char degre);
 
 /*
 * Overview : Permet de savoir si l'instrument est accordé à la note donnée
-* Author : BIZON Alexis
+* Author : METAYER Simon
 * Params :  -const char note -> note correspondante calculée
 *           -const char degre -> octave de la note correspondant calculé
 *           -const float freq -> fréquence mesurée
