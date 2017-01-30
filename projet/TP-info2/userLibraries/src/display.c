@@ -5,7 +5,6 @@
 * Version : 1.0
 */
 
-
 #include "define.h"
 #include "display.h"
 #include <stdio.h>
@@ -34,8 +33,8 @@ void displayTitle()
 */
 void noteToString(const char note, char* str)
 {
-	switch (note){
-	case NUM_DO :
+	switch (note){ // Ecriture conditionnée par la note
+	case NUM_DO : 
 		strcpy(str, "Do");
 	break;
 	
@@ -98,10 +97,10 @@ void noteToString(const char note, char* str)
 */
 void displayNote(const char note)
 {
-	OLEDClearLine(3);//Efface la quatrième ligne
-	OLEDSetLine(3);//Se place sur la quatrième ligne
-	printf("Note  : ");//Ecrit "note"
-	switch (note){//Ecriture conditionnée par la note
+	OLEDClearLine(3); //Efface la quatrième ligne
+	OLEDSetLine(3); //Se place sur la quatrième ligne
+	printf("Note  : "); //Ecrit "note"
+	switch (note){ //Ecriture conditionnée par la note
 	case NUM_DO :
 		printf("Do\n");
 	break;
@@ -185,7 +184,13 @@ void displayDegre(char degre)
 	printf("Degre : %d   \n",degre); //Ecrit le degré envoyé
 }
 
-void diplayLedIndicator(char acc) // Allume les leds en fonciton de l'indicateur : trop bas / ok / trop haut
+/*
+* Overview : Allume les leds d'aide à l'accordage en fonction de l'indicateur : trop bas / ok / trop haut
+* Author : METAYER Simon
+* Params :  char acc ->indicateur : trop bas / ok / trop haut
+* Return : none
+*/
+void diplayLedIndicator(char acc) // Allume les leds en fonction de l'indicateur : trop bas / ok / trop haut
 {
 	switch (acc){//Test de la valeur renvoyée par la fonction précédente
 			case LOW_FREQ://Si la fréquence est trop basse
