@@ -16,6 +16,10 @@ struct floatArray{
   int size;
 };
 
+int sizeof(floatArray vect){
+  return vect->size;
+}
+
 /*
 * Overview : Conversion d'un nombre complexe de la forme a + j*b vers la forme mod*exp(j*arg)
 * Author : BIZON Alexis
