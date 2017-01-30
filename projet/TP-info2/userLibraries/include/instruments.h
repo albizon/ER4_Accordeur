@@ -55,10 +55,10 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 * Overview : perment de reconnaitre la fréquence de la note jouée par un instrument
 * Author : BIZON Alexis
 * Params :  -const float *env -> enveloppe à étudier
-*			-const struct Instrument instru -> instrument ayant été identifié comme étant la source de la note
+*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const float *env, const struct Instrument instru);
+float getFreqPlay(const float *env, const float deltaFreq);
 
 
 /*

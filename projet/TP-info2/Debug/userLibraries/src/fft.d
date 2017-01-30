@@ -106,7 +106,7 @@ userLibraries/src/fft.d userLibraries/src/fft.o: \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\timespec.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\_timespec.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h \
- ../userLibraries/include/fft.h
+ ../userLibraries/include/fft.h ../userLibraries/include/note.h
 
 ../userLibraries/include/define.h:
 
@@ -337,3 +337,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\stdio.h:
 
 ../userLibraries/include/fft.h:
+
+../userLibraries/include/note.h:

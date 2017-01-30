@@ -32,4 +32,6 @@
 	#define TRUE 1 //Vrai/Oui
 	#define FALSE 0 //Faux/Non
 	
+	#define ADC_MIC 4
+	
 #endif

@@ -40,7 +40,7 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 	{
 		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
 		argument = imag[i]/real[i];
-		argument = arctan(argument);
+		argument = atan(argument);
 		mod[i]=module;
 		arg[i]=argument;
 	}
