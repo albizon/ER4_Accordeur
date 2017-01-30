@@ -31,7 +31,7 @@
 */
 double arrondi (const double val)
 {
-	return floor (val+0.5);
+	return floor (val+0.5);//floor renvoyant une troncature, on ajoute 0.5 à la valeure envoyée pour avoir l'arrondi
 } 
 
 
@@ -95,6 +95,7 @@ char degreSolver(float freq)
 float getFreqNote(const char note, const char degre)
 {
 	switch (note){
+//En fonction de la note demandée, on utilise les différents calculs définits dans defineNote.h qui nous renvoies la fréquence d'une note en fonction de son octave
 		case NUM_DO :
 			return DO(degre);
 		break;
@@ -148,10 +149,13 @@ float getFreqNote(const char note, const char degre)
 */
 char accorder(const char note, const char degre, const float freq, const float error)
 {
-	float freq_calcul = getFreqNote(note, degre);
-	if(((freq_calcul-plage)<freq)&&(freq<(freq_calcul+plage))) return OK_FREQ;
-	else if(freq<(freq_calcul+plage)) return LOW_FREQ;
-	else if((freq_calcul-plage)<freq) return HIGH_FREQ;
+	float freq_calcul = getFreqNote(note, degre);//récupère la fréquence parfaite de la note envoyée
+	//Si on est sur la fréquence parfaite à +- l'erreur, l'instrument est accordé à cette note
+	if(((freq_calcul-error)<freq)&&(freq<(freq_calcul+error))) return OK_FREQ;
+	//Sinon si on est en dessous de la fréquence parfaite moins l'erreur, on est trop bas
+	else if(freq<(freq_calcul-error)) return LOW_FREQ;
+	//Sinon si on est au dessus de la fréquence parfaite plus l'erreur, on trop haut
+	else if((freq_calcul+error)<freq) return HIGH_FREQ;
 }
 
 
@@ -165,5 +169,6 @@ char accorder(const char note, const char degre, const float freq, const float e
 */
 float calculAbsError(const float relativeError, const float noteFreq, const float deltaFreq=0)
 {
+	//L'erreur absolue vaut la fréquence multipliée par l'erreur relative en scalaire(erreur en % /100) + l'erreur introduite par l'imprésision de la fft
 	return (noteFreq*relativeError POURCENT_TO_SCALAIRE)+deltaFreq;
 }
