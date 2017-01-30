@@ -27,6 +27,7 @@ struct Instrument
 	char codeMIDI;//Code MIDI de l'instrument
 	char isKnowInstrument;//Définit si il s'agit d'un instrument connu ou non
 	
+	int nbHarmoniques;//Nombre d'harmoniques dans le signal
 	float harmoniquesAmplitudes[17]; //Amplitude relative des harmoniques du signal par rapport au fondamental en % ([0]-> Valeure moyenne; [1]-> fondammental)
 	
 	

@@ -22,7 +22,28 @@
 */
 struct Instrument getInstru(const float *env, const struct Instrument *listInstru)
 {
+	int nbInstrus = sizeof(listInstru);
+	int instruOk = FALSE;
+	int i=0;
+	int nbHarmoniquesOK =0;
+	float coefH=0;
+	float relativeCurrentH =0;
+	int delta=1;
 	
+	int size = sizeof(env);
+	for(int i=1; i<size; i++)
+	{
+		if(env[i]==0) delta++;
+	}
+	while(instruOk == FALSE && i<nbInstrus)
+	{
+		coefH=listInstru[i].harmoniquesAmplitudes[1]*PURCENT_TO_SCALAIRE/env[delta];
+		for(int j=0; j<17; j++)
+		{
+			relativeCurrentH = listInstru[i].harmoniquesAmplitudes[j];
+			if(relativeCurrentH !=0) {if(relativeCurrentH)}
+		}
+	}
 }
 
 
