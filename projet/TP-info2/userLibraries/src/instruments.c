@@ -8,6 +8,7 @@
 
 
 #include "instruments.h"
+#include "define.h"
 
 
 
@@ -22,7 +23,7 @@
 */
 struct Instrument getInstru(const float *env, const struct Instrument *listInstru)
 {
-	int nbInstrus = sizeof(listInstru);
+	/*int nbInstrus = sizeof(listInstru);
 	int instruOk = FALSE;
 	int i=0;
 	int nbHarmoniquesOK =0;
@@ -43,7 +44,7 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 			relativeCurrentH = listInstru[i].harmoniquesAmplitudes[j];
 			if(relativeCurrentH !=0) {if(relativeCurrentH)}
 		}
-	}
+	}*/
 }
 
 

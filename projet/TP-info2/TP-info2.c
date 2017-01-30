@@ -30,6 +30,8 @@ int main(void)//fonction principale du programme
 		
 		/*Acquisition*/
 		getTabsFFT(user_real,user_imag);
+		user_real[0]=1;
+		user_imag[0]=1;
 		complexLinearToComplexExponential(user_real,user_imag,user_mod,user_arg);
 		freq=getFreqPlay(user_mod,df);
 		

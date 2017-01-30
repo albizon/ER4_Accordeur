@@ -19,6 +19,7 @@
 */
 void complexLinearToComplexExponential(const float *real, const float *imag, float *mod, float *arg)
 {
+	__disable_irq();
 	int size=0;
 	if(sizeof(&real)>sizeof(&imag)) {size = sizeof(&imag);}
 	else {size = sizeof(&real);}
@@ -33,17 +34,21 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 	if(tempPtr == NULL) {free(arg);}
 	else {arg = tempPtr;}
 
-	float module=0;
+	double module=0;
 	float argument=0;
 	
 	for(int i=0; i<size; i++)
 	{
-		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
+		double re= pow(real[i],2);
+		double im= pow(imag[i],2);
+		module = re + im;
+		module = (double)sqrt(module);
 		argument = imag[i]/real[i];
 		argument = atan(argument);
-		mod[i]=module;
+		mod[i]=(float)module;
 		arg[i]=argument;
 	}
+	__enable_irq();
 }
 
 /*

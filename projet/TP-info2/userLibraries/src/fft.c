@@ -65,7 +65,7 @@ void fft(int inverse, float *R, float *I)
   
   for  (L=1; L<M; L++ )
   {
-	L1 = trunc(exp(L*log(2))) ;
+	L1 = floor(exp(L*log(2))) ;
 	L2 = L1 / 2 ;
 	U1 = 1 ;
 	U2 = 0 ;
@@ -115,6 +115,7 @@ void fft(int inverse, float *R, float *I)
 		U2 = Z2 ;
 	}
   }  
+  
 }
 
 
@@ -143,6 +144,7 @@ void FFTInit(int deltaF)
 	_deltaF=deltaF;
 	_size=(_deltaF*1000)/_deltaT;
 	
+	__disable_irq();
 	float *tempPtr;
 	
 	tempPtr = malloc(_size * sizeof(*_real));
@@ -156,6 +158,8 @@ void FFTInit(int deltaF)
 	tempPtr = malloc(_size * sizeof(*_adcReal));
 	if(tempPtr == NULL) {free(_adcReal);}
 	else {_adcReal = tempPtr;}
+		
+	__enable_irq();
 		
 	// TIMER TC4 à 1MHz
 	TCinitClock(F1MHZ,4); // Initialisation de l'horloge à 1MHz pour le timer TC4
@@ -196,7 +200,7 @@ void TC3_Handler ( ) // Récupération périodique des valeurs de l'ADC
 
 	TC4->COUNT16.INTFLAG.reg = 1 ;
 	__enable_irq();
-}void getTabsFFT(float *real,float *imag){	float *tempPtr;
+}void getTabsFFT(float *real,float *imag){	__disable_irq();		float *tempPtr;
 	
 	tempPtr = malloc(_size * sizeof(*real));
 	if(tempPtr == NULL) {free(real);}
@@ -204,6 +208,6 @@ void TC3_Handler ( ) // Récupération périodique des valeurs de l'ADC
 		
 	tempPtr = malloc(_size * sizeof(*imag));
 	if(tempPtr == NULL) {free(imag);}
-	else {imag = tempPtr;}			memcpy(_real,real,_size);	memcpy(_imag,imag,_size);}
+	else {imag = tempPtr;}			memcpy(_real,real,_size);	free(_real);	memcpy(_imag,imag,_size);	free(_imag);		__enable_irq();}
 
 
