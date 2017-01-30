@@ -62,6 +62,16 @@ float getFreqPlay(const float *env, const struct Instrument instru);
 
 
 /*
+* Overview : perment de récupérer l'amplitude de la note
+* Author : BIZON Alexis
+* Params :  -const float *env -> enveloppe à étudier
+*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
+* Return : float -> amplitude de la note en dB
+*/
+float getLevelPlay(const float *env, const float deltaFreq);
+
+
+/*
 * Overview : permet de créer l'enveloppe spectrale d'un instrument pour une note d'une certaine fréquence
 * Author : BIZON Alexis
 * Params :  -const float freqNote -> fréquence de la note à jouer
