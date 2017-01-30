@@ -10,6 +10,12 @@
 #define __FFTDESCRIBE_H__
 
 #include "define.h"
+
+struct floatArray{
+  float* array;
+  int size;
+};
+
 /*
 * Overview : Conversion d'un nombre complexe de la forme a + j*b vers la forme mod*exp(j*arg)
 * Author : BIZON Alexis
