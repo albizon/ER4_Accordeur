@@ -20,6 +20,7 @@
 	#include "note.h"
 	#include "define_notes.h"
 	#include <stdlib.h>
+	#include <stdio.h>
 	
 	#define LOW_FREQ	1 //La fréquence est trop basse
 	#define OK_FREQ		2 //La fréquence est OK

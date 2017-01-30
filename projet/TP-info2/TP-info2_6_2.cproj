@@ -260,7 +260,16 @@
     <Compile Include="userLibraries\include\display.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="userLibraries\include\fft.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userLibraries\include\fftDescribe.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="userLibraries\include\freq.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userLibraries\include\instruments.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\include\note.h">
@@ -272,7 +281,16 @@
     <Compile Include="userLibraries\src\display.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="userLibraries\src\fft.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userLibraries\src\fftDescribe.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="userLibraries\src\freq.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userLibraries\src\instruments.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\src\note.c">

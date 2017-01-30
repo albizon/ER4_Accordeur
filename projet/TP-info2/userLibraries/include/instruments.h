@@ -21,7 +21,7 @@
 
 struct Instrument
 {
-	string name;//Nom de l'instrument
+	char *name;//Nom de l'instrument
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
 	char haveOtherFrequency;//Dit si l'instrument contient des fréquences n'appartenants pas aux harmoniques
 	char codeMIDI;//Code MIDI de l'instrument
@@ -32,9 +32,9 @@ struct Instrument
 	
 	float **otherFrequency;//Contient les amplitudes relatives des fréquences n'étant pas des harmoniques en %
 	
-	float delay = 0;//durée entre le début de la note et le début de l'attaque en seconde
+	float delay; //durée entre le début de la note et le début de l'attaque en seconde
 	float attack;//durée de la montée de la note jusqu'à so maximum en seconde
-	float hold = 0;//durée où la note reste à son maximum en seconde
+	float hold ;//durée où la note reste à son maximum en seconde
 	float decay;//durée de descente de la note aprés le maximum vers le maintient en seconde
 	float sustain;//amplitude relative de la note pendant sa pèriode de maintient par rapport au maximum en %
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde

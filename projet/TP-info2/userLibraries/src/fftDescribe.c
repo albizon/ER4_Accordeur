@@ -5,11 +5,7 @@
 * Version : 1.0
 */
 
-
-
 #include "fftDescribe.h"
-
-
 
 
 /*
@@ -23,19 +19,19 @@
 */
 void complexLinearToComplexExponential(const float *real, const float *imag, float *mod, float *arg)
 {
-	
-	if(sizeof(&real)>sizeof(&imag)) int size = sizeof(&imag);
-	else int size = sizeof(&real);
+	int size=0;
+	if(sizeof(&real)>sizeof(&imag)) {size = sizeof(&imag);}
+	else {size = sizeof(&real);}
 	
 	float *tempPtr;
 	
 	tempPtr = malloc(size * sizeof(*mod));
-	if(tempPtr == NULL) free(mod);
-	else mod = tempPtr;
+	if(tempPtr == NULL) {free(mod);}
+	else {mod = tempPtr;}
 	
 	tempPtr = malloc(size * sizeof(*arg));
-	if(tempPtr == NULL) free(arg);
-	else arg = tempPtr;
+	if(tempPtr == NULL) {free(arg);}
+	else {arg = tempPtr;}
 
 	float module=0;
 	float argument=0;
@@ -45,8 +41,8 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 		module = sqrt((real[i] * real[i]) + (imag[i] * imag[i]));
 		argument = imag[i]/real[i];
 		argument = arctan(argument);
-		&mod[i]=module;
-		&arg[i]=argument;
+		mod[i]=module;
+		arg[i]=argument;
 	}
 }
 
@@ -61,18 +57,19 @@ void complexLinearToComplexExponential(const float *real, const float *imag, flo
 */
 void complexExponentialToComplexLinear(const float *mod, const float *arg, float *real, float *imag)
 {
-	if(sizeof(&mod)>sizeof(&arg)) int size = sizeof(&arg);
-	else int size = sizeof(&mod);
+	int size =0;
+	if(sizeof(&mod)>sizeof(&arg)) {size = sizeof(&arg);}
+	else {size = sizeof(&mod);}
 	
 	float *tempPtr;
 	
 	tempPtr = malloc(size * sizeof(*real));
-	if(tempPtr == NULL) free(real);
-	else real = tempPtr;
+	if(tempPtr == NULL) {free(real);}
+	else {real = tempPtr;}
 	
 	tempPtr = malloc(size * sizeof(*imag));
-	if(tempPtr == NULL) free(imag);
-	else imag = tempPtr;
+	if(tempPtr == NULL) {free(imag);}
+	else {imag = tempPtr;}
 
 	float a=0;
 	float b=0;
@@ -81,8 +78,8 @@ void complexExponentialToComplexLinear(const float *mod, const float *arg, float
 	{
 		a = mod[i]*cos(arg[i]);
 		b = mod[i]*sin(arg[i]);
-		&real[i]=a;
-		&imag[i]=b;
+		real[i]=a;
+		imag[i]=b;
 	}
 }
 
@@ -94,10 +91,12 @@ void complexExponentialToComplexLinear(const float *mod, const float *arg, float
 *			-float **envs -> tableau des enveloppes différenciées par leur argument
 * Return : none
 */
+
 void extractEnveloppes(const float *mod, const float *arg, float **envs)
 {
-	if(sizeof(&mod)>sizeof(&arg)) int size = sizeof(&arg);
-	else int size = sizeof(&mod);
+	int size = 0;
+	if(sizeof(&mod)>sizeof(&arg)) {size = sizeof(&arg);}
+	else {size = sizeof(&mod);}
 	
 	float *tempPtr;
 	
@@ -112,10 +111,9 @@ void extractEnveloppes(const float *mod, const float *arg, float **envs)
 	for(int i =0; i<size; i++)
 	{
 		int diff =TRUE;
-		for(int j =0; j<nbDiffArgs; j++) if (&arg== args[j]) diff=FALSE;
-		if(diff == TRUE)args[nbDiffArgs++] = &arg;
+		for(int j =0; j<nbDiffArgs; j++) {if (arg[i] == args[j]) {diff=FALSE;}}
+		if(diff == TRUE)args[nbDiffArgs++] = arg[i];
 	}
-	
 	
 	tempPtr = malloc(nbDiffArgs * sizeof(*envs));
 	if(tempPtr == NULL) free(envs);
@@ -123,9 +121,9 @@ void extractEnveloppes(const float *mod, const float *arg, float **envs)
 	
 	for(int i=0 ; i < nbDiffArgs ; i++)
 	{
-		tempPtr[i] = malloc(size * sizeof(*(envs[i])));
-		if(tempPtr[i] == NULL)free(envs[i]);
-		else envs[i] = tempPtr;
+		tempPtr = malloc(size * sizeof(**envs));
+		if(tempPtr == NULL) free(envs[i]);
+		else  envs[i] = tempPtr; 
 	}
 	
 	for(int i =0; i<nbDiffArgs; i++)
