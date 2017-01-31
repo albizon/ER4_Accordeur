@@ -13,11 +13,14 @@
 
 typedef struct floatArray{
   float* array;
-  int size;
+  int* size;
+  int dimension;
 }struct;
 
 int sizeof(floatArray vect){
-  return vect->size;
+  int s =0;
+  for(int i=0; i<vect->dimension; i++) s+=vect->size[i];
+  return s;
 }
 
 /*
