@@ -59,7 +59,7 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const float *env, const float deltaFreq);
+float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
 
 
 /*

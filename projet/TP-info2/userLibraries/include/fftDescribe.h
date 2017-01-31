@@ -11,10 +11,10 @@
 
 #include "define.h"
 
-struct floatArray{
+typedef struct floatArray{
   float* array;
   int size;
-};
+}struct;
 
 int sizeof(floatArray vect){
   return vect->size;
@@ -29,7 +29,7 @@ int sizeof(floatArray vect){
 *			-float *arg -> argument du nombre complexe traité
 * Return : none
 */
-void complexLinearToComplexExponential(const float *real, const float *imag, float *mod, float *arg);
+void complexLinearToComplexExponential(const floatArray *real, const floatArray *imag, floatArray *mod, floatArray *arg);
 
 
 /*
