@@ -28,9 +28,15 @@ void* realloc (floatArray *vect, const int *size)
   float *tempPtr;
   tempPtr = realloc(vect->array, size[0]);
   vect->array = tempPtr;
-  for(int i=0; i<array->dimensions; i++)
+  vect->size[0]=size[0];
+  for(int i=1; i<array->dimensions; i++)
   {
-    
+    for(int j =0; i<array->size[i]; j++)
+    {
+      tempPtr = realloc(vect->array, size[i-1]);
+      array = tempPtr;
+    }
+    vect->size[i]=size[i];
   }
 }
 
