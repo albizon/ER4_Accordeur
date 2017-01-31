@@ -23,6 +23,17 @@ int sizeof(floatArray vect){
   return s;
 }
 
+void* realloc (floatArray *vect, const int *size)
+{
+  float *tempPtr;
+  tempPtr = realloc(vect->array, size[0]);
+  vect->array = tempPtr;
+  for(int i=0; i<array->dimensions; i++)
+  {
+    
+  }
+}
+
 /*
 * Overview : Conversion d'un nombre complexe de la forme a + j*b vers la forme mod*exp(j*arg)
 * Author : BIZON Alexis
