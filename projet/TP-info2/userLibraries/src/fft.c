@@ -2,16 +2,6 @@
 #include "fft.h"
 #include "note.h"
 
-/*
-En entrée : 
-  N : nombre de points en puissance de 2,
-  R, I : tableaux de N points contenant les parties réelles (R) et imaginaires (I) du signal d'entrée. Pour un signal réel, I doit être initialisé à 0.
-  inverse : booléen qui indique si le calcul est une transformée directe (False) ou inverse (True).
-En sortie : 
-  R,I : tableaux qui contiennent les parties réelles et imaginaires de la transformée de FOURIER directe ou inverse calculée.
-  Type RESULD : Array [0..1023] Of Real ;
-*/
-
 struct floatSingleArray *_adcReal;
 struct floatSingleArray *_real;
 struct floatSingleArray *_imag;
@@ -19,40 +9,88 @@ int _deltaT;
 int _deltaF;
 int _size;
 
-void fft(int inverse, struct floatSingleArray *real, struct floatSingleArray *imag)
-//void FFT( complex double *x, , int N ) 
-{/*
-    struct floatSingleArray *tabSize;
-tabSize=lengthfloatSingleArray(real); // On récupère la taille du tableau
-struct floatSingleArray *temp_real; 
-temp_real = reallocfloatSingleArray(temp_real,tabSize);
+
+void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *imag)
+{
+   long  tabsize,bintabsize,i,i1,j,k,i2,l,l1,l2;
+   float temp_real,temp_imag,c1,c2,t1,t2,u1,u2,z;
 	
-	if (inverse == FALSE) // Si on veut faire une FFT
-	{
-		
-		
-		
-		for ( int k = 0; k < tabSize; k++ ) 
+	/* Calcul du nombre de points */
+		stabize = length(real); // On récupère la taille du tableau de réels
+		j = tabsize ;
+		i=0;
+		do // calcul de la taille du tableau en 2^binsize sans reste
 		{
-			temp_real-> array[k] = 0;
-			
-			for ( int j = 0; j < tabSize; j++ ) 
+			j /= 2;
+			i++;
+		}
+		while(j>=2); 
+		bintabsize = i; // taille du tableau en 2^binsize sans reste
+   	/* Attribution de mémoire au tableau d'imaginaires */ 
+		real = reallocfloatSingleArray(imag,tabsize);
+	/* inversion de bit */
+		i2 = tabsize >> 1;
+		j = 0;
+		for (i=0;i<(tabsize-1);i++) 
+		{
+			if (i < j) 
 			{
-				temp_real-> array[k] += real[j] ;
-				imag     -> array[k] += cexp( 2.0 * I * M_PI * j * k / tabSize );
+				temp_real = real[i];
+				temp_imag = imag[i];
+				real[i] = real[j];
+				imag[i] = imag[j];
+				real[j] = temp_real;
+				imag[j] = temp_imag;
 			}
-	    }
-	    for ( int k = 0; k < tabSize; k++ ) 
-	    {
-		   real->array[k] =  temp_real[k];
-	    }
-	}
-	else if (inverse == TRUE) // si on veut faire une FFT inverse
-	{
-		// ALGO FFT INVERSE
-	}
-	free(temp_real);*/
+			k = i2;
+			while (k <= j)
+			{
+				j -= k;
+				k >>= 1;
+			}
+			j += k;
+		}
+	/* Calcul de la FFT */
+		c1 = -1.0;
+		c2 = 0.0;
+		l2 = 1;
+		for (l=0;l< bintabsize ;l++) 
+		{
+			l1 = l2;
+			l2 <<= 1;
+			u1 = 1.0;
+			u2 = 0.0;
+			for (j=0;j<l1;j++) 
+			{
+				for (i=j;i<tabsize;i+=l2)
+				{
+					i1 = i + l1;
+					t1 = u1 * real[i1] - u2 * imag[i1];
+					t2 = u1 * imag[i1] + u2 * real[i1];
+					real[i1] = real[i] - t1;
+					imag[i1] = imag[i] - t2;
+					real[i] += t1;
+					imag[i] += t2;
+				}
+				z =  u1 * c1 - u2 * c2;
+				u2 = u1 * c2 + u2 * c1;
+				u1 = z;
+			}
+			c2 = sqrt((1.0 - c1) / 2.0);
+			if (dir == 1)
+			c2 = -c2;
+			c1 = sqrt((1.0 + c1) / 2.0);
+		}
+		if (dir == 1) 
+		{
+			for (i=0;i<tabsize;i++)
+			{
+				real[i] /= tabsize;
+				imag[i] /= tabsize;
+			}
+		}  
 }
+
 
 void adcFFTInit(int deltaT) // deltaT en us
 {
@@ -124,7 +162,7 @@ void TC4_Handler ( ) // FFT périodique
 	TC4->COUNT16.COUNT.reg=_deltaF; // Chargement du compteur
 	
 	memcpy(_real,_adcReal,sizeof(_adcReal));
-	fft(FALSE,_real,_imag);
+	fft(1,_real,_imag);
 
 	TC4->COUNT16.INTFLAG.reg = 1 ;
 	__enable_irq();
@@ -134,13 +172,13 @@ void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
 {
 	__disable_irq();
 	
-	float *tempPtr;
+	//float *tempPtr;
 	real = reallocfloatSingleArray(real, _size);
 	imag = reallocfloatSingleArray(imag, _size);
 		
-	memcpy(_real,real,sizeof(_real));
+	memcpy(_real,real,lengh(_real));
 	free(_real);
-	memcpy(_imag,imag,sizeof(_imag));
+	memcpy(_imag,imag,lengh(_imag));
 	free(_imag);
 	
 	__enable_irq();
