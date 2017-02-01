@@ -21,9 +21,9 @@
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-Instrument getInstru(const floatSingleArray *env, const Instrument *listInstru)
+Instrument getInstru(const floatSingleArray *env, const InstrumentSingleArray *listInstru)
 {
-	/*int nbInstrus = sizeof(listInstru);
+	int nbInstrus = sizeof(listInstru);
 	int instruOk = FALSE;
 	int i=0;
 	int nbHarmoniquesOK =0;
@@ -32,6 +32,7 @@ Instrument getInstru(const floatSingleArray *env, const Instrument *listInstru)
 	int delta=1;
 	
 	int size = sizeof(env);
+	/*
 	for(int i=1; i<size; i++)
 	{
 		if(env[i]==0) delta++;
@@ -82,7 +83,7 @@ float getLevelPlay(const floatSingleArray *env, const float deltaFreq)
 	{
 		if(env->array[i]==0) delta++;
 	}
-	return 20*log10(env[delta]);	
+	return 20*log10(env->array[delta]);	
 }
 
 
