@@ -123,7 +123,7 @@ void TC4_Handler ( ) // FFT périodique
 	__disable_irq();
 	TC4->COUNT16.COUNT.reg=_deltaF; // Chargement du compteur
 	
-	memcpy(_real,_adcReal,_size);
+	memcpy(_real,_adcReal,sizeof(_adcReal));
 	fft(FALSE,_real,_imag);
 
 	TC4->COUNT16.INTFLAG.reg = 1 ;
@@ -138,9 +138,9 @@ void getTabsFFT(float *real,float *imag)
 	real = realloc(real, _size);
 	imag = realloc(imag, _size);
 		
-	memcpy(_real,real,_size);
+	memcpy(_real,real,sizeof(_real));
 	free(_real);
-	memcpy(_imag,imag,_size);
+	memcpy(_imag,imag,sizeof(_imag));
 	free(_imag);
 	
 	__enable_irq();
