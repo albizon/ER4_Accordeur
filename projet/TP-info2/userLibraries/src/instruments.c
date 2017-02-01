@@ -48,6 +48,17 @@ Instrument getInstru(const floatSingleArray *env, const InstrumentSingleArray *l
 	}*/
 }
 
+envAreKnowInstrument(const floatDoubleArray *inEnv, floatDoubleArray *outEnv, const InstrumentSingleArray *listInstru)
+{
+	Instrument *tempInstru;
+	for(int i = 0; i<inEnv->sizeDimX; i++)
+	{
+		&tempInstru = getInstru(inEnv[i], listInstru);
+		if(tempInstru->isKnowInstrument==TRUE){pushBack(outEnv, inEnv[i]);}
+	}
+	free(tempInstru);
+}
+
 
 /*
 * Overview : perment de reconnaitre la fréquence de la note jouée par un instrument
