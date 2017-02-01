@@ -23,7 +23,7 @@ void fft(int inverse, floatSingleArray *real, floatSingleArray *imag)
 //void FFT( complex double *x, , int N ) 
 {
     
-tabSize=sizeof(real); // On récupère la taille du tableau
+tabSize=length(real); // On récupère la taille du tableau
 floatSingleArray *temp_real; 
 temp_real = realloc(temp_real,tabSize);
 	
