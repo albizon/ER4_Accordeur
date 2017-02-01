@@ -7,6 +7,7 @@
 
 #include "define.h"	
 
+#define DIAPASON_IS_INSTRUMENT 0
 
 
 int main(void)//fonction principale du programme
