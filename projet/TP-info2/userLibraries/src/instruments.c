@@ -23,7 +23,7 @@
 */
 Instrument getInstru(const floatSingleArray *env, const InstrumentSingleArray *listInstru)
 {
-	int nbInstrus = sizeof(listInstru);
+	int nbInstrus = length(listInstru);
 	int instruOk = FALSE;
 	int i=0;
 	int nbHarmoniquesOK =0;
@@ -59,7 +59,7 @@ Instrument getInstru(const floatSingleArray *env, const InstrumentSingleArray *l
 float getFreqPlay(const floatSingleArray *env, const float deltaFreq)
 {
 	int delta=1;
-	int size = sizeof(env);
+	int size = length(env);
 	for(int i=1; i<size; i++)
 	{
 		if(env->array[i]==0) delta++;
@@ -78,7 +78,7 @@ float getFreqPlay(const floatSingleArray *env, const float deltaFreq)
 float getLevelPlay(const floatSingleArray *env, const float deltaFreq)
 {
 	int delta=1;
-	int size = sizeof(env);
+	int size = length(env);
 	for(int i=1; i<size; i++)
 	{
 		if(env->array[i]==0) delta++;
