@@ -19,7 +19,7 @@
 #define SUSTAIN 5
 #define RELEASE 6
 
-struct Instrument
+typedef struct Instrument
 {
 	char *name;//Nom de l'instrument
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
@@ -39,7 +39,7 @@ struct Instrument
 	float decay;//durée de descente de la note aprés le maximum vers le maintient en seconde
 	float sustain;//amplitude relative de la note pendant sa pèriode de maintient par rapport au maximum en %
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde
-};
+}struct;
 
 
 /*
@@ -49,7 +49,7 @@ struct Instrument
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-struct Instrument getInstru(const float *env, const struct Instrument *listInstru);
+Instrument getInstru(const floatSingleArray *env, const Instrument *listInstru);
 
 
 /*
@@ -59,7 +59,7 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
+float getFreqPlay(const floatSingleArray *env, const float deltaFreq)
 
 
 /*
@@ -69,7 +69,7 @@ float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> amplitude de la note en dB
 */
-float getLevelPlay(const float *env, const float deltaFreq);
+float getLevelPlay(const floatSingleArray *env, const float deltaFreq);
 
 
 /*
@@ -80,7 +80,7 @@ float getLevelPlay(const float *env, const float deltaFreq);
 *			-float *env -> enveloppe spectrale à envoyer sur le DAC
 * Return : none
 */
-getEnveloppe(const float freqNote, const struct Instrument instru, float *env);
+getEnveloppe(const float freqNote, const Instrument instru, floatSingleArray *env);
 
 
 #endif
