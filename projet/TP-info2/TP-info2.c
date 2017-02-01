@@ -11,10 +11,10 @@
 
 int main(void)//fonction principale du programme
 {
-	float *user_real;
-	float *user_imag;
-	float *user_mod;
-	float *user_arg;
+	floatSingleArray *user_real;
+	floatSingleArray *user_imag;
+	floatSingleArray *user_mod;
+	floatSingleArray *user_arg;
 	float df=1;
 	float freq = 0; //contient la fréquence mesurée de la note
 	char note = 0; //contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define_notes.h
@@ -30,8 +30,6 @@ int main(void)//fonction principale du programme
 		
 		/*Acquisition*/
 		getTabsFFT(user_real,user_imag);
-		user_real[0]=1;
-		user_imag[0]=1;
 		complexLinearToComplexExponential(user_real,user_imag,user_mod,user_arg);
 		freq=getFreqPlay(user_mod,df);
 		
