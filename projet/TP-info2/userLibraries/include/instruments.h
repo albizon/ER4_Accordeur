@@ -45,16 +45,9 @@ typedef struct InstrumentSingleArray
 	Instrument *array;
 	int size;
 }
-int sizeof(Instrument a)
-{
-	int tmp = 0;
-	tmp= (nameSize+3)*sizeof(char b);
-	tmp+=sizeof(tmp);
-	tmp+=23*sizeof(float c);
-	return tmp;
-}
 
-int sizeof(InstrumentSingleArray vect)
+
+int length(InstrumentSingleArray vect)
 {
 	return vect->size;
 }
