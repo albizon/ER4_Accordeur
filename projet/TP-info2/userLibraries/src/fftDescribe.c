@@ -17,22 +17,15 @@
 *			-float *arg -> argument du nombre complexe traité
 * Return : none
 */
-void complexLinearToComplexExponential(const floatArray *real, const floatArray *imag, floatArray *mod, floatArray *arg);
+void complexLinearToComplexExponential(const floatSingleArray *real, const floatSingleArray *imag, floatSingleArray *mod, floatSIngleArray *arg);
 {
 	__disable_irq();
 	int size=0;
 	if(sizeof(real)>sizeof(imag)) {size = sizeof(imag);}
 	else {size = sizeof(real);}
 	
-	float *tempPtr;
-	
-	tempPtr = realloc(mod->array, size * sizeof(*mod->array));
-	if(tempPtr == NULL) {free(mod->array);}
-	else {mod->array = tempPtr;}
-	
-	tempPtr = malloc(arg->array, size * sizeof(*arg->array));
-	if(tempPtr == NULL) {free(arg->array);}
-	else {arg->array = tempPtr;}
+	mod = realloc(mod, size);
+	arg = realloc(arg, size);
 
 	double module=0;
 	float argument=0;
@@ -60,31 +53,25 @@ void complexLinearToComplexExponential(const floatArray *real, const floatArray 
 *			-float *imag -> partie imaginaire du nombre complexe traité
 * Return : none
 */
-void complexExponentialToComplexLinear(const float *mod, const float *arg, float *real, float *imag)
+void complexExponentialToComplexLinear(const floatSingleArray *mod, const floatSingleArray *arg, floatSingleArray *real, floatSingleArray *imag)
 {
 	int size =0;
-	if(sizeof(&mod)>sizeof(&arg)) {size = sizeof(&arg);}
-	else {size = sizeof(&mod);}
-	
-	float *tempPtr;
-	
-	tempPtr = realloc(real, size * sizeof(*real));
-	if(tempPtr == NULL) {free(real);}
-	else {real = tempPtr;}
-	
-	tempPtr = realloc(imag, size * sizeof(*imag));
-	if(tempPtr == NULL) {free(imag);}
-	else {imag = tempPtr;}
+	if(sizeof(mod)>sizeof(arg)) {size = sizeof(arg);}
+	else {size = sizeof(mod);}
+
+	real = realloc(real, size);
+	imag = realloc(imag, size);
+
 
 	float a=0;
 	float b=0;
 	
 	for(int i=0; i<size; i++)
 	{
-		a = mod[i]*cos(arg[i]);
-		b = mod[i]*sin(arg[i]);
-		real[i]=a;
-		imag[i]=b;
+		a = mod->array[i]*cos(arg[i]);
+		b = mod->array[i]*sin(arg[i]);
+		real->array[i]=a;
+		imag->array[i]=b;
 	}
 }
 
@@ -97,7 +84,7 @@ void complexExponentialToComplexLinear(const float *mod, const float *arg, float
 * Return : none
 */
 
-void extractEnveloppes(const float *mod, const float *arg, float **envs)
+void extractEnveloppes(const floatSingleArray *mod, const floatSingleArray *arg, floatDoubleArray **envs)
 {
 	int size = 0;
 	if(sizeof(mod)>sizeof(arg)) {size = sizeof(arg);}
@@ -119,18 +106,7 @@ void extractEnveloppes(const float *mod, const float *arg, float **envs)
 		for(int j =0; j<nbDiffArgs; j++) {if (arg->array[i] == args[j]) {diff=FALSE;}}
 		if(diff == TRUE)args[nbDiffArgs++] = arg[i];
 	}
-	
-	tempPtr = realloc(envs->array, nbDiffArgs * sizeof(*envs->array));
-	if(tempPtr == NULL) free(envs->array);
-	else envs->array = tempPtr;
-	
-	for(int i=0 ; i < nbDiffArgs ; i++)
-	{
-		tempPtr = realloc(*envs->array, size * sizeof(**envs->array));
-		if(tempPtr == NULL) free(envs->array[i]);
-		else  envs->array[i] = tempPtr; 
-		envs->size=nbDiffArgs;
-	}
+	envs = realloc(envs, float s[2] = {nbDiffArgs, size});
 	
 	for(int i =0; i<nbDiffArgs; i++)
 	{
