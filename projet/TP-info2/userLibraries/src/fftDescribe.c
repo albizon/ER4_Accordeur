@@ -21,8 +21,8 @@ void complexLinearToComplexExponential(const floatSingleArray *real, const float
 {
 	__disable_irq();
 	int size=0;
-	if(sizeof(real)>sizeof(imag)) {size = sizeof(imag);}
-	else {size = sizeof(real);}
+	if(length(real)>length(imag)) {size = length(imag);}
+	else {size = length(real);}
 	
 	mod = realloc(mod, size);
 	arg = realloc(arg, size);
@@ -56,8 +56,8 @@ void complexLinearToComplexExponential(const floatSingleArray *real, const float
 void complexExponentialToComplexLinear(const floatSingleArray *mod, const floatSingleArray *arg, floatSingleArray *real, floatSingleArray *imag)
 {
 	int size =0;
-	if(sizeof(mod)>sizeof(arg)) {size = sizeof(arg);}
-	else {size = sizeof(mod);}
+	if(length(mod)>length(arg)) {size = length(arg);}
+	else {size = length(mod);}
 
 	real = realloc(real, size);
 	imag = realloc(imag, size);
@@ -87,8 +87,8 @@ void complexExponentialToComplexLinear(const floatSingleArray *mod, const floatS
 void extractEnveloppes(const floatSingleArray *mod, const floatSingleArray *arg, floatDoubleArray **envs)
 {
 	int size = 0;
-	if(sizeof(mod)>sizeof(arg)) {size = sizeof(arg);}
-	else {size = sizeof(mod);}
+	if(length(mod)>length(arg)) {size = length(arg);}
+	else {size = length(mod);}
 	
 	float *tempPtr;
 	
