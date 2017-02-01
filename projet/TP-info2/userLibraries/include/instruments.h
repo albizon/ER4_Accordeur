@@ -22,16 +22,15 @@
 typedef struct Instrument
 {
 	char *name;//Nom de l'instrument
+	int nameSize;//Nombre de caractères dans le nom
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
-	char haveOtherFrequency;//Dit si l'instrument contient des fréquences n'appartenants pas aux harmoniques
 	char codeMIDI;//Code MIDI de l'instrument
 	char isKnowInstrument;//Définit si il s'agit d'un instrument connu ou non
 	
 	int nbHarmoniques;//Nombre d'harmoniques dans le signal
 	float harmoniquesAmplitudes[17]; //Amplitude relative des harmoniques du signal par rapport au fondamental en % ([0]-> Valeure moyenne; [1]-> fondammental)
 	
-	
-	float **otherFrequency;//Contient les amplitudes relatives des fréquences n'étant pas des harmoniques en %
+
 	
 	float delay; //durée entre le début de la note et le début de l'attaque en seconde
 	float attack;//durée de la montée de la note jusqu'à so maximum en seconde
@@ -41,6 +40,40 @@ typedef struct Instrument
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde
 }struct;
 
+typedef struct InstrumentSingleArray
+{
+	Instrument *array;
+	int size;
+}
+int sizeof(Instrument a)
+{
+	int tmp = 0;
+	tmp= (nameSize+3)*sizeof(char b);
+	tmp+=sizeof(tmp);
+	tmp+=23*sizeof(float c);
+	return tmp;
+}
+
+int sizeof(InstrumentSingleArray vect)
+{
+	return vect->size;
+}
+
+InstrumentSingleArray realloc(InstrumentSingleArray vect, int size)
+{
+	InstrumentSingleArray *tmpPtr;
+	tmpIns *Instrument
+		
+	tmpPtr = realloc(vect; size*sizeof(&tmpIns));
+	if(tmpPtr == NULL){free(vect);}
+	else{vect=tmpPtr;}
+	vect->size = size;
+	
+	free(tmpIns);
+	free(tempPtr);
+	
+	return vect;
+}
 
 /*
 * Overview : permet de reconnaitre un instrument à partir de son enveloppe spectrale
