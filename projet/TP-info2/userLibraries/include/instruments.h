@@ -82,7 +82,7 @@ InstrumentSingleArray realloc(InstrumentSingleArray vect, int size)
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-Instrument getInstru(const floatSingleArray *env, const Instrument *listInstru);
+Instrument getInstru(const floatSingleArray *env, const InstrumentSingleArray *listInstru);
 
 
 /*
