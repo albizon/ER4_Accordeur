@@ -13,10 +13,10 @@ int _size;
 void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *imag)
 {
    long  tabsize,bintabsize,i,i1,j,k,i2,l,l1,l2;
-   float temp_real,temp_imag,c1,c2,t1,t2,u1,u2,z;
+   float  temp_real,temp_imag,c1,c2,t1,t2,u1,u2,z;
 	
 	/* Calcul du nombre de points */
-		stabize = length(real); // On récupère la taille du tableau de réels
+		tabsize = length(real); // On récupère la taille du tableau de réels
 		j = tabsize ;
 		i=0;
 		do // calcul de la taille du tableau en 2^binsize sans reste
@@ -27,7 +27,7 @@ void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *im
 		while(j>=2); 
 		bintabsize = i; // taille du tableau en 2^binsize sans reste
    	/* Attribution de mémoire au tableau d'imaginaires */ 
-		real = reallocfloatSingleArray(imag,tabsize);
+		imag = reallocfloatSingleArray(imag,tabsize);
 	/* inversion de bit */
 		i2 = tabsize >> 1;
 		j = 0;
@@ -35,12 +35,12 @@ void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *im
 		{
 			if (i < j) 
 			{
-				temp_real = real[i];
-				temp_imag = imag[i];
-				real[i] = real[j];
-				imag[i] = imag[j];
-				real[j] = temp_real;
-				imag[j] = temp_imag;
+				temp_real = real->array[i];
+				temp_imag = imag->array[i];
+				real->array[i] = real->array[j];
+				imag->array[i] = imag->array[j];
+				real->array[j] = temp_real;
+				imag->array[j] = temp_imag;
 			}
 			k = i2;
 			while (k <= j)
@@ -65,12 +65,12 @@ void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *im
 				for (i=j;i<tabsize;i+=l2)
 				{
 					i1 = i + l1;
-					t1 = u1 * real[i1] - u2 * imag[i1];
-					t2 = u1 * imag[i1] + u2 * real[i1];
-					real[i1] = real[i] - t1;
-					imag[i1] = imag[i] - t2;
-					real[i] += t1;
-					imag[i] += t2;
+					t1 = u1 * real->array[i1] - u2 * imag->array[i1];
+					t2 = u1 * imag->array[i1] + u2 * real->array[i1];
+					real->array[i1] = real->array[i] - t1;
+					imag->array[i1] = imag->array[i] - t2;
+					real->array[i] += t1;
+					imag->array[i] += t2;
 				}
 				z =  u1 * c1 - u2 * c2;
 				u2 = u1 * c2 + u2 * c1;
@@ -85,8 +85,8 @@ void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *im
 		{
 			for (i=0;i<tabsize;i++)
 			{
-				real[i] /= tabsize;
-				imag[i] /= tabsize;
+				real->array[i] /= tabsize;
+				imag->array[i] /= tabsize;
 			}
 		}  
 }
@@ -183,8 +183,3 @@ void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
 	
 	__enable_irq();
 }
-
-
-
-
-
