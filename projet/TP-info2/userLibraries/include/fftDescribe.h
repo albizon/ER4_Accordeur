@@ -54,7 +54,43 @@ floatDoubleArray* realloc (floatDoubleArray *vect, const int *size)
 		if(tempPtr == NULL) free(vect->array[i]);
 		else  vect->array[i] = tempPtr; 
 		vect->sizeDimY=size[1];
+	}
 }
+
+void pushBack(floatDoubleArray *vect, const floatSingleArray *line)
+{
+	floatDoubleArray *tmpArray;
+	tmpArray = realloc(tmpArray, (vect->sizeDimX)+1);
+	for(int i = 0; i<vect->sizeDimX; i++)
+	{
+		tmpArray->array[i] = vect->array[i];
+	}
+	tmpArray->array[sizeDimX]=line;
+	vect= realloc(vect, (vect->sizeDimX)+1);
+	for(int i =0; i<(vect->sizeDimX)+1; i++)
+	{
+		vect->array[i] = tmpArray->array[i];
+	}
+	vect->sizeDimX++;
+	free(tmpArray);
+}
+
+void pushBack(floatSingleArray *vect, const float line)
+{
+	floatSingleArray *tmpArray;
+	tmpArray = realloc(tmpArray, length(vect)+1);
+	for(int i = 0; i<length(vect); i++)
+	{
+		tmpArray->array[i] = vect->array[i];
+	}
+	tmpArray->array[size]=line;
+	vect= realloc(vect, length(vect)+1);
+	for(int i =0; i<length(vect)+1; i++)
+	{
+		vect->array[i] = tmpArray->array[i];
+	}
+	vect->size++;
+	free(tmpArray);
 }
 
 /*
