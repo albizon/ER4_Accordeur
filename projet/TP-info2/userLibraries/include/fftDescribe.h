@@ -22,13 +22,14 @@ typedef struct floatDoubleArray{
   int sizeDimY;
 }struct;
 
-int sizeof(floatSingleArray vect){
+int length(floatSingleArray vect){
   return vect->size;
 }
 
-int sizeof(floatDoubleArray vect){
+int length(floatDoubleArray vect){
   return (vect->sizeDimX*vect->sizeDimY);
 }
+
 
 floatSingleArray* realloc (floatSingleArray *vect, const int size)
 {
