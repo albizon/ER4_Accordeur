@@ -11,33 +11,86 @@
 
 #include "define.h"
 
-typedef struct floatArray{
+typedef struct floatSingleArray{
   float* array;
-  int* size;
-  int dimension;
-}struct;
+  int size;
+};
 
-int sizeof(floatArray vect){
-  int s =0;
-  for(int i=0; i<vect->dimension; i++) s+=vect->size[i];
-  return s;
+typedef struct floatDoubleArray{
+  float** array;
+  int sizeDimX;
+  int sizeDimY;
+};
+
+int lengthfloatSingleArray(struct floatSingleArray *vect){
+  return vect->size;
 }
 
-void* realloc (floatArray *vect, const int *size)
+int lengthfloatDoubleArray(struct floatDoubleArray *vect){
+  return (vect->sizeDimX*vect->sizeDimY);
+}
+
+
+struct floatSingleArray* reallocfloatSingleArray (struct floatSingleArray *vect, const int size)
 {
   float *tempPtr;
-  tempPtr = realloc(vect->array, size[0]);
-  vect->array = tempPtr;
-  vect->size[0]=size[0];
-  for(int i=1; i<array->dimensions; i++)
-  {
-    for(int j =0; i<array->size[i]; j++)
-    {
-      tempPtr = realloc(vect->array, size[i-1]);
-      array = tempPtr;
-    }
-    vect->size[i]=size[i];
-  }
+  tempPtr = realloc(vect->array, size);
+  if(tempPtr==NULL){free(vect->array);}
+  else{vect->array = tempPtr;}
+  vect->size=size;
+}
+
+struct floatDoubleArray* reallocfloatDoubleArray (struct floatDoubleArray *vect, const int *size)
+{
+  float *tempPtr;
+  tempPtr = realloc(vect->array, size[0]*sizeof(vect->array));
+  if(tempPtr==NULL){free(vect->array);}
+  else{vect->array = tempPtr;}
+  vect->sizeDimX=size;
+  
+  for(int i=0 ; i < size[0] ; i++)
+	{
+		tempPtr = realloc(*vect->array, size[1] * sizeof(vect->array[i]));
+		if(tempPtr == NULL) free(vect->array[i]);
+		else  vect->array[i] = tempPtr; 
+		vect->sizeDimY=size[1];
+	}
+}
+
+void pushBackfloatDoubleArray(struct floatDoubleArray *vect, const struct floatSingleArray *line)
+{
+	struct floatDoubleArray *tmpArray;
+	tmpArray = reallocfloatDoubleArray(tmpArray, (vect->sizeDimX)+1);
+	for(int i = 0; i<vect->sizeDimX; i++)
+	{
+		tmpArray->array[i] = vect->array[i];
+	}
+	tmpArray->array[vect->sizeDimX]=line;
+	vect= reallocfloatDoubleArray(vect, (vect->sizeDimX)+1);
+	for(int i =0; i<(vect->sizeDimX)+1; i++)
+	{
+		vect->array[i] = tmpArray->array[i];
+	}
+	vect->sizeDimX++;
+	free(tmpArray);
+}
+
+void pushBackfloatSingleArray(struct floatSingleArray *vect, const float line)
+{
+	struct floatSingleArray *tmpArray;
+	tmpArray = reallocfloatSingleArray(tmpArray, lengthfloatSingleArray(vect)+1);
+	for(int i = 0; i<lengthfloatSingleArray(vect); i++)
+	{
+		tmpArray->array[i] = vect->array[i];
+	}
+	tmpArray->array[vect->size]=line;
+	vect= reallocfloatSingleArray(vect, lengthfloatSingleArray(vect)+1);
+	for(int i =0; i<lengthfloatSingleArray(vect)+1; i++)
+	{
+		vect->array[i] = tmpArray->array[i];
+	}
+	vect->size++;
+	free(tmpArray);
 }
 
 /*
@@ -49,7 +102,7 @@ void* realloc (floatArray *vect, const int *size)
 *			-float *arg -> argument du nombre complexe traité
 * Return : none
 */
-void complexLinearToComplexExponential(const floatArray *real, const floatArray *imag, floatArray *mod, floatArray *arg);
+void complexLinearToComplexExponential(const struct floatSingleArray *real, const struct floatSingleArray *imag, struct floatSingleArray *mod, struct floatSingleArray *arg);
 
 
 /*
@@ -61,7 +114,7 @@ void complexLinearToComplexExponential(const floatArray *real, const floatArray 
 *			-float *imag -> partie imaginaire du nombre complexe traité
 * Return : none
 */
-void complexExponentialToComplexLinear(const float *mod, const float *arg, float *real, float *imag);
+void complexExponentialToComplexLinear(const struct floatSingleArray *mod, const struct floatSingleArray *arg, struct floatSingleArray *real, struct floatSingleArray *imag);
 
 
 /*
@@ -72,7 +125,7 @@ void complexExponentialToComplexLinear(const float *mod, const float *arg, float
 *			-float **envs -> tableau des enveloppes différenciées par leur argument
 * Return : none
 */
-void extractEnveloppes(const float *mod, const float *arg, float **envs);
+void extractEnveloppes(const struct floatSingleArray *mod, const struct floatSingleArray *arg, struct floatDoubleArray **envs);
 
 
 

@@ -19,19 +19,18 @@
 #define SUSTAIN 5
 #define RELEASE 6
 
-struct Instrument
+typedef struct Instrument
 {
 	char *name;//Nom de l'instrument
+	int nameSize;//Nombre de caractères dans le nom
 	char isMIDIInstrument;//Dit si l'instrument fait parti de la norme MIDI
-	char haveOtherFrequency;//Dit si l'instrument contient des fréquences n'appartenants pas aux harmoniques
 	char codeMIDI;//Code MIDI de l'instrument
 	char isKnowInstrument;//Définit si il s'agit d'un instrument connu ou non
 	
 	int nbHarmoniques;//Nombre d'harmoniques dans le signal
 	float harmoniquesAmplitudes[17]; //Amplitude relative des harmoniques du signal par rapport au fondamental en % ([0]-> Valeure moyenne; [1]-> fondammental)
 	
-	
-	float **otherFrequency;//Contient les amplitudes relatives des fréquences n'étant pas des harmoniques en %
+
 	
 	float delay; //durée entre le début de la note et le début de l'attaque en seconde
 	float attack;//durée de la montée de la note jusqu'à so maximum en seconde
@@ -41,6 +40,33 @@ struct Instrument
 	float release;//durée de descente de la note jusqu'à zero aprés relachement de la note en seconde
 };
 
+typedef struct InstrumentSingleArray
+{
+	struct Instrument *array;
+	int size;
+};
+
+
+int lengthInstrumentSingleArray(struct InstrumentSingleArray *vect)
+{
+	return vect->size;
+}
+
+struct InstrumentSingleArray* reallocInstrumentSingleArray(struct InstrumentSingleArray *vect, int size)
+{
+	struct InstrumentSingleArray *tmpPtr;
+	struct Instrument *tmpIns;
+		
+	tmpPtr = realloc(vect, size*sizeof(&tmpIns));
+	if(tmpPtr == NULL){free(vect);}
+	else{vect=tmpPtr;}
+	vect->size = size;
+	
+	free(tmpIns);
+	free(tmpPtr);
+	
+	return vect;
+}
 
 /*
 * Overview : permet de reconnaitre un instrument à partir de son enveloppe spectrale
@@ -49,7 +75,7 @@ struct Instrument
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-struct Instrument getInstru(const float *env, const struct Instrument *listInstru);
+struct Instrument getInstru(const struct floatSingleArray *env, const struct InstrumentSingleArray *listInstru);
 
 
 /*
@@ -59,7 +85,7 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
+float getFreqPlay(const struct floatSingleArray *env, const float deltaFreq);
 
 
 /*
@@ -69,7 +95,7 @@ float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> amplitude de la note en dB
 */
-float getLevelPlay(const float *env, const float deltaFreq);
+float getLevelPlay(const struct floatSingleArray *env, const float deltaFreq);
 
 
 /*
@@ -80,7 +106,7 @@ float getLevelPlay(const float *env, const float deltaFreq);
 *			-float *env -> enveloppe spectrale à envoyer sur le DAC
 * Return : none
 */
-getEnveloppe(const float freqNote, const struct Instrument instru, float *env);
+void getEnveloppe(const float freqNote, const struct Instrument instru, struct floatSingleArray *env);
 
 
 #endif

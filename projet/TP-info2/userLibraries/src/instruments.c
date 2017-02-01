@@ -21,30 +21,46 @@
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-struct Instrument getInstru(const float *env, const struct Instrument *listInstru)
+struct Instrument getInstru(const struct floatSingleArray *env, const struct InstrumentSingleArray *listInstru)
 {
-	/*int nbInstrus = sizeof(listInstru);
+	int nbInstrus = lengthInstrumentSingleArray(listInstru);
 	int instruOk = FALSE;
 	int i=0;
 	int nbHarmoniquesOK =0;
 	float coefH=0;
 	float relativeCurrentH =0;
 	int delta=1;
+	struct Instrument instru;
 	
 	int size = sizeof(env);
+	
 	for(int i=1; i<size; i++)
 	{
-		if(env[i]==0) delta++;
+		if(env->array[i]==0) delta++;
 	}
 	while(instruOk == FALSE && i<nbInstrus)
 	{
-		coefH=listInstru[i].harmoniquesAmplitudes[1]*PURCENT_TO_SCALAIRE/env[delta];
+		//coefH=listInstru[i].harmoniquesAmplitudes[1]*PURCENT_TO_SCALAIRE/env[delta];
 		for(int j=0; j<17; j++)
 		{
-			relativeCurrentH = listInstru[i].harmoniquesAmplitudes[j];
-			if(relativeCurrentH !=0) {if(relativeCurrentH)}
+			//relativeCurrentH = listInstru[i].harmoniquesAmplitudes[j];
+			//if(relativeCurrentH !=0) {if(relativeCurrentH)}
 		}
-	}*/
+		i++;
+	}
+	if(instruOk==FALSE){instru.isKnowInstrument=FALSE;}
+	return instru;
+}
+
+envAreKnowInstrument(const struct floatDoubleArray *inEnv, struct floatDoubleArray *outEnv, const struct InstrumentSingleArray *listInstru)
+{
+	struct Instrument *tempInstru;
+	for(int i = 0; i<inEnv->sizeDimX; i++)
+	{
+		&tempInstru = getInstru(inEnv->array[i], listInstru);
+		if(tempInstru->isKnowInstrument==TRUE){pushBackfloatDoubleArray(outEnv, inEnv->array[i]);}
+	}
+	free(tempInstru);
 }
 
 
@@ -55,10 +71,10 @@ struct Instrument getInstru(const float *env, const struct Instrument *listInstr
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
+float getFreqPlay(const struct floatSingleArray *env, const float deltaFreq)
 {
 	int delta=1;
-	int size = sizeof(env);
+	int size = lengthfloatSingleArray(env);
 	for(int i=1; i<size; i++)
 	{
 		if(env->array[i]==0) delta++;
@@ -74,15 +90,15 @@ float getFreqPlay(const floatArray *env, const floatArray deltaFreq)
 *			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
 * Return : float -> amplitude de la note en dB
 */
-float getLevelPlay(const float *env, const float deltaFreq)
+float getLevelPlay(const struct floatSingleArray *env, const float deltaFreq)
 {
 	int delta=1;
-	int size = sizeof(env);
+	int size = lengthfloatSingleArray(env);
 	for(int i=1; i<size; i++)
 	{
-		if(env[i]==0) delta++;
+		if(env->array[i]==0) delta++;
 	}
-	return 20*log10(env[delta]);	
+	return 20*log10(env->array[delta]);	
 }
 
 
@@ -94,7 +110,7 @@ float getLevelPlay(const float *env, const float deltaFreq)
 *			-float *env -> enveloppe spectrale à envoyer sur le DAC
 * Return : none
 */
-getEnveloppe(const float freqNote, const struct Instrument instru, float *env)
+void getEnveloppe(const float freqNote, const struct Instrument instru, struct floatSingleArray *env)
 {
 	
 }
