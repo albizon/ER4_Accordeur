@@ -7,7 +7,10 @@
 
 #include "define.h"	
 
-#define DIAPASON_IS_INSTRUMENT 0
+#define DIAPASON_IS_INSTRUMENT 0//Défini si un sinus pur est considéré comme un instrument
+
+#define DELTA_FREQUENCE (float)1//Espacement en Hz entre chaques raies de la FFT
+#define FREQUENCE_ECHANTILLONAGE (float)44100//Fréquence en Hz de l'échantillonage du signal audio
 
 int main(void)//fonction principale du programme
 {
@@ -15,7 +18,8 @@ int main(void)//fonction principale du programme
 	struct floatSingleArray *user_imag;
 	struct floatSingleArray *user_mod;
 	struct floatSingleArray *user_arg;
-	float df=1;
+	float df=1000/DELTA_FREQUENCE;//Espacement en ms ente chaques fft
+	float dt=1000000/FREQUENCE_ECHANTILLONAGE;//Espacement en us entre chaque acquisition sur l'adc
 	float freq = 0; //contient la fréquence mesurée de la note
 	char note = 0; //contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define_notes.h
 	char degre = 0; //contient le degré, ou l'octave de la note calculée à partir de la fréqence
@@ -35,12 +39,12 @@ int main(void)//fonction principale du programme
 		getTabsFFT(user_real,user_imag);
 
 		complexLinearToComplexExponential(user_real,user_imag,user_mod,user_arg);
-		freq=getFreqPlay(user_mod,df);
+		freq=getFreqPlay(user_mod,DELTA_FREQUENCE);
 		
 		/*Traitement*/
 		note = noteSolver(freq); //permet de déterminer la note correspondant à la fréquence mesurée
 		degre = degreSolver(freq); //permet de déterminer le degré ou l'octave correspondant à la fréquence mesurée
-		char acc = accorder(note, degre, freq, calculAbsError(relativeError, freq, df));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
+		char acc = accorder(note, degre, freq, calculAbsError(relativeError, freq, DELTA_FREQUENCE));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
 		
 		/*Affichage*/
 		diplayLedIndicator(acc); // Allume les leds en fonciton de l'indicateur : trop bas / ok / trop haut
