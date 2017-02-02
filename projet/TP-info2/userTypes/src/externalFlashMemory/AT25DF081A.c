@@ -5,12 +5,12 @@
 * Version : 2.0
 */
 
-#include "AT25DF081A.c"
+#include "AT25DF081A.h"
 
 
 #ifndef AT25DF081A
 
-void initSecondaryFlash(void)
+void initCircuitFlash(void)
 {
 	
 }

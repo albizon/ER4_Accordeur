@@ -9,6 +9,8 @@
 #include "userComplexArray.h"
 #include "userEnvelope.h"
 
+#define USE_SAMD21
+
 #define DIAPASON_IS_INSTRUMENT 0//Défini si un sinus pur est considéré comme un instrument
 
 #define NB_HARMONIQUE_ETUDIES 17//
