@@ -7,10 +7,10 @@
 
 #include "define.h"	
 
-#define DIAPASON_IS_INSTRUMENT 0//Défini si un sinus pur est considéré comme un instrument
+#define DIAPASON_IS_INSTRUMENT 0 //Défini si un sinus pur est considéré comme un instrument
 
-#define DELTA_FREQUENCE (float)1//Espacement en Hz entre chaques raies de la FFT
-#define FREQUENCE_ECHANTILLONAGE (float)44100//Fréquence en Hz de l'échantillonage du signal audio
+#define DELTA_FREQUENCE (float)1 //Espacement en Hz entre chaques raies de la FFT
+#define FREQUENCE_ECHANTILLONAGE (float)44100 //Fréquence en Hz de l'échantillonage du signal audio
 
 int main(void)//fonction principale du programme
 {
@@ -29,9 +29,8 @@ int main(void)//fonction principale du programme
 	adcFFTInit(1);
 	displayTitle(); //affiche le titre du projet en haut de l'écran OLED
 	while(1)
-	{		
-		
-		freq=getFreq(); //Récupère la fréquence mesurée par le fréquencemètre
+	{			
+		//freq=getFreq(); //Récupère la fréquence mesurée par le fréquencemètre
 		
 		/*Acquisition*/
 
@@ -51,14 +50,7 @@ int main(void)//fonction principale du programme
 		displayFrequence(freq); //On affiche la fréquence sur l'afficheur OLED
 		displayNote(note); //On affiche la note sur l'afficheur OLED
 		displayDegre(degre); //On affiche le degré sur l'afficheur OLED
-		
 	}
 	
 	return 0; //Le programme renvoit 0x0000 si l'execution c'est correctement terminée
 }
-
-
-
-
-
-

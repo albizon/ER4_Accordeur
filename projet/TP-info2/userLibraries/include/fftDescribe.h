@@ -6,15 +6,19 @@
 */
 
 
+
 #ifndef __FFTDESCRIBE_H__
 #define __FFTDESCRIBE_H__
 
 #include "define.h"
+#include "fftDescribe.h"
 
 typedef struct floatSingleArray{
   float* array;
   int size;
 };
+
+//struct floatSingleArray floatSingleArray;
 
 typedef struct floatDoubleArray{
   float** array;
@@ -22,76 +26,7 @@ typedef struct floatDoubleArray{
   int sizeDimY;
 };
 
-int lengthfloatSingleArray(struct floatSingleArray *vect){
-  return vect->size;
-}
-
-int lengthfloatDoubleArray(struct floatDoubleArray *vect){
-  return (vect->sizeDimX*vect->sizeDimY);
-}
-
-
-struct floatSingleArray* reallocfloatSingleArray (struct floatSingleArray *vect, const int size)
-{
-  float *tempPtr;
-  tempPtr = realloc(vect->array, size);
-  if(tempPtr==NULL){free(vect->array);}
-  else{vect->array = tempPtr;}
-  vect->size=size;
-}
-
-struct floatDoubleArray* reallocfloatDoubleArray (struct floatDoubleArray *vect, const int *size)
-{
-  float *tempPtr;
-  tempPtr = realloc(vect->array, size[0]*sizeof(vect->array));
-  if(tempPtr==NULL){free(vect->array);}
-  else{vect->array = tempPtr;}
-  vect->sizeDimX=size;
-  
-  for(int i=0 ; i < size[0] ; i++)
-	{
-		tempPtr = realloc(*vect->array, size[1] * sizeof(vect->array[i]));
-		if(tempPtr == NULL) free(vect->array[i]);
-		else  vect->array[i] = tempPtr; 
-		vect->sizeDimY=size[1];
-	}
-}
-
-void pushBackfloatDoubleArray(struct floatDoubleArray *vect, const struct floatSingleArray *line)
-{
-	struct floatDoubleArray *tmpArray;
-	tmpArray = reallocfloatDoubleArray(tmpArray, (vect->sizeDimX)+1);
-	for(int i = 0; i<vect->sizeDimX; i++)
-	{
-		tmpArray->array[i] = vect->array[i];
-	}
-	tmpArray->array[vect->sizeDimX]=line;
-	vect= reallocfloatDoubleArray(vect, (vect->sizeDimX)+1);
-	for(int i =0; i<(vect->sizeDimX)+1; i++)
-	{
-		vect->array[i] = tmpArray->array[i];
-	}
-	vect->sizeDimX++;
-	free(tmpArray);
-}
-
-void pushBackfloatSingleArray(struct floatSingleArray *vect, const float line)
-{
-	struct floatSingleArray *tmpArray;
-	tmpArray = reallocfloatSingleArray(tmpArray, lengthfloatSingleArray(vect)+1);
-	for(int i = 0; i<lengthfloatSingleArray(vect); i++)
-	{
-		tmpArray->array[i] = vect->array[i];
-	}
-	tmpArray->array[vect->size]=line;
-	vect= reallocfloatSingleArray(vect, lengthfloatSingleArray(vect)+1);
-	for(int i =0; i<lengthfloatSingleArray(vect)+1; i++)
-	{
-		vect->array[i] = tmpArray->array[i];
-	}
-	vect->size++;
-	free(tmpArray);
-}
+//struct floatSingleArray floatSingleArray;
 
 /*
 * Overview : Conversion d'un nombre complexe de la forme a + j*b vers la forme mod*exp(j*arg)

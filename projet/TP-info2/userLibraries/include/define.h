@@ -19,6 +19,9 @@
 	#include "user_init.h"
 	#include "note.h"
 	#include "define_notes.h"
+	#include "fftDescribe.h"
+	#include "fft.h"
+	#include "instruments.h"
 	#include <stdlib.h>
 	#include <stdio.h>
 	

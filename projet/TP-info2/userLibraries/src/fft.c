@@ -1,22 +1,21 @@
-#include "define.h"
-#include "fft.h"
-#include "note.h"
 
-struct floatSingleArray *_adcReal;
-struct floatSingleArray *_real;
-struct floatSingleArray *_imag;
+#include "define.h"
+
+struct floatSingleArray * _adcReal;
+struct floatSingleArray * _real;
+struct floatSingleArray * _imag;
 int _deltaT;
 int _deltaF;
 int _size;
 
 
-void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *imag)
+void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *imag)
 {
    long  tabsize,bintabsize,i,i1,j,k,i2,l,l1,l2;
    float  temp_real,temp_imag,c1,c2,t1,t2,u1,u2,z;
 	
 	/* Calcul du nombre de points */
-		tabsize = length(real); // On récupère la taille du tableau de réels
+		tabsize = lengthfloatSingleArray(real); // On récupère la taille du tableau de réels
 		j = tabsize ;
 		i=0;
 		do // calcul de la taille du tableau en 2^binsize sans reste
@@ -176,9 +175,9 @@ void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
 	real = reallocfloatSingleArray(real, _size);
 	imag = reallocfloatSingleArray(imag, _size);
 		
-	memcpy(_real,real,lengh(_real));
+	memcpy(_real,real,lengthfloatSingleArray(_real));
 	free(_real);
-	memcpy(_imag,imag,lengh(_imag));
+	memcpy(_imag,imag,lengthfloatSingleArray(_imag));
 	free(_imag);
 	
 	__enable_irq();
