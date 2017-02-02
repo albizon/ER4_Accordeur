@@ -13,7 +13,7 @@
 
 #define ALLOCATION_SIZE_IN_FLASH_MEMORY 256//taille minimum d'allocation en octet
 
-uint32_t __flashMemoryMap[BITMAP_SIZE];
+uint32_t __flashMemoryMap[BITMAP_SIZE/4];
 
 
 void initCircuitFlash(void);

@@ -95,10 +95,10 @@ void writeBytesSamd21Spi(uint8_t *bytes, uint32_t length)
 
 uint8_t readByteSamd21Spi(void)
 {
-	
+	/*TODO*/
 }
 
 void readBytesSamd21Spi(uint8_t *bytes, uint32_t *length)
 {
-	
+	/*TODO*/
 }
