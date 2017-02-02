@@ -1,37 +1,44 @@
 /*
 * Accordeur de Guitare
 * Authors : METAYER Simon & BIZON Alexis
-* Created Date : 25/01/17
+* Created Date : 02/02/17
 * Version : 2.0
 */
 
 
 #include "userComplexArray.h"
-#include "math.h"
 
-
-void setMemoryMode_userComplexArray(userComplexArray *vect, uint32_t memoryMode)
+void new_userComplexArray(userComplexArray *vect)
 {
-	vect = malloc(3*sizeof(&vect));
-	vect[0]=memoryMode;
+	vect = malloc(4*sizeof(&vect));
+	vect[0]=USE_NOT_MEMORY;
 	vect[1]=1;
 	vect[2]=HAVE_NOT_IMAGINARY;
-	if(vect[0]==MEMORY_MODE_RAM) {vect[3] = malloc(vect[1]*vect[2]*sizeof(float));}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){ vect[3] = allocAddressFlash(vect[1]);}
+}
+
+void setMemoryMode_userComplexArray(userComplexArray *vect, uint8_t memoryMode)
+{
+	freeGeneric(vect[3], vect[1], vect[0]);
+	vect[3] = allocGeneric(vect[1]*vect[2], memoryMode);
+	vect[0]=memoryMode;
 }
 
 void resize_userComplexArray(userComplexArray *vect, uint32_t size)
 {
-	if(vect[0]==MEMORY_MODE_RAM) {vect[3] = realloc(vect[3], size*vect[2]*sizeof(float));}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){vect[3]=reallocFlash(vect[3], vect[1], size);}
+	vect[3] = reallocGeneric(vect[3], vect[1]*vect[2], size*vect[2], vect[0]);
 	vect[1]=size;
 }
 
-void haveImag_userComplexArray(userComplexArray *vect, int haveImag)
+
+void setHaveImag_userComplexArray(userComplexArray *vect, uint8_t haveImag)
 {
-	if(vect[0]==MEMORY_MODE_RAM) {vect[3] = realloc(vect[3], vect[1]*vect[2]*sizeof(float));}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){vect[3]=reallocFlash(vect[3], vect[1]*vect[2], vect[1]*haveImage);}
+	vect[3] = reallocGeneric(vect[3], vect[1]*vect[2], vect[1]*haveImag, vect[0]);
 	vect[2]=haveImag;
+}
+
+uint8_t getHaveImag_userComplexArray(userComplexArray *vect)
+{
+	return vect[2]&0xFF;
 }
 
 uint32_t getSize_userComplexArray(userComplexArray *vect)
@@ -41,131 +48,80 @@ uint32_t getSize_userComplexArray(userComplexArray *vect)
 
 void pushBack_userComplexArray(userComplexArray *vect, float imag, float real)
 {
-	if(vect[0]==MEMORY_MODE_RAM){
-		
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		
-	}
+	
 }
 
-float getImag_userComplexArray(userComplexArray *vect, int i)
+float getImag_userComplexArray(userComplexArray *vect, uint32_t i)
 {
-	if(vect[0]==MEMORY_MODE_RAM){
-		return vect[3][vect[1]+i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		return readFlash_uint32(vect[2]+vect[1]+i);
-	}
+	return readGeneric((vect[3]+vect[1]+i), vect[0]);
 }
 
-float getReal_userComplexArray(userComplexArray *vect, int i)
+float getReal_userComplexArray(userComplexArray *vect, uint32_t i)
 {
-	if(vect[0]==MEMORY_MODE_RAM){
-		return vect[3][i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		return readFlash_uint32(vect[2]+i);
-	}
+	return readGeneric((vect[3]+i), vect[0]);
 }
 
-float getArg_userComplexArray(userComplexArray *vect, int i)
+float getArg_userComplexArray(userComplexArray *vect, uint32_t i)
 {
-	float imag, real;
-	if(vect[0]==MEMORY_MODE_RAM){
-		imag = vect[3][vect[1]+i];
-		real = vect[3][i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		imag = readFlash_uint32(vect[2]+vect[1]+i);
-		real = readFlash_uint32(vect[2]+i);
-	}
+	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
+	float real = readGeneric((vect[3]+i), vect[0]);
 	
 	return atan(imag/real);
 }
 
-float getMod_userComplexArray(userComplexArray *vect, int i)
+float getMod_userComplexArray(userComplexArray *vect, uint32_t i)
 {
-	float imag, real;
-	if(vect[0]==MEMORY_MODE_RAM){
-		imag = vect[3][vect[1]+i];
-		real = vect[3][i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		imag = readFlash_uint32(vect[2]+vect[1]+i);
-		real = readFlash_uint32(vect[2]+i);
-	}
+	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
+	float real = readGeneric((vect[3]+i), vect[0]);
+	
 	return sqrt((imag*imag)+(real*real));
 }
 
-void setImag_userComplexArray(userComplexArray *vect, int i, float imag)
+void setImag_userComplexArray(userComplexArray *vect, uint32_t i, float imag)
 {
-	if(vect[0]==MEMORY_MODE_RAM){
-		vect[3][vect[1]+i]=imag;
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		writeFlash_uint32(vect[2]+vect[1]+i, imag);
-	}
+	writeGeneric((vect[3]+vect[1]+i), imag, vect[0]);
 }
 
-void setReal_userComplexArray(userComplexArray *vect, int i, float real)
+void setReal_userComplexArray(userComplexArray *vect, uint32_t i, float real)
 {
-	if(vect[0]==MEMORY_MODE_RAM){
-		vect[3][i] = real;
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		writeFlash_uint32(vect[2]+i, real);
-	}
+	writeGeneric((vect[3]+i), real, vect[0]);
 }
 
-void setArg_userComplexArray(userComplexArray *vect, int i, float arg)
+void setArg_userComplexArray(userComplexArray *vect, uint32_t i, float arg)
 {
-	float imag, real, mod;
-	if(vect[0]==MEMORY_MODE_RAM){
-		imag = vect[3][vect[1]+i];
-		real = vect[3][i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		imag = readFlash_uint32(vect[2]+vect[1]+i);
-		real = readFlash_uint32(vect[2]+i);
-	}
+	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
+	float real = readGeneric((vect[3]+i), vect[0]);
 	
 	mod = sqrt((imag*imag)+(real*real));
 	real = mod*cos(arg);
 	imag = mod*sin(arg);
 	
-	if(vect[0]==MEMORY_MODE_RAM){
-		vect[3][vect[1]+i]=imag;
-		vect[3][i] = real;
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		writeFlash_uint32(vect[2]+vect[1]+i, imag);
-		writeFlash_uint32(vect[2]+i, real);
-	}
+	writeGeneric((vect[3]+vect[1]+i), imag, vect[0]);
+	writeGeneric((vect[3]+i), real, vect[0]);
 }
 
-void setMod_userComplexArray(userComplexArray *vect, int i, float mod)
+void setMod_userComplexArray(userComplexArray *vect, uint32_t i, float mod)
 {
-	float imag, real, arg;
-	if(vect[0]==MEMORY_MODE_RAM){
-		imag = vect[3][vect[1]+i];
-		real = vect[3][i];
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		imag = readFlash_uint32(vect[2]+vect[1]+i);
-		real = readFlash_uint32(vect[2]+i);
-	}
+	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
+	float real = readGeneric((vect[3]+i), vect[0]);
 	
 	arg = atan(imag/real);
 	real = mod*cos(arg);
 	imag = mod*sin(arg);
 	
-	if(vect[0]==MEMORY_MODE_RAM){
-		vect[3][vect[1]+i]=imag;
-		vect[3][i] = real;
-	}
-	else if(vect[0]==MEMORY_MODE_FLASH_SAMD21){
-		writeFlash_uint32(vect[2]+vect[1]+i, imag);
-		writeFlash_uint32(vect[2]+i, real);
+	writeGeneric((vect[3]+vect[1]+i), imag, vect[0]);
+	writeGeneric((vect[3]+i), real, vect[0]);
+}
+
+void duplicate_userComplexArray(userComplexArray *in, unserComplexArray *out)
+{
+	uint32_t size = getSize_userComplexArray(in);
+	uint8_t imaginaryState = getHaveImag_userComplexArray(in)
+	resize_userComplexArray(out, size);
+	setHaveImag_userComplexArray(out, imaginaryState);
+	for(int i =0; i<size; i++)
+	{
+		setImag_userComplexArray(in, i, getImag_userComplexArray(out, i));
+		if(imaginaryState==HAVE_IMAGINARY){setReal_userComplexArray(in, i, getReal_userComplexArray(out, i));}
 	}
 }

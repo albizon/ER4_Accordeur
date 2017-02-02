@@ -21,7 +21,7 @@
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-struct Instrument getInstru(const struct floatSingleArray *env, const struct InstrumentSingleArray *listInstru)
+/*struct Instrument getInstru(const struct floatSingleArray *env, const struct InstrumentSingleArray *listInstru)
 {
 	int nbInstrus = lengthInstrumentSingleArray(listInstru);
 	int instruOk = FALSE;
@@ -50,9 +50,9 @@ struct Instrument getInstru(const struct floatSingleArray *env, const struct Ins
 	}
 	if(instruOk==FALSE){instru.isKnowInstrument=FALSE;}
 	return instru;
-}
+}*/
 
-envAreKnowInstrument(const struct floatDoubleArray *inEnv, struct floatDoubleArray *outEnv, const struct InstrumentSingleArray *listInstru)
+/*envAreKnowInstrument(const struct floatDoubleArray *inEnv, struct floatDoubleArray *outEnv, const struct InstrumentSingleArray *listInstru)
 {
 	struct Instrument *tempInstru;
 	for(int i = 0; i<inEnv->sizeDimX; i++)
@@ -61,45 +61,32 @@ envAreKnowInstrument(const struct floatDoubleArray *inEnv, struct floatDoubleArr
 		if(tempInstru->isKnowInstrument==TRUE){pushBackfloatDoubleArray(outEnv, inEnv->array[i]);}
 	}
 	free(tempInstru);
-}
+}*/
 
 
 /*
 * Overview : perment de reconnaitre la fréquence de la note jouée par un instrument
 * Author : BIZON Alexis
-* Params :  -const float *env -> enveloppe à étudier
-*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
+* Params : const userEnvelope *env -> enveloppe à étudier
 * Return : float -> fréquence de la note jouée
 */
-float getFreqPlay(const struct floatSingleArray *env, const float deltaFreq)
+float getFreqPlay(const userEnvelope *env)
 {
-	int delta=1;
-	int size = lengthfloatSingleArray(env);
-	for(int i=1; i<size; i++)
-	{
-		if(env->array[i]==0) delta++;
-	}
-	return (float)delta*deltaFreq;	
+	return getFreqFond_userEnvelope(env);
 }
 
 
 /*
 * Overview : perment de récupérer l'amplitude de la note
 * Author : BIZON Alexis
-* Params :  -const float *env -> enveloppe à étudier
-*			-const float deltaFreq -> Espacement en Hz entre les différentes raies de l'enveloppe
+* Params : const userEnvelope *env -> enveloppe à étudier
 * Return : float -> amplitude de la note en dB
 */
-float getLevelPlay(const struct floatSingleArray *env, const float deltaFreq)
+float getLevelPlay(const userEnvelope *env)
 {
-	int delta=1;
-	int size = lengthfloatSingleArray(env);
-	for(int i=1; i<size; i++)
-	{
-		if(env->array[i]==0) delta++;
-	}
-	return 20*log10(env->array[delta]);	
+	return 20*log10(getMod_userEnvelope(env, INDEX_FONDAMENTAL));	
 }
+
 
 
 /*
@@ -110,8 +97,9 @@ float getLevelPlay(const struct floatSingleArray *env, const float deltaFreq)
 *			-float *env -> enveloppe spectrale à envoyer sur le DAC
 * Return : none
 */
-void getEnveloppe(const float freqNote, const struct Instrument instru, struct floatSingleArray *env)
+/*void getEnveloppe(const float freqNote, const struct Instrument instru, struct floatSingleArray *env)
 {
 	
 }
+*/
 
