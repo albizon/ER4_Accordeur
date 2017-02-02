@@ -3,7 +3,7 @@
 * Accordeur de Guitare
 * Authors : METAYER Simon & BIZON Alexis
 * Created Date : 25/01/17
-* Version : 1.0
+* Version : 2.0
 */
 
 

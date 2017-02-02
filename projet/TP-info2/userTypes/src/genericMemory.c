@@ -7,10 +7,6 @@
 
 
 #include "genericMemory.h"
-#include "sam.h"
-#include "pinAccess.h"
-#include "pinMux.h"
-#include "clock.h"
 
 void writeGeneric(uint32_t address, uint32_t val, uint8_t device)
 {

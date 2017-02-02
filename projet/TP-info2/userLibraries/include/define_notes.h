@@ -1,3 +1,10 @@
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 23/01/17
+* Version : 1.0
+*/
+
   #ifndef DEFINE_NOTE_H
   #define DEFINE_NOTE_H
   

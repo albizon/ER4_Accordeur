@@ -1,7 +1,12 @@
-#include "define.h"
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 28/01/17
+* Version : 2.0
+*/ 
+
+//#include "define.h"
 #include "fft.h"
-#include "note.h"
-#include "userComplexArray.h"
 
 /*struct floatSingleArray *_adcReal;
 struct floatSingleArray *_real;

@@ -1,3 +1,10 @@
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 23/01/17
+* Version : 2.0
+*/
+
 #include "define.h"
 #include "user_init.h"
 
