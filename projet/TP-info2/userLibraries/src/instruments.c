@@ -21,8 +21,8 @@
 *			-const struct Instrument *listInstru -> liste des instruments connu
 * Return : struct Instrument -> instrument reconnu
 */
-/*struct Instrument getInstru(const struct floatSingleArray *env, const struct InstrumentSingleArray *listInstru)
-{
+void getInstru(userEnvelope *env, userInstrumentArray *listInstru, userInstrument *returnInstru)
+{/*
 	int nbInstrus = lengthInstrumentSingleArray(listInstru);
 	int instruOk = FALSE;
 	int i=0;
@@ -49,19 +49,26 @@
 		i++;
 	}
 	if(instruOk==FALSE){instru.isKnowInstrument=FALSE;}
-	return instru;
-}*/
+	return instru;*/
+}
 
-/*envAreKnowInstrument(const struct floatDoubleArray *inEnv, struct floatDoubleArray *outEnv, const struct InstrumentSingleArray *listInstru)
-{
+/*
+* Overview : permet de reconnaitre un instrument à partir de son enveloppe spectrale
+* Author : BIZON Alexis
+* Params :  -userEnvelopeArray *inEnvelope -> enveloppes à étudier
+*			-userEnvelopeArray *outEnvelope -> enveloppes considérées comme appartenant à un instrument
+* Return : none
+*/
+void extractKnowedInstrument(userEnvelopeArray *inEnvelope, userEnvelopeArray *outEnvelope)
+{/*
 	struct Instrument *tempInstru;
 	for(int i = 0; i<inEnv->sizeDimX; i++)
 	{
 		&tempInstru = getInstru(inEnv->array[i], listInstru);
 		if(tempInstru->isKnowInstrument==TRUE){pushBackfloatDoubleArray(outEnv, inEnv->array[i]);}
 	}
-	free(tempInstru);
-}*/
+	free(tempInstru);*/
+}
 
 
 /*
@@ -93,13 +100,12 @@ float getLevelPlay(const userEnvelope *env)
 * Overview : permet de créer l'enveloppe spectrale d'un instrument pour une note d'une certaine fréquence
 * Author : BIZON Alexis
 * Params :  -const float freqNote -> fréquence de la note à jouer
-*			-const struct Instrument instru -> instrument devant jouer la note
-*			-float *env -> enveloppe spectrale à envoyer sur le DAC
+*			-const userInstrument *instru -> instrument devant jouer la note
+*			-userEnvelope *env -> enveloppe spectrale à envoyer sur le DAC
 * Return : none
 */
-/*void getEnveloppe(const float freqNote, const struct Instrument instru, struct floatSingleArray *env)
+void getEnveloppe(const float freqNote, const userInstrument *instru, userEnvelope *env)
 {
 	
 }
-*/
 

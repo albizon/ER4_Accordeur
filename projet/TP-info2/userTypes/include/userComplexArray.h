@@ -10,7 +10,7 @@
 #define __USERCOMPLEXARRAY_H__
 
 #include "genericMemory.h"
-#include "math.h"
+#include <math.h>
 
 #define HAVE_IMAGINARY 2
 #define HAVE_NOT_IMAGINARY 1
