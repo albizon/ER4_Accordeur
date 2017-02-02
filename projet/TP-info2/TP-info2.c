@@ -40,7 +40,7 @@ int main(void)//fonction principale du programme
 		/*Traitement*/
 		note = noteSolver(freq); //permet de déterminer la note correspondant à la fréquence mesurée
 		degre = degreSolver(freq); //permet de déterminer le degré ou l'octave correspondant à la fréquence mesurée
-		char acc = accorder(note, degre, freq, calculAbsError(relativeError, freq,0));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
+		char acc = accorder(note, degre, freq, calculAbsError(relativeError, freq, df));//Permet de déterminer si la note est acoordée, trop basse ou trop haute
 		
 		/*Affichage*/
 		diplayLedIndicator(acc); // Allume les leds en fonciton de l'indicateur : trop bas / ok / trop haut
