@@ -23,7 +23,7 @@ void resize_userComplexArray(userComplexArray *vect, uint32_t size, uint32_t max
 
 void haveImag_userComplexArray(userComplexArray *vect, int haveImag);
 
-void pushBack_userCOmplexArray(userComplexArray *vect, float imag, float real);
+void pushBack_userComplexArray(userComplexArray *vect, float imag, float real);
 
 float getImag_userComplexArray(userComplexArray *vect, int i);
 
