@@ -1,3 +1,10 @@
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 23/01/17
+* Version : 2.0
+*/
+
 #ifndef __DEFINE_H__
 #define __DEFINE_H__
 	
@@ -15,7 +22,6 @@
 	#include <math.h>
 	
 	#include "display.h"
-	#include "freq.h"
 	#include "user_init.h"
 	#include "note.h"
 	#include "define_notes.h"

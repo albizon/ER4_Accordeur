@@ -4,18 +4,47 @@
 struct floatSingleArray * _adcReal;
 struct floatSingleArray * _real;
 struct floatSingleArray * _imag;
+
+/*
+* Accordeur de Guitare
+* Authors : METAYER Simon & BIZON Alexis
+* Created Date : 28/01/17
+* Version : 2.0
+*/ 
+
+//#include "define.h"
+#include "fft.h"
+
+/*struct floatSingleArray *_adcReal;
+struct floatSingleArray *_real;
+struct floatSingleArray *_imag;*/
+
+userComplexArray *_complexTab;
+
 int _deltaT;
 int _deltaF;
 int _size;
 
 
-void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *imag)
+
+void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *imag);
+
+void fft(uint8_t dir, userComplexArray *vect)
+{
+	setHaveImag_userComplexArray(vect, HAVE_IMAGINARY);
+}
+
+/*
+void fft(short int dir,struct floatSingleArray *real,struct floatSingleArray *imag)
 {
    long  tabsize,bintabsize,i,i1,j,k,i2,l,l1,l2;
    float  temp_real,temp_imag,c1,c2,t1,t2,u1,u2,z;
 	
-	/* Calcul du nombre de points */
+	// Calcul du nombre de points 
 		tabsize = lengthfloatSingleArray(real); // On récupère la taille du tableau de réels
+
+	// Calcul du nombre de points 
+		tabsize = length(real); // On récupère la taille du tableau de réels
 		j = tabsize ;
 		i=0;
 		do // calcul de la taille du tableau en 2^binsize sans reste
@@ -25,9 +54,9 @@ void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *i
 		}
 		while(j>=2); 
 		bintabsize = i; // taille du tableau en 2^binsize sans reste
-   	/* Attribution de mémoire au tableau d'imaginaires */ 
+   	// Attribution de mémoire au tableau d'imaginaires  
 		imag = reallocfloatSingleArray(imag,tabsize);
-	/* inversion de bit */
+	// inversion de bit 
 		i2 = tabsize >> 1;
 		j = 0;
 		for (i=0;i<(tabsize-1);i++) 
@@ -49,7 +78,7 @@ void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *i
 			}
 			j += k;
 		}
-	/* Calcul de la FFT */
+	// Calcul de la FFT 
 		c1 = -1.0;
 		c2 = 0.0;
 		l2 = 1;
@@ -89,9 +118,9 @@ void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *i
 			}
 		}  
 }
+*/
 
-
-void adcFFTInit(int deltaT) // deltaT en us
+void __adcFFTInit(uint32_t deltaT) // deltaT en us
 {
 	ADCInit();
 	_deltaT=deltaT;
@@ -111,16 +140,19 @@ void adcFFTInit(int deltaT) // deltaT en us
 	NVIC_SetPriority ( TC3_IRQn , 2 ) ;
 }
 
-void FFTInit(int deltaF)
+void __FFTInit(uint32_t deltaF)
 {
 	_deltaF=deltaF;
 	_size=(_deltaF*1000)/_deltaT;
 	
 	__disable_irq();
 
-	_real = reallocfloatSingleArray(_real, _size);
+	/*_real = reallocfloatSingleArray(_real, _size);
 	_imag = reallocfloatSingleArray(_imag, _size);
-	_adcReal = reallocfloatSingleArray(_adcReal, _size);
+	_adcReal = reallocfloatSingleArray(_adcReal, _size);*/
+	new_userComplexArray(_complexTab);
+	setMemoryMode_userComplexArray(_complexTab, USE_EXTERNAL_FLASH);
+	resize_userComplexArray(_complexTab, _size);
 		
 	__enable_irq();
 		
@@ -141,13 +173,21 @@ void FFTInit(int deltaF)
 	
 }
 
+void fftGeneralInit(uint32_t deltaT, uint32_t deltaF)
+{
+	FFTInit(deltaF);
+	adcFFTInit(deltaT);
+}
+
 void TC3_Handler ( ) // Récupération périodique des valeurs de l'ADC
 {	
 	__disable_irq();
 	TC3->COUNT16.COUNT.reg=(_deltaT*3); // Chargement du compteur
 	
 	static int i=0;
-	_adcReal->array[i]=(float)ADCRead(ADC_MIC)*(3.3/4096.00);
+	//_adcReal->array[i]=(float)ADCRead(ADC_MIC)*(3.3/4096.00);
+	setReal_userComplexArray(_complexTab, i, ((float)ADCRead(ADC_MIC)*(3.3/4096.00)));
+	
 	if (i==_size) i=0;
 	else i++;
 	
@@ -160,14 +200,15 @@ void TC4_Handler ( ) // FFT périodique
 	__disable_irq();
 	TC4->COUNT16.COUNT.reg=_deltaF; // Chargement du compteur
 	
-	memcpy(_real,_adcReal,sizeof(_adcReal));
-	fft(1,_real,_imag);
+	
+	//fft(1,_real,_imag);
+	void fft(DIRECT_FFT, _complexTab);
 
 	TC4->COUNT16.INTFLAG.reg = 1 ;
 	__enable_irq();
 }
 
-void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
+/*void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
 {
 	__disable_irq();
 	
@@ -181,4 +222,11 @@ void getTabsFFT(struct floatSingleArray *real,struct floatSingleArray *imag)
 	free(_imag);
 	
 	__enable_irq();
+}*/
+
+void getTabsFFT(userComplexArray *vect)
+{
+	duplicate_userComplexArray(_complexTab, vect);
+	setHaveImag_userComplexArray(_complexTab, HAVE_NOT_IMAGINARY);
+	
 }

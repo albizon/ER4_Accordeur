@@ -2,7 +2,7 @@
 * Accordeur de Guitare
 * Authors : METAYER Simon & BIZON Alexis
 * Created Date : 25/01/17
-* Version : 1.0
+* Version : 2.0
 */
 
 
@@ -13,10 +13,6 @@
 #include "define.h"
 #include "fftDescribe.h"
 
-typedef struct floatSingleArray{
-  float* array;
-  int size;
-};
 
 //struct floatSingleArray floatSingleArray;
 
@@ -51,7 +47,6 @@ void complexLinearToComplexExponential(const struct floatSingleArray *real, cons
 */
 void complexExponentialToComplexLinear(const struct floatSingleArray *mod, const struct floatSingleArray *arg, struct floatSingleArray *real, struct floatSingleArray *imag);
 
-
 /*
 * Overview : Sépare les enveloppes spectrales présentent dans une fft en fonction de l'argument présent sur chaques raies
 * Author : BIZON Alexis
@@ -60,8 +55,9 @@ void complexExponentialToComplexLinear(const struct floatSingleArray *mod, const
 *			-float **envs -> tableau des enveloppes différenciées par leur argument
 * Return : none
 */
-void extractEnveloppes(const struct floatSingleArray *mod, const struct floatSingleArray *arg, struct floatDoubleArray **envs);
+//void extractEnveloppes(const struct floatSingleArray *mod, const struct floatSingleArray *arg, struct floatDoubleArray **envs);
 
+void extractOneEnvelope(userComplexArray *complexVect, userEnvelope *env, uint8_t nbHarm, float deltaFreq);
 
 
 

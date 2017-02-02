@@ -42,3 +42,19 @@ userLibraries\src\note.c
 
 userLibraries\src\user_init.c
 
+userTypes\src\externalFlashMemory.c
+
+userTypes\src\externalFlashMemory\AT25DF081A.c
+
+userTypes\src\genericMemory.c
+
+userTypes\src\userComplexArray.c
+
+userTypes\src\userEnvelope.c
+
+userTypes\src\userEnvelopeArray.c
+
+userTypes\src\userInstrument.c
+
+userTypes\src\userInstrumentArray.c
+
