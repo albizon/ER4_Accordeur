@@ -8,10 +8,10 @@
 #ifndef __EXTERNALFLASHMEMORY_H__
 #define __EXTERNALFLASHMEMORY_H__
 
-#include "AT25DF081A.h"
+#ifndef AT25DF081A
+	#include "AT25DF081A.h"
+#endif
 
-
-#define USES_SERCOM_PORT_EXTERNAL_FLASH_MEMORY SERCOM5
 #define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
 
 
@@ -20,7 +20,7 @@
 uint32_t __flashMemoryMap[BITMAP_SIZE/4];
 
 
-void initCircuitFlash(void);
+void initCircuitFlash(uint32_t *args);
 
 void initExternalFlash(void);
 

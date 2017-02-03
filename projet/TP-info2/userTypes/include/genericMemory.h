@@ -11,6 +11,15 @@
 
 #include "externalFlashMemory.h"
 
+#define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
+
+#ifndef USE_SAMD21//Si utilisation d'un SAMD21
+	#include "sam.h"
+	#define SERCOM_FOR_EXTERNALFLASH SERCOM5
+	#define ARGS_FOR_EXTERNALFLASH_INIT {PORTA;13;PORTB;16;CONFIG_C;PORTB;22;CONFIG_D;PORTB;23;CONFIG_D}
+	#define ARGGS_FOR_EXTERNALFLASH_OPS {PORTA;13}
+#endif
+
 #define USE_INTERNAL_RAM 1//Ecriture du tableau dans la ram interne
 #define USE_EXTERNAL_FLASH 2//Ecriture du tableau dans la flash externe
 #define USE_INTERNAL_FLASH 3//Ecriture du tableau dans la flash interne

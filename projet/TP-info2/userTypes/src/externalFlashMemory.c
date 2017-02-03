@@ -12,8 +12,8 @@
 
 void initExternalFlash(void)
 {
-	initSpi();
-	initCircuitFlash();
+	init_spi(SERCOM_FOR_EXTERNALFLASH, ARGS_FOR_EXTERNALFLASH_INIT);
+	initCircuitFlash(0);
 }
 
 

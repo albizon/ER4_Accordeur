@@ -9,7 +9,9 @@
 #ifndef GENERICADC_H_
 #define GENERICADC_H_
 
+void init_adc(uint32_t *args);
 
+uint32_t read_adc(uint32_t *args);
 
 
 
