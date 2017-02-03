@@ -42,8 +42,12 @@ SUBDIRS :=  \
 ../iutNantes/src \
 ../userHardware \
 ../userHardware/include \
+../userHardware/include/adc \
+../userHardware/include/gpio \
 ../userHardware/include/spi \
 ../userHardware/src \
+../userHardware/src/adc \
+../userHardware/src/gpio \
 ../userHardware/src/spi \
 ../userTypes \
 ../userLibraries \
@@ -51,8 +55,10 @@ SUBDIRS :=  \
 ../userLibraries/src \
 ../userTypes/include \
 ../userTypes/include/externalFlashMemory \
+../userTypes/include/externalRamMemory \
 ../userTypes/src \
-../userTypes/src/externalFlashMemory
+../userTypes/src/externalFlashMemory \
+../userTypes/src/externalRamMemory
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
@@ -70,6 +76,10 @@ C_SRCS +=  \
 ../iutNantes/src/serial.c \
 ../iutNantes/src/timer.c \
 ../TP-info2.c \
+../userHardware/src/adc/genericAdc.c \
+../userHardware/src/adc/samd21Adc.c \
+../userHardware/src/gpio/genericGpio.c \
+../userHardware/src/gpio/samd21Gpio.c \
 ../userHardware/src/spi/genericSpi.c \
 ../userHardware/src/spi/samd21Spi.c \
 ../userLibraries/src/display.c \
@@ -81,6 +91,7 @@ C_SRCS +=  \
 ../userLibraries/src/user_init.c \
 ../userTypes/src/externalFlashMemory.c \
 ../userTypes/src/externalFlashMemory/AT25DF081A.c \
+../userTypes/src/externalRamMemory.c \
 ../userTypes/src/genericMemory.c \
 ../userTypes/src/userComplexArray.c \
 ../userTypes/src/userEnvelope.c \
@@ -109,6 +120,10 @@ iutNantes/src/redirectPrintf.o \
 iutNantes/src/serial.o \
 iutNantes/src/timer.o \
 TP-info2.o \
+userHardware/src/adc/genericAdc.o \
+userHardware/src/adc/samd21Adc.o \
+userHardware/src/gpio/genericGpio.o \
+userHardware/src/gpio/samd21Gpio.o \
 userHardware/src/spi/genericSpi.o \
 userHardware/src/spi/samd21Spi.o \
 userLibraries/src/display.o \
@@ -120,6 +135,7 @@ userLibraries/src/note.o \
 userLibraries/src/user_init.o \
 userTypes/src/externalFlashMemory.o \
 userTypes/src/externalFlashMemory/AT25DF081A.o \
+userTypes/src/externalRamMemory.o \
 userTypes/src/genericMemory.o \
 userTypes/src/userComplexArray.o \
 userTypes/src/userEnvelope.o \
@@ -141,6 +157,10 @@ iutNantes/src/redirectPrintf.o \
 iutNantes/src/serial.o \
 iutNantes/src/timer.o \
 TP-info2.o \
+userHardware/src/adc/genericAdc.o \
+userHardware/src/adc/samd21Adc.o \
+userHardware/src/gpio/genericGpio.o \
+userHardware/src/gpio/samd21Gpio.o \
 userHardware/src/spi/genericSpi.o \
 userHardware/src/spi/samd21Spi.o \
 userLibraries/src/display.o \
@@ -152,6 +172,7 @@ userLibraries/src/note.o \
 userLibraries/src/user_init.o \
 userTypes/src/externalFlashMemory.o \
 userTypes/src/externalFlashMemory/AT25DF081A.o \
+userTypes/src/externalRamMemory.o \
 userTypes/src/genericMemory.o \
 userTypes/src/userComplexArray.o \
 userTypes/src/userEnvelope.o \
@@ -173,6 +194,10 @@ iutNantes/src/redirectPrintf.d \
 iutNantes/src/serial.d \
 iutNantes/src/timer.d \
 TP-info2.d \
+userHardware/src/adc/genericAdc.d \
+userHardware/src/adc/samd21Adc.d \
+userHardware/src/gpio/genericGpio.d \
+userHardware/src/gpio/samd21Gpio.d \
 userHardware/src/spi/genericSpi.d \
 userHardware/src/spi/samd21Spi.d \
 userLibraries/src/display.d \
@@ -184,6 +209,7 @@ userLibraries/src/note.d \
 userLibraries/src/user_init.d \
 userTypes/src/externalFlashMemory.d \
 userTypes/src/externalFlashMemory/AT25DF081A.d \
+userTypes/src/externalRamMemory.d \
 userTypes/src/genericMemory.d \
 userTypes/src/userComplexArray.d \
 userTypes/src/userEnvelope.d \
@@ -205,6 +231,10 @@ iutNantes/src/redirectPrintf.d \
 iutNantes/src/serial.d \
 iutNantes/src/timer.d \
 TP-info2.d \
+userHardware/src/adc/genericAdc.d \
+userHardware/src/adc/samd21Adc.d \
+userHardware/src/gpio/genericGpio.d \
+userHardware/src/gpio/samd21Gpio.d \
 userHardware/src/spi/genericSpi.d \
 userHardware/src/spi/samd21Spi.d \
 userLibraries/src/display.d \
@@ -216,6 +246,7 @@ userLibraries/src/note.d \
 userLibraries/src/user_init.d \
 userTypes/src/externalFlashMemory.d \
 userTypes/src/externalFlashMemory/AT25DF081A.d \
+userTypes/src/externalRamMemory.d \
 userTypes/src/genericMemory.d \
 userTypes/src/userComplexArray.d \
 userTypes/src/userEnvelope.d \
@@ -302,52 +333,76 @@ LINKER_SCRIPT_DEP+=  \
 
 
 
+
+
+
+
+
+
+
+
+
+
 cmsis/src/%.o: ../cmsis/src/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 iutNantes/src/%.o: ../iutNantes/src/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 ./%.o: .././%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+userHardware/src/adc/%.o: ../userHardware/src/adc/%.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 5.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+userHardware/src/gpio/%.o: ../userHardware/src/gpio/%.c
+	@echo Building file: $<
+	@echo Invoking: ARM/GNU C Compiler : 5.3.1
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 userHardware/src/spi/%.o: ../userHardware/src/spi/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 userLibraries/src/%.o: ../userLibraries/src/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 userTypes/src/%.o: ../userTypes/src/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 
 userTypes/src/externalFlashMemory/%.o: ../userTypes/src/externalFlashMemory/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM/GNU C Compiler : 5.3.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\arm\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE)  -x c -mthumb -D__SAMD21J18A__ -DDEBUG  -I"../iutNantes/include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\SAMD21_DFP\1.0.231\samd21a\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\arm\cmsis\4.2.0\CMSIS\Include" -I"../userLibraries/include" -I"../userTypes/include" -I"../userHardware/include" -I"../userTypes/include/externalFlashMemory" -I"../userHardware/include/spi" -I"../userTypes/include/externalRamMemory" -I"../userHardware/include/gpio" -I"../userHardware/include/adc"  -O0 -ffunction-sections -mlong-calls -g3 -Wall -mcpu=cortex-m0plus -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
 	@echo Finished building: $<
 	
 

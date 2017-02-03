@@ -149,6 +149,9 @@
       <Value>../userHardware/include</Value>
       <Value>../userTypes/include/externalFlashMemory</Value>
       <Value>../userHardware/include/spi</Value>
+      <Value>../userTypes/include/externalRamMemory</Value>
+      <Value>../userHardware/include/gpio</Value>
+      <Value>../userHardware/include/adc</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -255,10 +258,34 @@
     <Compile Include="TP-info2.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="userHardware\include\adc\genericAdc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\adc\samd21Adc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\gpio\genericGpio.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\gpio\samd21Gpio.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="userHardware\include\spi\genericSpi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userHardware\include\spi\samd21Spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\adc\genericAdc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\adc\samd21Adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\gpio\genericGpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\gpio\samd21Gpio.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userHardware\src\spi\genericSpi.c">
@@ -324,6 +351,9 @@
     <Compile Include="userTypes\include\externalFlashMemory\AT25DF081A_define.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="userTypes\include\externalRamMemory.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="userTypes\include\genericMemory.h">
       <SubType>compile</SubType>
     </Compile>
@@ -346,6 +376,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userTypes\src\externalFlashMemory\AT25DF081A.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userTypes\src\externalRamMemory.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userTypes\src\genericMemory.c">
@@ -377,8 +410,12 @@
     <Folder Include="iutNantes\src" />
     <Folder Include="userHardware" />
     <Folder Include="userHardware\include" />
+    <Folder Include="userHardware\include\adc" />
+    <Folder Include="userHardware\include\gpio" />
     <Folder Include="userHardware\include\spi" />
     <Folder Include="userHardware\src" />
+    <Folder Include="userHardware\src\adc" />
+    <Folder Include="userHardware\src\gpio" />
     <Folder Include="userHardware\src\spi" />
     <Folder Include="userTypes" />
     <Folder Include="userLibraries" />
@@ -386,8 +423,10 @@
     <Folder Include="userLibraries\src" />
     <Folder Include="userTypes\include" />
     <Folder Include="userTypes\include\externalFlashMemory" />
+    <Folder Include="userTypes\include\externalRamMemory" />
     <Folder Include="userTypes\src" />
     <Folder Include="userTypes\src\externalFlashMemory" />
+    <Folder Include="userTypes\src\externalRamMemory" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cmsis\linkerScripts\samd21j18a_flash.ld">

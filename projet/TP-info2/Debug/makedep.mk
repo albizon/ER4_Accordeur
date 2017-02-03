@@ -28,6 +28,14 @@ iutNantes\src\timer.c
 
 TP-info2.c
 
+userHardware\src\adc\genericAdc.c
+
+userHardware\src\adc\samd21Adc.c
+
+userHardware\src\gpio\genericGpio.c
+
+userHardware\src\gpio\samd21Gpio.c
+
 userHardware\src\spi\genericSpi.c
 
 userHardware\src\spi\samd21Spi.c
@@ -49,6 +57,8 @@ userLibraries\src\user_init.c
 userTypes\src\externalFlashMemory.c
 
 userTypes\src\externalFlashMemory\AT25DF081A.c
+
+userTypes\src\externalRamMemory.c
 
 userTypes\src\genericMemory.c
 
