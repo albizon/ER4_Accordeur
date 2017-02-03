@@ -91,6 +91,7 @@ void setArg_userComplexArray(userComplexArray *vect, uint32_t i, float arg)
 {
 	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
 	float real = readGeneric((vect[3]+i), vect[0]);
+	float mod;
 	
 	mod = sqrt((imag*imag)+(real*real));
 	real = mod*cos(arg);
@@ -104,6 +105,7 @@ void setMod_userComplexArray(userComplexArray *vect, uint32_t i, float mod)
 {
 	float imag = readGeneric((vect[3]+vect[1]+i), vect[0]);
 	float real = readGeneric((vect[3]+i), vect[0]);
+	float arg;
 	
 	arg = atan(imag/real);
 	real = mod*cos(arg);
@@ -113,10 +115,10 @@ void setMod_userComplexArray(userComplexArray *vect, uint32_t i, float mod)
 	writeGeneric((vect[3]+i), real, vect[0]);
 }
 
-void duplicate_userComplexArray(userComplexArray *in, unserComplexArray *out)
+void duplicate_userComplexArray(userComplexArray *in, userComplexArray *out)
 {
 	uint32_t size = getSize_userComplexArray(in);
-	uint8_t imaginaryState = getHaveImag_userComplexArray(in)
+	uint8_t imaginaryState = getHaveImag_userComplexArray(in);
 	resize_userComplexArray(out, size);
 	setHaveImag_userComplexArray(out, imaginaryState);
 	for(int i =0; i<size; i++)

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //
 ///*
 //* Accordeur de Guitare
@@ -116,7 +115,6 @@
 	//
 //}
 //
-=======
 
 /*
 * Accordeur de Guitare
@@ -227,5 +225,3 @@ void getEnveloppe(const float freqNote, const userInstrument *instru, userEnvelo
 {
 	
 }
-
->>>>>>> 5b7aebad9e8444c383427206f5be96cb1f19eb51

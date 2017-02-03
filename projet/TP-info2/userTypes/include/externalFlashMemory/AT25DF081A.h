@@ -8,12 +8,18 @@
 #ifndef __AT25DF081A_H__
 #define __AT25DF081A_H__
 
-#ifndef AT25DF081A
+#include "genericSpi.h"
+#include "AT25DF081A_define.h"
+#include "externalFlashMemory.h"
+#include "genericMemory.h"
 
-#define START_ADDRESS_FLASH_MEMORY 0x000000//Adresse de la première case où l'on peut écrire
+void __writeAT25DF081AByte(uint8_t byte, uint32_t address);
 
-#define FLASH_SIZE 4096//taille de la mémoire flash en octet
+uint8_t __readAT25DF081AByte(uint32_t address);
 
-#endif
+void __getBitmapAT25DF081A(uint32_t *bitmap);
+
+void __setBitmapAT25DF081A(uint32_t *bitmap);
+
 
 #endif

@@ -21,6 +21,9 @@
 
 ////////////////////////////////////////////////////////////////////////////FUNCTIONS////////////////////
 
+void _4BytesTo1Byte(uint32_t in, uint8_t *out);
+
+uint32_t _1BytesTo4Byte(uint8_t *in);
 
 void writeGeneric(uint32_t address, uint32_t val, uint8_t device);
 

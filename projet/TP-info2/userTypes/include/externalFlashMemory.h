@@ -8,16 +8,19 @@
 #ifndef __EXTERNALFLASHMEMORY_H__
 #define __EXTERNALFLASHMEMORY_H__
 
+#include "AT25DF081A.h"
+
+
+#define USES_SERCOM_PORT_EXTERNAL_FLASH_MEMORY SERCOM5
 #define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
 
-#define MNIMUM_SIZE_IN_FLASH_MEMORY 4096//taille minimum d'allocation en octet
 
-uint32_t __flashMemoryMap[FLASH_SIZE/MINIMUM_SIZE_IN_FLASH_MEMORY];
+#define ALLOCATION_SIZE_IN_FLASH_MEMORY 256//taille minimum d'allocation en octet
+
+uint32_t __flashMemoryMap[BITMAP_SIZE/4];
 
 
-void initSpi(void);
-
-void initSecondaryFlash(void);
+void initCircuitFlash(void);
 
 void initExternalFlash(void);
 

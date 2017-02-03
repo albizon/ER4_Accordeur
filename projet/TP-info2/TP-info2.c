@@ -15,6 +15,9 @@
 
 #define DELTA_FREQUENCE (float)1 //Espacement en Hz entre chaques raies de la FFT
 #define FREQUENCE_ECHANTILLONAGE (float)44100 //Fréquence en Hz de l'échantillonage du signal audio
+#define USE_SAMD21
+
+#define DIAPASON_IS_INSTRUMENT 0//Défini si un sinus pur est considéré comme un instrument
 
 #define NB_HARMONIQUE_ETUDIES 17//
 
@@ -53,7 +56,7 @@ int main(void)//fonction principale du programme
 
 		getTabsFFT(userComplexTab);
 		extractOneEnvelope(userComplexTab, userEnv, (NB_HARMONIQUE_ETUDIES+1), DELTA_FREQUENCE);
-		freq=getFreqPlay(user_mod,DELTA_FREQUENCE);
+		freq=getFreqPlay(userEnv);
 		
 		/*Traitement*/
 		note = noteSolver(freq); //permet de déterminer la note correspondant à la fréquence mesurée

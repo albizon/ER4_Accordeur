@@ -28,6 +28,10 @@ iutNantes\src\timer.c
 
 TP-info2.c
 
+userHardware\src\spi\genericSpi.c
+
+userHardware\src\spi\samd21Spi.c
+
 userLibraries\src\display.c
 
 userLibraries\src\fft.c

@@ -27,8 +27,6 @@ int _size;
 
 
 
-void fft(short int dir,struct floatSingleArray *real,struct  floatSingleArray *imag);
-
 void fft(uint8_t dir, userComplexArray *vect)
 {
 	setHaveImag_userComplexArray(vect, HAVE_IMAGINARY);

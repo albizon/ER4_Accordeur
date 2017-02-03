@@ -146,6 +146,9 @@
       <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
       <Value>../userLibraries/include</Value>
       <Value>../userTypes/include</Value>
+      <Value>../userHardware/include</Value>
+      <Value>../userTypes/include/externalFlashMemory</Value>
+      <Value>../userHardware/include/spi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -250,6 +253,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="TP-info2.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\spi\genericSpi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\spi\samd21Spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\spi\genericSpi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\spi\samd21Spi.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\include\define.h">
@@ -360,6 +375,11 @@
     <Folder Include="iutNantes" />
     <Folder Include="iutNantes\include" />
     <Folder Include="iutNantes\src" />
+    <Folder Include="userHardware" />
+    <Folder Include="userHardware\include" />
+    <Folder Include="userHardware\include\spi" />
+    <Folder Include="userHardware\src" />
+    <Folder Include="userHardware\src\spi" />
     <Folder Include="userTypes" />
     <Folder Include="userLibraries" />
     <Folder Include="userLibraries\include" />
