@@ -1,0 +1,80 @@
+void fft(short int dir,double *real,double *imag)
+{
+   long size,binsize,i,i1,j,k,i2,l,l1,l2;
+   double c1,c2,temp_real,temp_imag,t1,t2,u1,u2,z;
+   
+	/* Calcul du nombre de points */
+		size= length(real); // On récupère la taille du tableau de réels
+		j = size ;
+		i=0;
+		do // calcul de la taille du tableau en 2^binsize sans reste
+		{
+			j /= 2;
+			i++;
+		}
+		while(j>=2); 
+		binsize = i; // taille du tableau en 2^binsize sans reste
+	/* Attribution de mémoire aux tableaux */ 
+		real = reallocfloatSingleArray(real,size);
+	/* inversion de bit */
+		i2 = size >> 1;
+		j = 0;
+		for (i=0;i<(size-1);i++) 
+		{
+			if (i < j) 
+			{
+				temp_real = real[i];
+				temp_imag = imag[i];
+				real[i] = real[j];
+				imag[i] = imag[j];
+				real[j] = temp_real;
+				imag[j] = temp_imag;
+			}
+			k = i2;
+			while (k <= j)
+			{
+				j -= k;
+				k >>= 1;
+			}
+			j += k;
+		}
+	/* Calcul de la FFT */
+		c1 = -1.0;
+		c2 = 0.0;
+		l2 = 1;
+		for (l=0;l< binsize ;l++) 
+		{
+			l1 = l2;
+			l2 <<= 1;
+			u1 = 1.0;
+			u2 = 0.0;
+			for (j=0;j<l1;j++) 
+			{
+				for (i=j;i<size;i+=l2)
+				{
+					i1 = i + l1;
+					t1 = u1 * real[i1] - u2 * imag[i1];
+					t2 = u1 * imag[i1] + u2 * real[i1];
+					real[i1] = real[i] - t1;
+					imag[i1] = imag[i] - t2;
+					real[i] += t1;
+					imag[i] += t2;
+				}
+				z =  u1 * c1 - u2 * c2;
+				u2 = u1 * c2 + u2 * c1;
+				u1 = z;
+			}
+			c2 = sqrt((1.0 - c1) / 2.0);
+			if (dir == 1)
+			c2 = -c2;
+			c1 = sqrt((1.0 + c1) / 2.0);
+		}
+		if (dir == 1) 
+		{
+			for (i=0;i<size;i++)
+			{
+				real[i] /= size;
+				imag[i] /= size;
+			}
+		}  
+}
