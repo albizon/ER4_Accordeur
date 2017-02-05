@@ -20,6 +20,6 @@ void writeBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t le
 
 uint8_t readByte_spi(void *interface, uint32_t *args);
 
-void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t *length);
+void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t *length, uint32_t maxLength);
 
 #endif
