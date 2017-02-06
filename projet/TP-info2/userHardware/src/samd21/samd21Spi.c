@@ -106,22 +106,19 @@ void writeBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t le
 uint8_t readByte_spi(void *interface, uint32_t *args)
 {
 	digitalWrite_gpioGeneric({args[0]; args[1]},LOW);            //chip select.
-	while(!(interface->INTFLAG.bit.SSL));
+	while(!(interface->INTFLAG.bit.RXC));
 	uint8_t tmp = interface->DATA.reg;
 	digitalWrite_gpioGeneric({args[0]; args[1]},HIGH);            //chip unselect.
 	return tmp;
 }
 
-void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t *length, uint32_t maxLength)
+void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t length)
 {
-	&length =0;
 	digitalWrite_gpioGeneric({args[0]; args[1]},LOW);            //chip select.
-	while(! interface->INTFLAG.bit.TXC && length<maxLength)
+	for(uint32_t i =0; i<length; i++)
 	{
-		while(!(interface->INTFLAG.bit.SSL));
-		bytes[&length] = interface->DATA.reg;
-		&length++;
-		
+		while(!(interface->INTFLAG.bit.RXC));
+		bytes[&length] = interface->DATA.reg;		
 	}
 	digitalWrite_gpioGeneric({args[0]; args[1]},HIGH);            //chip unselect.
 }
