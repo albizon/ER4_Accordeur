@@ -50,7 +50,7 @@ int16_t read_adc(
 									args[2] = ref positive	
 									*/
 {
-	uint32_t result;
+	int16_t result;
 	//choix du canal de conversion.
 	ADC->INPUTCTRL.reg = 0x0 | 
 						args[0] << 24 | //gain
