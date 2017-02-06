@@ -5,4 +5,8 @@
 
 #include "23LCV1024_define.h"
 
+void __write23LCV1024Byte(uint8_t byte, uint32_t address);
+
+uint8_t __read23LCV1024Byte(uint32_t address);
+
 #endif
