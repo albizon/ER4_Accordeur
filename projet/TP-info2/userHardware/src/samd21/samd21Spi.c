@@ -23,7 +23,11 @@ void init_spi(void *interface,
 								
 								args[8] = port SCK
 								args[9] = numBit SCK
-								args[10] = cofig SCK								
+								args[10] = cofig SCK
+								
+								args[11] = mode spi
+								args[12] = DOPO config
+								args[13] = DIPO config
 								*/
 {
 	pinConfig_gpioGeneric({args[0];args[1]} ,OUTPUT);// pin CS
@@ -73,8 +77,9 @@ void init_spi(void *interface,
 	interface->CTRLA.bit.SWRST = 1;
 	while ( interface->CTRLA.bit.SWRST || interface->SYNCBUSY.bit.SWRST );
 	interface->CTRLA.reg =	1 << 29 | //CPOL
-						1 << 16 | //DOPO = 1 => pad1=SS=PORTA.17 - pad2=DO=PORT.A.18 - pad3=SCK=PORTA.19
-						3 << 2;    //Mode Master
+						args[13] << 20 | //DIPO
+						args[12] << 16 | //DOPO
+						args[11] << 2;    //Mode 
 	interface->CTRLB.reg = 0;//1 << 13; //MSSEN (Master Slave Select Enable) <=> Chip Select matériel
 	interface->BAUD.reg = 0; // p.427 (synchronous) => Fbaud=Fref/(2*(baud+1)) => Fref=48MHz => FBaud = 24MHz
 	//validation spi
