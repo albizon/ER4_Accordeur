@@ -34,7 +34,7 @@ void writeGeneric(uint32_t address, uint32_t val, uint8_t device)
 		
 		break;
 		case USE_EXTERNAL_RAM:
-		
+			writeExternalRam_uint32(address, val);		
 		break;
 		default :
 		
@@ -57,7 +57,7 @@ uint32_t readGeneric(uint32_t address, uint8_t device)
 			tmp = 1;
 		break;
 		case USE_EXTERNAL_RAM:
-		 tmp = 1;
+		 tmp = readExternalRam_uint32(address);
 		break;
 		default :
 		 tmp = 1;
@@ -82,7 +82,7 @@ uint32_t allocGeneric(uint32_t size, uint8_t device)
 			tmp = 1;
 		break;
 		case USE_EXTERNAL_RAM:
-			tmp = 1;
+			tmp = allocExternalRam(size);
 		break;
 		default :
 			tmp = 1;
@@ -105,7 +105,7 @@ void freeGeneric(uint32_t address, uint32_t size, uint8_t device)
 		
 		break;
 		case USE_EXTERNAL_RAM:
-		
+			freeExternalRam(address, size);
 		break;
 		default :
 		
@@ -128,7 +128,7 @@ uint32_t reallocGeneric(uint32_t address, uint32_t lastSize, uint32_t newSize, u
 			tmp = 1;
 		break;
 		case USE_EXTERNAL_RAM:
-			tmp = 1;
+			tmp = reallocExternalRam(address, lastSize, newSize);
 		break;
 		default :
 			tmp = 1;
