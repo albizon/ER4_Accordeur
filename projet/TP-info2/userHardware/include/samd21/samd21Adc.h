@@ -9,6 +9,8 @@
 #ifndef SAMD21ADC_H_
 #define SAMD21ADC_H_
 
+#include "samd21Adc_define.h"
+
 
 
 
