@@ -12,6 +12,7 @@
 
 void initExternalRam(void)
 {
+	#ifndef USE_SAMD21
 	initSpi(SERCOM_EXTERNAL_RAM, {SS_PORT_EXTERNAL_RAM;
 				      SS_BIT_EXTERNAL_RAM;
 				      MOSI_PORT_EXTERNAL_RAM;
@@ -26,6 +27,7 @@ void initExternalRam(void)
 				      SAMD21_SPI_MASTER_MODE;
 				      DIPO_EXTERNAL_RAM;
 				     DOPO_EXTERNAL_RAM});
+	#endif
 	initCircuitRam();
 }
 
