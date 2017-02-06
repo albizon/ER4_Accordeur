@@ -42,7 +42,7 @@ void init_adc(
 	
 }
 
-uint32_t read_adc(
+int16_t read_adc(
 					uint32_t *args)
 									/*
 									args[0] = gain
