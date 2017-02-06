@@ -10,6 +10,7 @@
 #define __GENERIC_H__
 
 #include "externalFlashMemory.h"
+#include "externalRamMemory.h"
 
 #define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
 
