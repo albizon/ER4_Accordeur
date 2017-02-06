@@ -46,18 +46,16 @@ uint32_t read_adc(
 					uint32_t *args)
 									/*
 									args[0] = gain
-									args[1] = offset
-									args[2] = ref negative
-									args[3] = ref positive	
+									args[1] = ref negative
+									args[2] = ref positive	
 									*/
 {
 	uint32_t result;
 	//choix du canal de conversion.
 	ADC->INPUTCTRL.reg = 0x0 | 
-						args[3] << 24 | //gain
-						args[4] << 20 | //offset
-						args[5] << 8 | //ref negative
-						args[6] << 0;  //ref positive
+						args[0] << 24 | //gain
+						args[1] << 8 | //ref negative
+						args[2] << 0;  //ref positive
 						
 	//RAZ flag de fin de conversion (avec un 1!)
 	ADC->INTFLAG.reg = 0x1; //RAZ RESRDY
