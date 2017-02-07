@@ -10,6 +10,7 @@
 #define __USERCOMPLEXINTEGER16ARRAY_H__
 
 #include "genericMemory.h"
+#include "userComplexArray.h"
 #include <math.h>
 
 #define HAVE_IMAGINARY 2

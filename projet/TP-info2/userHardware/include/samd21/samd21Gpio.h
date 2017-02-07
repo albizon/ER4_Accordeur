@@ -13,8 +13,15 @@
 #include "samd21Gpio_define.h"
 #include "sam.h"
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 void pinMux_gpioSamd21(uint32_t *pin, uint32_t config);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* SAMD21GPIO_H_ */

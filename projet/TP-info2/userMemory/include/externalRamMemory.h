@@ -10,12 +10,13 @@
 
 #include "genericMemory.h"
 
-#ifndef 23LCV1024
+#ifndef _23LCV1024
 	#include "23LCV1024.h"
 #endif
 
 #define ALLOCATION_SIZE_IN_RAM_MEMORY 256//taille minimum d'allocation en octet
 
+#define BITMAP_SIZE 2690
 
 uint32_t __ramMemoryMap[BITMAP_SIZE/4];
 

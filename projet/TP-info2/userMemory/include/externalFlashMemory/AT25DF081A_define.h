@@ -8,6 +8,9 @@
 #ifndef __AT25DF081A_DEFINE_H__
 #define __AT25DF081A_DEFINE_H__
 
+#include "genericMemory.h"
+#include "externalFlashMemory.h"
+
 #define BITMAP_ADDRESS 0x000000//Adresse où se trouve le bitmap de la flash
 
 #define BITMAP_SIZE ((FLASH_SIZE/ALLOCATION_SIZE_IN_FLASH_MEMORY)/8)+1//taille du bitmap

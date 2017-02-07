@@ -4,7 +4,9 @@
  * Created: 03/02/2017 13:32:53
  *  Author: simon
  */ 
-
+#include "samd21Adc.h"
+#define TRUE 1
+#define FALSE 0
  
 void init_adc(
 				uint32_t *args)

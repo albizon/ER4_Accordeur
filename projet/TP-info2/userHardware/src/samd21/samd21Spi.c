@@ -45,28 +45,28 @@ void init_spi(void *interface,
 	uint8_t pmMask;
 	uint8_t gclkMask;
 	
-	switch(&interface){
-		case &SERCOM0:
+	switch(interface){
+		case SERCOM0:
 			pmMask = 0x04;
 			gclkMask = 0x14;
 		break;
-		case &SERCOM1:
+		case SERCOM1:
 			pmMask = 0x08;
 			gclkMask = 0x15;
 		break;
-		case &SERCOM2:
+		case SERCOM2:
 			pmMask = 0x10;
 			gclkMask = 0x16;
 		break;
-		case &SERCOM3:
+		case SERCOM3:
 			pmMask = 0x20;
 			gclkMask = 0x17;
 		break;
-		case &SERCOM4:
+		case SERCOM4:
 			pmMask = 0x40;
 			gclkMask = 0x18;
 		break;
-		case &SERCOM5:
+		case SERCOM5:
 			pmMask = 0x80;
 			gclkMask = 0x19;
 		break;
@@ -132,7 +132,7 @@ void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t len
 	for(uint32_t i =0; i<length; i++)
 	{
 		while(!(interface->INTFLAG.bit.RXC));
-		bytes[&length] = interface->DATA.reg;		
+		bytes[i] = interface->DATA.reg;		
 	}
 	digitalWrite_gpioGeneric(ar,HIGH);            //chip unselect.
 }

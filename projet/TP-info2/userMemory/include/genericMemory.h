@@ -13,7 +13,17 @@
 #include "externalRamMemory.h"
 
 #define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
-#define 23LCV1024 //utilisation de la puce 23LCV1024 pour mémoire ram externe
+#define _23LCV1024 //utilisation de la puce 23LCV1024 pour mémoire ram externe
+
+#define USE_SAMD21 //Utilisation d'un samd21
+
+#define SERCOM_FOR_EXTERNALFLASH
+#define ARGS_FOR_EXTERNALFLASH_INIT
+#define ARGGS_FOR_EXTERNALFLASH_OPS
+
+#define SERCOM_FOR_EXTERNALRAM
+#define ARGS_FOR_EXTERNALRAM_INIT
+#define ARGGS_FOR_EXTERNALRAM_OPS
 
 #ifndef USE_SAMD21//Si utilisation d'un SAMD21
 	#include "sam.h"
@@ -37,6 +47,9 @@
 
 ////////////////////////////////////////////////////////////////////////////FUNCTIONS////////////////////
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 /*
 * Overview : Convertit un uint32_t en un tableau de 4 uint8_t
@@ -109,5 +122,9 @@ void freeMemory(uint32_t address, uint32_t size, uint8_t device);
 * Return : uint32_t -> adresse de la première case mémoire nouvellement allouée
 */
 uint32_t reallocMemory(uint32_t address, uint32_t lastSize, uint32_t newSize, uint8_t device);
+
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 #endif

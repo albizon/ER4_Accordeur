@@ -10,6 +10,8 @@
 #define SAMD21ADC_H_
 
 #include "samd21Adc_define.h"
+#include "sam.h"
+#include "genericAdc.h"
 
 
 

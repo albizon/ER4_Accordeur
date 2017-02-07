@@ -8,14 +8,22 @@
 #ifndef __EXTERNALFLASHMEMORY_H__
 #define __EXTERNALFLASHMEMORY_H__
 
+#define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
+
 #ifndef AT25DF081A
 	#include "AT25DF081A.h"
 #endif
 
+#include "stdint-gcc.h"
 #include "genericMemory.h"
 
-#define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
 
+
+#ifndef USE_SAMD21//Si utilisation d'un SAMD21
+	#include "sam.h"
+#endif
+
+#define BITMAP_SIZE 24914
 
 #define ALLOCATION_SIZE_IN_FLASH_MEMORY 256//taille minimum d'allocation en octet
 

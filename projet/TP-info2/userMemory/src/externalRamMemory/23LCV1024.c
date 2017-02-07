@@ -5,7 +5,7 @@
 void __write23LCV1024Byte(uint8_t byte, uint32_t address)
 {
   uint8_t trame[5];
-  trame[0]= 23LCV1024_WRITE;
+  trame[0]= _23LCV1024_WRITE;
   trame[1] = address & 0xFF;
   trame[2] = (address & 0xFF00)<<8;
   trame[3] = (address & 0xFF0000)<<16;
@@ -20,7 +20,7 @@ uint8_t __read23LCV1024Byte(uint32_t address)
 {
   uint8_t trame[4];
   uint8_t val;
-  trame[0]= 23LCV1024_READ;
+  trame[0]= _23LCV1024_READ;
   trame[1] = address & 0xFF;
   trame[2] = (address & 0xFF00)<<8;
   trame[3] = (address & 0xFF0000)<<16;
