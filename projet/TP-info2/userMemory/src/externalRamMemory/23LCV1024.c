@@ -10,18 +10,26 @@ void __write23LCV1024Byte(uint8_t byte, uint32_t address)
   trame[2] = (address & 0xFF00)<<8;
   trame[3] = (address & 0xFF0000)<<16;
   trame[4] = byte;
-  writeBytes_spi(SERCOM_EXTERNAL_RAM, {SS_PORT_EXTERNAL_RAM;SS_BIT_EXTERNAL_RAM}, trame, 5);
+  #ifndef USE_SAMD21
+  uint32_t args[2] = ARGGS_FOR_EXTERNALRAM_OPS;
+  writeBytes_spi(SERCOM_FOR_EXTERNALRAM, args, trame, 5);
+  #endif
 }
 
 uint8_t __read23LCV1024Byte(uint32_t address)
 {
   uint8_t trame[4];
+  uint8_t val;
   trame[0]= 23LCV1024_READ;
   trame[1] = address & 0xFF;
   trame[2] = (address & 0xFF00)<<8;
   trame[3] = (address & 0xFF0000)<<16;
-  writeBytes_spi(void *interface, uint32_t *args, trame, 4);
-  return readByte_spi(SERCOM_EXTERNAL_RAM, {SS_PORT_EXTERNAL_RAM;SS_BIT_EXTERNAL_RAM});
+  #ifndef USE_SAMD21
+  uint32_t args[2] = ARGGS_FOR_EXTERNALRAM_OPS;
+  writeBytes_spi(SERCOM_FOR_EXTERNALRAM, args, trame, 4);
+  val = readByte_spi(SERCOM_FOR_EXTERNALRAM, args);
+  #endif
+  return val;
 }
 
 

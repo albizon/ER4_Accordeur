@@ -21,7 +21,7 @@ uint32_t _1BytesTo4Byte(uint8_t *in)
 	return (in[3]<<24)|(in[2]<<16)|(in[1]<<8)|(in[0]<<0);
 }
 
-void writeGeneric(uint32_t address, uint32_t val, uint8_t device)
+void writeMemory(uint32_t address, uint32_t val, uint8_t device)
 {
 	switch(device){
 		case USE_INTERNAL_RAM :
@@ -42,7 +42,7 @@ void writeGeneric(uint32_t address, uint32_t val, uint8_t device)
 	}
 }
 
-uint32_t readGeneric(uint32_t address, uint8_t device)
+uint32_t readMemory(uint32_t address, uint8_t device)
 {
 	uint32_t tmp =0;
 	
@@ -67,7 +67,7 @@ uint32_t readGeneric(uint32_t address, uint8_t device)
 	return tmp;
 }
 
-uint32_t allocGeneric(uint32_t size, uint8_t device)
+uint32_t allocMemory(uint32_t size, uint8_t device)
 {
 	uint32_t tmp =0;
 	
@@ -92,7 +92,7 @@ uint32_t allocGeneric(uint32_t size, uint8_t device)
 	return tmp;
 }
 
-void freeGeneric(uint32_t address, uint32_t size, uint8_t device)
+void freeMemory(uint32_t address, uint32_t size, uint8_t device)
 {
 	switch(device){
 		case USE_INTERNAL_RAM :
@@ -113,7 +113,7 @@ void freeGeneric(uint32_t address, uint32_t size, uint8_t device)
 	}
 }
 
-uint32_t reallocGeneric(uint32_t address, uint32_t lastSize, uint32_t newSize, uint8_t device)
+uint32_t reallocMemory(uint32_t address, uint32_t lastSize, uint32_t newSize, uint8_t device)
 {
 	uint32_t tmp =0;
 	

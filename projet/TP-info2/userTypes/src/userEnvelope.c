@@ -18,14 +18,14 @@ void new_userEnvelope(userEnvelope *vect)
 
 void setMemoryMode_userEnvelope(userEnvelope *vect, uint8_t memoryMode)
 {
-	freeGeneric(vect[3], vect[1], vect[0]);
-	vect[3] = allocGeneric(vect[1]*vect[2], memoryMode);
+	freeMemory(vect[3], vect[1], vect[0]);
+	vect[3] = allocMemory(vect[1]*vect[2], memoryMode);
 	vect[0]=memoryMode;
 }
 
 void resize_userEnvelope(userEnvelope *vect, uint32_t size)
 {
-	vect[3] = reallocGeneric(vect[3], vect[1]*vect[2], size*vect[2], vect[0]);
+	vect[3] = reallocMemory(vect[3], vect[1]*vect[2], size*vect[2], vect[0]);
 	vect[1]=size;
 }
 
@@ -42,7 +42,7 @@ void pushBack_userEnvelope(userEnvelope *vect, float mod)
 
 float getMod_userEnvelope(userEnvelope *vect, uint32_t i)
 {
-	return readGeneric((vect[3]+i), vect[0]);
+	return readMemory((vect[3]+i), vect[0]);
 }
 
 float getFreqFond_userEnvelope(userEnvelope *vect)
@@ -52,7 +52,7 @@ float getFreqFond_userEnvelope(userEnvelope *vect)
 
 void setMod_userEnvelope(userEnvelope *vect, uint32_t i, float mod)
 {
-	writeGeneric((vect[3]+i), mod, vect[0]);
+	writeMemory((vect[3]+i), mod, vect[0]);
 }
 
 void setFreqFond_userEnvelope(userEnvelope *vect, float freqFond)

@@ -12,6 +12,8 @@
 	#include "AT25DF081A.h"
 #endif
 
+#include "genericMemory.h"
+
 #define AT25DF081A //utilisation de la puce AT25DF081A pour la mémoire flash externe
 
 
