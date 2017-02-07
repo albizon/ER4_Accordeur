@@ -145,13 +145,13 @@
       <Value>%24(PackRepoDir)\atmel\SAMD21_DFP\1.0.231\samd21a\include</Value>
       <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
       <Value>../userLibraries/include</Value>
-      <Value>../userTypes/include</Value>
       <Value>../userHardware/include</Value>
-      <Value>../userTypes/include/externalFlashMemory</Value>
-      <Value>../userHardware/include/spi</Value>
-      <Value>../userTypes/include/externalRamMemory</Value>
-      <Value>../userHardware/include/gpio</Value>
-      <Value>../userHardware/include/adc</Value>
+      <Value>../userHardware/include/samd21</Value>
+      <Value>../userDevice/include</Value>
+      <Value>../userMemory/include</Value>
+      <Value>../userMemory/include/externalFlashMemory</Value>
+      <Value>../userMemory/include/externalRamMemory</Value>
+      <Value>../userType/include</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
@@ -258,40 +258,82 @@
     <Compile Include="TP-info2.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\adc\genericAdc.h">
+    <Compile Include="userHardware\include\genericAdc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\adc\samd21Adc.h">
+    <Compile Include="userHardware\include\genericGpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\gpio\genericGpio.h">
+    <Compile Include="userHardware\include\genericHardwareTimer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\gpio\samd21Gpio.h">
+    <Compile Include="userHardware\include\genericSoftwareTimer.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\spi\genericSpi.h">
+    <Compile Include="userHardware\include\genericSpi.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\include\spi\samd21Spi.h">
+    <Compile Include="userHardware\include\genericSystem.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\adc\genericAdc.c">
+    <Compile Include="userHardware\include\hardware.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\adc\samd21Adc.c">
+    <Compile Include="userHardware\include\samd21\samd21Adc.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\gpio\genericGpio.c">
+    <Compile Include="userHardware\include\samd21\samd21Adc_define.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\gpio\samd21Gpio.c">
+    <Compile Include="userHardware\include\samd21\samd21Gpio.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\spi\genericSpi.c">
+    <Compile Include="userHardware\include\samd21\samd21Gpio_define.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userHardware\src\spi\samd21Spi.c">
+    <Compile Include="userHardware\include\samd21\samd21HardwareTimer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\samd21\samd21Spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\samd21\samd21Spi_define.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\include\samd21\samd21System.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\genericAdc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\genericGpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\genericSpi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\samd21Adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\samd21Gpio.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\samd21HardwareTimer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\samd21Spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\samd21System.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\startup_samd21.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\syscalls.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userHardware\src\samd21\system_samd21_48MHz.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="userLibraries\include\define.h">
@@ -342,61 +384,76 @@
     <Compile Include="userLibraries\src\user_init.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\externalFlashMemory.h">
+    <Compile Include="userMemory\include\externalFlashMemory.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\externalFlashMemory\AT25DF081A.h">
+    <Compile Include="userMemory\include\externalFlashMemory\AT25DF081A.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\externalFlashMemory\AT25DF081A_define.h">
+    <Compile Include="userMemory\include\externalFlashMemory\AT25DF081A_define.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\externalRamMemory.h">
+    <Compile Include="userMemory\include\externalRamMemory.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\genericMemory.h">
+    <Compile Include="userMemory\include\externalRamMemory\23LCV1024.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\userComplexArray.h">
+    <Compile Include="userMemory\include\externalRamMemory\23LCV1024_define.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\userEnvelope.h">
+    <Compile Include="userMemory\include\genericMemory.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\userEnvelopeArray.h">
+    <Compile Include="userMemory\src\externalFlashMemory.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\userInstrument.h">
+    <Compile Include="userMemory\src\externalFlashMemory\AT25DF081A.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\include\userInstrumentArray.h">
+    <Compile Include="userMemory\src\externalRamMemory.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\externalFlashMemory.c">
+    <Compile Include="userMemory\src\externalRamMemory\23LCV1024.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\externalFlashMemory\AT25DF081A.c">
+    <Compile Include="userMemory\src\genericMemory.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\externalRamMemory.c">
+    <Compile Include="userType\include\userComplexArray.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\genericMemory.c">
+    <Compile Include="userType\include\userComplexInteger16Array.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\userComplexArray.c">
+    <Compile Include="userType\include\userEnvelope.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\userEnvelope.c">
+    <Compile Include="userType\include\userEnvelopeArray.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\userEnvelopeArray.c">
+    <Compile Include="userType\include\userInstrument.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\userInstrument.c">
+    <Compile Include="userType\include\userInstrumentArray.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="userTypes\src\userInstrumentArray.c">
+    <Compile Include="userType\src\userComplexArray.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userType\src\userComplexInteger16Array.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userType\src\userEnvelope.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userType\src\userEnvelopeArray.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userType\src\userInstrument.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="userType\src\userInstrumentArray.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -408,25 +465,27 @@
     <Folder Include="iutNantes" />
     <Folder Include="iutNantes\include" />
     <Folder Include="iutNantes\src" />
-    <Folder Include="userHardware" />
+    <Folder Include="userDevice\include" />
+    <Folder Include="userDevice\src" />
     <Folder Include="userHardware\include" />
-    <Folder Include="userHardware\include\adc" />
-    <Folder Include="userHardware\include\gpio" />
-    <Folder Include="userHardware\include\spi" />
+    <Folder Include="userHardware\include\samd21" />
     <Folder Include="userHardware\src" />
-    <Folder Include="userHardware\src\adc" />
-    <Folder Include="userHardware\src\gpio" />
-    <Folder Include="userHardware\src\spi" />
-    <Folder Include="userTypes" />
+    <Folder Include="userHardware\src\samd21" />
+    <Folder Include="userMemory\include" />
+    <Folder Include="userMemory\include\externalFlashMemory" />
+    <Folder Include="userMemory\include\externalRamMemory" />
+    <Folder Include="userMemory\src" />
+    <Folder Include="userMemory\src\externalFlashMemory" />
+    <Folder Include="userMemory\src\externalRamMemory" />
+    <Folder Include="userType" />
+    <Folder Include="userMemory" />
+    <Folder Include="userHardware" />
+    <Folder Include="userDevice" />
     <Folder Include="userLibraries" />
     <Folder Include="userLibraries\include" />
     <Folder Include="userLibraries\src" />
-    <Folder Include="userTypes\include" />
-    <Folder Include="userTypes\include\externalFlashMemory" />
-    <Folder Include="userTypes\include\externalRamMemory" />
-    <Folder Include="userTypes\src" />
-    <Folder Include="userTypes\src\externalFlashMemory" />
-    <Folder Include="userTypes\src\externalRamMemory" />
+    <Folder Include="userType\include" />
+    <Folder Include="userType\src" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cmsis\linkerScripts\samd21j18a_flash.ld">

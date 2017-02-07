@@ -54,7 +54,7 @@ void digitalWrite_gpioGeneric(uint32_t *pin, uint32_t level)
 	if(port > 1) return;
 	if(numBit > 31) return;
 	
-	if(level)
+	if(value)
 		PORT->Group[port].OUTSET.reg = 1 << numBit;
 	else
 		PORT->Group[port].OUTCLR.reg = 1 << numBit;

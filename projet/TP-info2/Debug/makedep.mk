@@ -28,17 +28,27 @@ iutNantes\src\timer.c
 
 TP-info2.c
 
-userHardware\src\adc\genericAdc.c
+userHardware\src\genericAdc.c
 
-userHardware\src\adc\samd21Adc.c
+userHardware\src\genericGpio.c
 
-userHardware\src\gpio\genericGpio.c
+userHardware\src\genericSpi.c
 
-userHardware\src\gpio\samd21Gpio.c
+userHardware\src\samd21\samd21Adc.c
 
-userHardware\src\spi\genericSpi.c
+userHardware\src\samd21\samd21Gpio.c
 
-userHardware\src\spi\samd21Spi.c
+userHardware\src\samd21\samd21HardwareTimer.c
+
+userHardware\src\samd21\samd21Spi.c
+
+userHardware\src\samd21\samd21System.c
+
+userHardware\src\samd21\startup_samd21.c
+
+userHardware\src\samd21\syscalls.c
+
+userHardware\src\samd21\system_samd21_48MHz.c
 
 userLibraries\src\display.c
 
@@ -54,21 +64,25 @@ userLibraries\src\note.c
 
 userLibraries\src\user_init.c
 
-userTypes\src\externalFlashMemory.c
+userMemory\src\externalFlashMemory.c
 
-userTypes\src\externalFlashMemory\AT25DF081A.c
+userMemory\src\externalFlashMemory\AT25DF081A.c
 
-userTypes\src\externalRamMemory.c
+userMemory\src\externalRamMemory.c
 
-userTypes\src\genericMemory.c
+userMemory\src\externalRamMemory\23LCV1024.c
 
-userTypes\src\userComplexArray.c
+userMemory\src\genericMemory.c
 
-userTypes\src\userEnvelope.c
+userType\src\userComplexArray.c
 
-userTypes\src\userEnvelopeArray.c
+userType\src\userComplexInteger16Array.c
 
-userTypes\src\userInstrument.c
+userType\src\userEnvelope.c
 
-userTypes\src\userInstrumentArray.c
+userType\src\userEnvelopeArray.c
+
+userType\src\userInstrument.c
+
+userType\src\userInstrumentArray.c
 

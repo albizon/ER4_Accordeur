@@ -10,9 +10,8 @@
 #ifndef GENERICGPIO_H_
 #define GENERICGPIO_H_
 
-#ifndef USE_SAMD21
+#infdef USE_SAMD21
 	#include "samd21Gpio.h"
-	#include "sam.h"
 #endif
 
 #define LOW 0
