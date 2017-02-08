@@ -31,7 +31,7 @@ void init_spi(void *interface,
 								args[13] = DIPO config
 								*/
 {
-	Sercom* sercomInterface = interface;
+	SercomSpi* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	pinConfig_gpioGeneric(ar ,OUTPUT);// pin CS
 	uint32_t ar1[2] = {args[2],args[3]};
@@ -86,16 +86,16 @@ void init_spi(void *interface,
 						args[13] << 20 | //DIPO
 						args[12] << 16 | //DOPO
 						args[11] << 2;    //Mode 
-	interface->CTRLB.reg = 0;//1 << 13; //MSSEN (Master Slave Select Enable) <=> Chip Select matériel
-	interface->BAUD.reg = 0; // p.427 (synchronous) => Fbaud=Fref/(2*(baud+1)) => Fref=48MHz => FBaud = 24MHz
+	sercomInterface->CTRLB.reg = 0;//1 << 13; //MSSEN (Master Slave Select Enable) <=> Chip Select matériel
+	sercomInterface->BAUD.reg = 0; // p.427 (synchronous) => Fbaud=Fref/(2*(baud+1)) => Fref=48MHz => FBaud = 24MHz
 	//validation spi
-	interface->CTRLA.reg |= 0x02;
+	sercomInterface->CTRLA.reg |= 0x02;
 }
 
 
 void writeByte_spi(void *interface, uint32_t *args, uint8_t byte)
 {
-	Sercom* sercomInterface = interface;
+	SercomSpi* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	sercomInterface->DATA.reg = (byte);        //envoi octet
@@ -105,7 +105,7 @@ void writeByte_spi(void *interface, uint32_t *args, uint8_t byte)
 
 void writeBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t length)
 {
-	Sercom* sercomInterface = interface;
+	SercomSpi* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	for(uint32_t i=0; i<length-1; i++)
@@ -120,7 +120,7 @@ void writeBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t le
 
 uint8_t readByte_spi(void *interface, uint32_t *args)
 {
-	Sercom* sercomInterface = interface;
+	SercomSpi* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	while(!(sercomInterface->INTFLAG.bit.RXC));
@@ -131,7 +131,7 @@ uint8_t readByte_spi(void *interface, uint32_t *args)
 
 void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t length)
 {
-	Sercom* sercomInterface = interface;
+	SercomSpi* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	for(uint32_t i =0; i<length; i++)
