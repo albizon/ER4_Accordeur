@@ -31,6 +31,7 @@ void init_spi(void *interface,
 								args[13] = DIPO config
 								*/
 {
+	Sercom* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	pinConfig_gpioGeneric(ar ,OUTPUT);// pin CS
 	uint32_t ar1[2] = {args[2],args[3]};
@@ -45,7 +46,7 @@ void init_spi(void *interface,
 	uint8_t pmMask;
 	uint8_t gclkMask;
 	
-	switch(interface){
+	switch(sercomInterface){
 		case SERCOM0:
 			pmMask = 0x04;
 			gclkMask = 0x14;
@@ -79,9 +80,9 @@ void init_spi(void *interface,
 						gclkMask;
 	
 	//config SPI:
-	interface->CTRLA.bit.SWRST = 1;
-	while ( interface->CTRLA.bit.SWRST || interface->SYNCBUSY.bit.SWRST );
-	interface->CTRLA.reg =	1 << 29 | //CPOL
+	sercomInterface->CTRLA.bit.SWRST = 1;
+	while ( sercomInterface->CTRLA.bit.SWRST || sercomInterface->SYNCBUSY.bit.SWRST );
+	sercomInterface->CTRLA.reg =	1 << 29 | //CPOL
 						args[13] << 20 | //DIPO
 						args[12] << 16 | //DOPO
 						args[11] << 2;    //Mode 
@@ -94,45 +95,49 @@ void init_spi(void *interface,
 
 void writeByte_spi(void *interface, uint32_t *args, uint8_t byte)
 {
+	Sercom* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
-	interface->DATA.reg = (byte);        //envoi octet
-	while(! interface->INTFLAG.bit.TXC);       //attente fin transmission
+	sercomInterface->DATA.reg = (byte);        //envoi octet
+	while(! sercomInterface->INTFLAG.bit.TXC);       //attente fin transmission
 	digitalWrite_gpioGeneric(ar,HIGH);            //chip unselect.
 }
 
 void writeBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t length)
 {
+	Sercom* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	for(uint32_t i=0; i<length-1; i++)
 	{
-		interface->DATA.reg = (bytes[i]);        //envoi octet courant
-		while(!(interface->INTFLAG.reg & 0x01));   //attente que Data Register Empty flag passe a 1
+		sercomInterface->DATA.reg = (bytes[i]);        //envoi octet courant
+		while(!(sercomInterface->INTFLAG.reg & 0x01));   //attente que Data Register Empty flag passe a 1
 	}
-	interface->DATA.reg = (bytes[length]);        //envoi dernier octet
-	while(! interface->INTFLAG.bit.TXC);       //attente fin transmission
+	sercomInterface->DATA.reg = (bytes[length]);        //envoi dernier octet
+	while(! sercomInterface->INTFLAG.bit.TXC);       //attente fin transmission
 	digitalWrite_gpioGeneric(ar,HIGH);            //chip unselect.
 }
 
 uint8_t readByte_spi(void *interface, uint32_t *args)
 {
+	Sercom* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
-	while(!(interface->INTFLAG.bit.RXC));
-	uint8_t tmp = interface->DATA.reg;
+	while(!(sercomInterface->INTFLAG.bit.RXC));
+	uint8_t tmp = sercomInterface->DATA.reg;
 	digitalWrite_gpioGeneric(ar,HIGH);            //chip unselect.
 	return tmp;
 }
 
 void readBytes_spi(void *interface, uint32_t *args, uint8_t *bytes, uint32_t length)
 {
+	Sercom* sercomInterface = interface;
 	uint32_t ar[2] ={args[0],args[1]};
 	digitalWrite_gpioGeneric(ar,LOW);            //chip select.
 	for(uint32_t i =0; i<length; i++)
 	{
-		while(!(interface->INTFLAG.bit.RXC));
-		bytes[i] = interface->DATA.reg;		
+		while(!(sercomInterface->INTFLAG.bit.RXC));
+		bytes[i] = sercomInterface->DATA.reg;		
 	}
 	digitalWrite_gpioGeneric(ar,HIGH);            //chip unselect.
 }
