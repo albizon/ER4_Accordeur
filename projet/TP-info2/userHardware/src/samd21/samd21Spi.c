@@ -46,31 +46,30 @@ void init_spi(void *interface,
 	uint8_t pmMask;
 	uint8_t gclkMask;
 	
-	switch(sercomInterface){
-		case SERCOM0:
-			pmMask = 0x04;
-			gclkMask = 0x14;
-		break;
-		case SERCOM1:
-			pmMask = 0x08;
-			gclkMask = 0x15;
-		break;
-		case SERCOM2:
-			pmMask = 0x10;
-			gclkMask = 0x16;
-		break;
-		case SERCOM3:
-			pmMask = 0x20;
-			gclkMask = 0x17;
-		break;
-		case SERCOM4:
-			pmMask = 0x40;
-			gclkMask = 0x18;
-		break;
-		case SERCOM5:
-			pmMask = 0x80;
-			gclkMask = 0x19;
-		break;
+	if(sercomInterface == (SercomSpi *)SERCOM0){
+		pmMask = SAMD21_PM_MASK_SERCOM0;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM0;
+	}
+	else if(sercomInterface == (SercomSpi *)SERCOM1){
+		pmMask = SAMD21_PM_MASK_SERCOM1;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM1;
+	}
+	else if(sercomInterface == (SercomSpi *)SERCOM2){
+		pmMask = SAMD21_PM_MASK_SERCOM2;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM2;
+	}
+	else if(sercomInterface == (SercomSpi *)SERCOM3){
+		pmMask = SAMD21_PM_MASK_SERCOM3;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM3;
+	}
+	else if(sercomInterface == (SercomSpi *)SERCOM4){
+		pmMask = SAMD21_PM_MASK_SERCOM4;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM4;
+	}
+	else if(sercomInterface == (SercomSpi *)SERCOM5){
+		pmMask = SAMD21_PM_MASK_SERCOM5;
+		gclkMask = SAMD21_GCLK_MASK_SERCOM5;
+	}
 	//Power Management.
 	PM->APBCMASK.reg |= pmMask;
 	
