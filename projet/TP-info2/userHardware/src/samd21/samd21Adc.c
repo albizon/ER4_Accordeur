@@ -37,7 +37,7 @@ void init_adc(
 		//config ADC
 		ADC->REFCTRL.reg |= args[1];		//référence de tension
 		ADC->CTRLB.reg = 	args[2] << 8 |  //diviseur de fréquence
-							0x1 << 0;		//mode différentiel
+					0x1 << 0;		//mode différentiel
 		ADC->CTRLA.reg |= 1<<1; //enable
 		firstInit=FALSE;
 	}
@@ -64,7 +64,7 @@ int16_t read_adc(
 	//demande de conversion
 	ADC->SWTRIG.reg = 1 << 1; //start.
 	while(!(ADC->INTFLAG.bit.RESRDY)); //attente fin de conversion.
-	result = ADC->RESULT.reg; //resultat sur 12 bits.
+	result = ((ADC->RESULT.reg & 0x0800) <<4)| ((ADC->RESULT.reg & 0x7FF));
 	
 	return result;
 }
