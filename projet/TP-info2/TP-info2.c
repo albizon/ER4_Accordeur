@@ -17,12 +17,9 @@
 #define FREQUENCE_ECHANTILLONAGE (float)44100 //Fréquence en Hz de l'échantillonage du signal audio
 #define USE_SAMD21
 
-#define DIAPASON_IS_INSTRUMENT 0//Défini si un sinus pur est considéré comme un instrument
-
 #define NB_HARMONIQUE_ETUDIES 17//
 
 #define DELTA_FREQUENCE (float)1//Espacement en Hz entre chaques raies de la FFT
-#define FREQUENCE_ECHANTILLONAGE (float)44100//Fréquence en Hz de l'échantillonage du signal audio
 
 int main(void)//fonction principale du programme
 {
@@ -35,7 +32,7 @@ int main(void)//fonction principale du programme
 	setMemoryMode_userEnvelope(userEnv, USE_INTERNAL_RAM);
 	resize_userEnvelope(userEnv, (NB_HARMONIQUE_ETUDIES+1));
 	
-	float df=1000/DELTA_FREQUENCE;//Espacement en ms ente chaques fft
+	float df=1000/DELTA_FREQUENCE;//Espacement en ms entre chaques fft
 	float dt=1000000/FREQUENCE_ECHANTILLONAGE;//Espacement en us entre chaque acquisition sur l'adc
 	float freq = 0; //contient la fréquence mesurée de la note
 	char note = 0; //contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define_notes.h
