@@ -1,0 +1,14 @@
+# Writing all output to: C:\Users\simon\Desktop\AccordeurV2.0.log
+set pad_wire_necking on
+bus diagonal
+fanout 10
+route 100
+clean 4
+route 100 16
+clean 4
+route 100 16
+clean 4
+filter 10
+recorner diagonal
+status_file
+
