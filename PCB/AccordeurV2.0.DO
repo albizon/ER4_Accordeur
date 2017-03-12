@@ -7,6 +7,6 @@ route 100 16
 clean 4
 route 100 16
 clean 4
-filter 10
+filter 5
 recorner diagonal
 status_file
