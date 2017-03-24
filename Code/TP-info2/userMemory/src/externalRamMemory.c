@@ -10,7 +10,7 @@
 
 
 
-void initExternalRam(void)
+/*void initExternalRam(void)
 {
 	#ifndef USE_SAMD21
 	uint32_t args[14] = ARGS_FOR_EXTERNALRAM_INIT;
@@ -26,4 +26,4 @@ uint32_t reallocExternalRam(uint32_t address, uint32_t lastSize, uint32_t newSiz
 {
 	freeExternalRam(address, lastSize);
 	return allocExternalRam(newSize);
-}
+}*/

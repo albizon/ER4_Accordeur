@@ -64,7 +64,8 @@ int16_t read_adc(
 	//demande de conversion
 	ADC->SWTRIG.reg = 1 << 1; //start.
 	while(!(ADC->INTFLAG.bit.RESRDY)); //attente fin de conversion.
-	result = ((ADC->RESULT.reg & 0x0800) <<4)| ((ADC->RESULT.reg & 0x7FF));
+	//result = ((ADC->RESULT.reg & 0x0800) <<4)| ((ADC->RESULT.reg & 0x7FF));
+	result = ADC->RESULT.reg;
 	
 	return result;
 }

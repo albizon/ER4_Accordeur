@@ -20,7 +20,7 @@ void displayTitle()
 {
 	OLEDClear();//Efface tous ce qu'il y a sur l'afficheur
 	OLEDSetLine(0);//Se place sur la première ligne
-	printf("Accordeur v1.0\n");//Ecrit le titre
+	printf("Accordeur v2.0\n");//Ecrit le titre
 }
 
 
