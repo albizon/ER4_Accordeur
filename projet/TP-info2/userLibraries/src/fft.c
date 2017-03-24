@@ -10,23 +10,69 @@
 #include "samd21Adc.h"
 #include "samd21Gpio.h"
 
-#define ADCTABSIZE 4096
-#define dt 0.00002261 //22.61 usfloat df=1/(dt*ADCTABSIZE);
+#define ADCTABSIZE 4096 //Taille du tableau de l'ADC
+#define dt 0.00002261 //pas d'échantillonnage temporel : 22.61 us
+float df=1/(dt*ADCTABSIZE); // pas d'échantillonnage fréquentiel : 10.7979Hz
 
-float freq_fondamental=0;
+float freq_fondamental=0; // contient la fréquence du fondamental
 
-int16_t real[ADCTABSIZE];
-int16_t imag[ADCTABSIZE];
-int16_t temp_adc_tab[10];
-int16_t temp=0;
+int16_t real[ADCTABSIZE]; // TABLEAU PRINCIPAL DE CALCUL
+int16_t imag[ADCTABSIZE]; // Tableau des imaginaires de la FFT
+int16_t temp_adc_tab[10]; // Petit tableau tempon pour le moyennage par 10 des valeurs de l'ADC
+int16_t temp=0; // Une valeur temporaire
+
+void FFTInit()
+{
+		__disable_irq(); //On annule les IT momentannément
+	/* INIT ADC */
+		uint32_t args[2] = {PORTB, 8};
+		pinMux_gpioSamd21(args, CONFIG_B);
+		uint32_t arg[2] = {PORTB, 9};
+		pinMux_gpioSamd21(arg, CONFIG_B);
+		uint32_t args2[3] = {F8MHZ, SAMD21_ADC_VREF_INT1V,0};
+		init_adc(args2);
+	/* TIMER DE l'ADC */
+		// TIMER TC3 de période 22.61us
+			TCinitClock(F48MHZ,3); // Initialisation de l'horloge à 48MHz pour le timer TC3
+			TC3->COUNT16.CTRLA.reg= (0x5<<8); // intialisation d'un prescaler de '101' soit une division par 64 donc 0.75Mhz
+			TC3->COUNT16.CTRLBSET.reg=0x1; // Initialisation du timer en décrémentation
+			TC3->COUNT16.COUNT.reg=(17); // Chargement du compteur
+			TC3->COUNT16.INTFLAG.reg=0x1; // Validation de l'overflow
+			TC3->COUNT16.CTRLA.reg |=2; // Démarrage du timer
+			//validation du timer sur overflow
+			TC3->COUNT16.INTENSET.reg = 1 ;
+			//validation NVIC
+			NVIC_EnableIRQ ( TC3_IRQn ) ;
+			//priorité (si plusieurs its...)
+			NVIC_SetPriority ( TC3_IRQn , 1 ) ;
+	/* INIT FFT */
+		// TIMER TC4 à 1MHz
+			TCinitClock(F48MHZ,4); // Initialisation de l'horloge à 48MHz pour le timer TC4
+			TC4->COUNT16.CTRLA.reg= (0x7<<8); // intialisation d'un prescaler de '111' soit une division par 1024
+			TC4->COUNT16.CTRLBSET.reg=0x1; // Initialisation du timer en décrémentation
+			TC4->COUNT16.COUNT.reg= 46875; // Chargement du compteur pour 1 seconde
+			TC4->COUNT16.INTFLAG.reg=0x1; // Validation de l'overflow
+			TC4->COUNT16.CTRLA.reg |=2; // Démarrage du timer
+
+			//validation du timer sur overflow
+			TC4->COUNT16.INTENSET.reg = 1 ;
+			//validation NVIC 
+			NVIC_EnableIRQ ( TC4_IRQn ) ;
+			//priorité (si plusieurs its...)
+			NVIC_SetPriority ( TC4_IRQn , 2 ) ;
+		
+		OLEDClear(); // On nettoie l'afficheur
+	
+		__enable_irq(); // On réautorise les interuptions
+		
+}
 
 void FFT_Detecteur_fondamental()
 {
+		int dir=1; // Paramètre de sens de la FFT (1=FFT et -1=FFT reverse) 
+		int n=0; // Incrémenteur
 		
-		int dir=1;
-		int n=0;
-		
-	// FFT	//////////////////////////////////////////////////////////////////////////////////////////////////
+	// ALGO FFT  //////////////////////////////////////////////////////////////////////////////////////////////////
 		long binsize,i,i1,j,k,i2,l,l1,l2;
 		float c1,c2,temp_real,temp_imag,t1,t2,u1,u2,z;
 		
@@ -126,8 +172,8 @@ void FFT_Detecteur_fondamental()
 		
 	// Calcul dérivée ////////////////////////////////////////////////////////////////////////////////////////////
 	// et détection du fondamental
-		int16_t derivRaies1=0;
-		int16_t derivRaies2=0;
+		int16_t derivRaies1=0; // Valeur précédente
+		int16_t derivRaies2=0;// Valeur actuelle
 		freq_fondamental=0;
 		n=0;
 		int montee=0;
@@ -151,85 +197,37 @@ void FFT_Detecteur_fondamental()
 		while ((n<ADCTABSIZE-1) && freq_fondamental==(0)); // tant qu'on a pas balayé le tableau ou trouvé un max
 }
 
-void FFTInit()
-{
-		__disable_irq(); //On annule les IT momentannément	
-	/* INIT ADC */
-		uint32_t args[2] = {PORTB, 8};
-		pinMux_gpioSamd21(args, CONFIG_B);
-		uint32_t arg[2] = {PORTB, 9};
-		pinMux_gpioSamd21(arg, CONFIG_B);
-		uint32_t args2[3] = {F8MHZ, SAMD21_ADC_VREF_INT1V,0};
-		init_adc(args2);
-	
-	/* TIMER DE l'ADC */
-		// TIMER TC3 de période 22.61us
-			TCinitClock(F48MHZ,3); // Initialisation de l'horloge à 48MHz pour le timer TC3
-			TC3->COUNT16.CTRLA.reg= (0x5<<8); // intialisation d'un prescaler de '101' soit une division par 64 donc 0.75Mhz
-			TC3->COUNT16.CTRLBSET.reg=0x1; // Initialisation du timer en décrémentation
-			TC3->COUNT16.COUNT.reg=(17); // Chargement du compteur
-			TC3->COUNT16.INTFLAG.reg=0x1; // Validation de l'overflow
-			TC3->COUNT16.CTRLA.reg |=2; // Démarrage du timer
-	
-			//validation du timer sur overflow
-			TC3->COUNT16.INTENSET.reg = 1 ;
-			//validation NVIC
-			NVIC_EnableIRQ ( TC3_IRQn ) ;
-			//priorité (si plusieurs its...)
-			NVIC_SetPriority ( TC3_IRQn , 1 ) ;
-	
-	/* INIT FFT */
-		// TIMER TC4 à 1MHz
-			TCinitClock(F48MHZ,4); // Initialisation de l'horloge à 1MHz pour le timer TC4
-			TC4->COUNT16.CTRLA.reg= (0x7<<8); // intialisation d'un prescaler de '000' soit une division par 1 donc 1/1 de 1Mhz
-			TC4->COUNT16.CTRLBSET.reg=0x1; // Initialisation du timer en décrémentation
-			TC4->COUNT16.COUNT.reg= 46875; // Chargement du compteur
-			TC4->COUNT16.INTFLAG.reg=0x1; // Validation de l'overflow
-			TC4->COUNT16.CTRLA.reg |=2; // Démarrage du timer
-
-			//validation du timer sur overflow
-			TC4->COUNT16.INTENSET.reg = 1 ;
-			//validation NVIC
-			NVIC_EnableIRQ ( TC4_IRQn ) ;
-			//priorité (si plusieurs its...)
-			NVIC_SetPriority ( TC4_IRQn , 2 ) ;
-		
-		OLEDClear();
-		__enable_irq();
-		
-}
-
-void TC3_Handler() // Récupération périodique des valeurs de l'ADC
+void TC3_Handler() // Récupération périodique des valeurs de l'ADC toute les 22.61us
 {	
-	__disable_irq(); //On désactive les IT momentanément
+	/* Pour la récupération des valeurs de l'ADC on triche un peu pour gagner en RAM et garder la précision de 1Hz
+	On récupère les valeurs de l'ADC, et toute les 10valeurs, on fait la moyenne de ces 10 valeurs et on met la valeur moyenne
+	dans le vrai tableau de réels. Cela revient a filtrer passe bas... 
+	Ainsi on a un tableau de 4096 valeurs qui en contient en fait 40960.*/
+	
+	__disable_irq(); //On désactive les IT pendant le traitement ADC
 		
-	static int i=0;
-	static int j=0;
+	static int i=0; // Incrémenteur principal [0;ADCTABSIZE]
+	static int j=0; // Incrépenteur secondaire [0;10]
 	
-	uint32_t tab[3] = {0,SAMD21_ADC_MUX_AIN2,SAMD21_ADC_MUX_AIN3};	
+	uint32_t tab[3] = {0,SAMD21_ADC_MUX_AIN2,SAMD21_ADC_MUX_AIN3};
+	temp_adc_tab[j]=read_adc(tab); // On récupère les valeurs dans un tableau temporaire
 	
-	temp_adc_tab[j]=read_adc(tab);
-	
-	if (j==10)
+	if (j==10) // quand on en a 10
 	{
 		int k=0;
 		for(k=0;k<ADCTABSIZE;k++) real[k]=real[k+1]; // On décale tout le tableau vers la gauche pour le FIFO
-		real[i]=(temp_adc_tab[0]+temp_adc_tab[1]+temp_adc_tab[2]+temp_adc_tab[3]+temp_adc_tab[4]+temp_adc_tab[5]+temp_adc_tab[6]+temp_adc_tab[7]+temp_adc_tab[8]+temp_adc_tab[9])/10;
+		/* FIFO = First In First Out, ainsi on obtient un tableau "glissant" */
+		real[i]=(temp_adc_tab[0]+temp_adc_tab[1]+temp_adc_tab[2]+temp_adc_tab[3]+temp_adc_tab[4]+temp_adc_tab[5]+temp_adc_tab[6]+temp_adc_tab[7]+temp_adc_tab[8]+temp_adc_tab[9])/10; // ON en fait la moyenne et on charge dans le tableau
 		j=0;
 		i++;
 	}
-	else 
-	{
-		j++;
-	}	
-	
-	if (i==ADCTABSIZE) i=0;
+	else j++;	
+	if (i==ADCTABSIZE) i=0; // RAZ si on a balayé tout le tableau de réel
 
-	
 	TC3->COUNT16.INTFLAG.reg = 0x1 ; // On valide l'overflow
 	TC3->COUNT16.COUNT.reg=17; // On recharge le compteur
 	
-	__enable_irq(); // On réactive les IT
+	__enable_irq(); // On réautorise les IT
 }
 
 void TC4_Handler ( ) // FFT + code principal (appelé toute les secondes)
@@ -238,8 +236,8 @@ void TC4_Handler ( ) // FFT + code principal (appelé toute les secondes)
 	__disable_irq(); // On désactive momentanément les IT pour ne pas être interrompu
 	
 	
-	FFT_Detecteur_fondamental(); //On lance la FFT
-		
+	FFT_Detecteur_fondamental(); //On lance le calcul de FFT plus détection de fondamental
+	
 	char note = 0;//contient la note calculée à partir de la fréquence, voir les différentes valeurs dans define_notes.h
 	char degre = 0;//contient le degré, ou l'octave de la note calculée à partir de la fréqence
 	float relativeError = 1.0;//spécifie l'erreur relative autorisée en % entre la fréquence mesurée et la fréquence réelle correspondant à la note
