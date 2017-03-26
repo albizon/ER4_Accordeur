@@ -8,7 +8,7 @@
 
 #include "genericMemory.h"
 
-void _4BytesTo1Byte(uint32_t in, uint8_t *out)
+/*void _4BytesTo1Byte(uint32_t in, uint8_t *out)
 {
 	out[0]=in&(0xFF<<0);
 	out[1]=in&(0xFF<<8);
@@ -136,4 +136,4 @@ uint32_t reallocMemory(uint32_t address, uint32_t lastSize, uint32_t newSize, ui
 	}
 	
 	return tmp;
-}
+}*/

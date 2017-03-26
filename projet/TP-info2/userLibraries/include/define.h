@@ -8,7 +8,7 @@
 #ifndef __DEFINE_H__
 #define __DEFINE_H__
 	
-	#include "sam.h"
+	//#include "sam.h"
 	#include "adc.h"
     #include "dac.h"
 	#include "eic.h"

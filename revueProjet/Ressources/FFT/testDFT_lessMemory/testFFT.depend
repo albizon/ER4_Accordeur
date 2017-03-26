@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1485942306 source:u:\testfft\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1485943568 source:e:\testfft\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1485944786 source:f:\testfft\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1485972152 source:d:\testfft\main.c
+	<stdio.h>
+	<stdlib.h>
+

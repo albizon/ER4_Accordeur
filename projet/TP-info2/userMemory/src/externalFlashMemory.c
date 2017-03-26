@@ -10,7 +10,7 @@
 
 
 
-void initExternalFlash(void)
+/*void initExternalFlash(void)
 {
 	init_spi(SERCOM_FOR_EXTERNALFLASH, ARGS_FOR_EXTERNALFLASH_INIT);
 	initCircuitFlash(0);
@@ -23,5 +23,5 @@ uint32_t reallocExternalFlash(uint32_t address, uint32_t lastSize, uint32_t newS
 {
 	freeExternalFlash(address, lastSize);
 	return allocExternalFlash(newSize);
-}
+}*/
 

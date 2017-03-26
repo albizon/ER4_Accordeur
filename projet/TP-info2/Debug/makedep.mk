@@ -2,12 +2,6 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-cmsis\src\startup_samd21.c
-
-cmsis\src\syscalls.c
-
-cmsis\src\system_samd21_48MHz.c
-
 iutNantes\src\adc.c
 
 iutNantes\src\dac.c
@@ -32,15 +26,9 @@ userHardware\src\genericAdc.c
 
 userHardware\src\genericGpio.c
 
-userHardware\src\genericSpi.c
-
 userHardware\src\samd21\samd21Adc.c
 
 userHardware\src\samd21\samd21Gpio.c
-
-userHardware\src\samd21\samd21HardwareTimer.c
-
-userHardware\src\samd21\samd21Spi.c
 
 userHardware\src\samd21\samd21System.c
 
@@ -63,26 +51,4 @@ userLibraries\src\instruments.c
 userLibraries\src\note.c
 
 userLibraries\src\user_init.c
-
-userMemory\src\externalFlashMemory.c
-
-userMemory\src\externalFlashMemory\AT25DF081A.c
-
-userMemory\src\externalRamMemory.c
-
-userMemory\src\externalRamMemory\23LCV1024.c
-
-userMemory\src\genericMemory.c
-
-userType\src\userComplexArray.c
-
-userType\src\userComplexInteger16Array.c
-
-userType\src\userEnvelope.c
-
-userType\src\userEnvelopeArray.c
-
-userType\src\userInstrument.c
-
-userType\src\userInstrumentArray.c
 
