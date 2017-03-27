@@ -18,11 +18,8 @@ float freq_fondamental=0; // contient la fréquence du fondamental
 
 int16_t real[ADCTABSIZE]; // TABLEAU PRINCIPAL DE CALCUL
 int16_t imag[ADCTABSIZE]; // Tableau des imaginaires de la FFT
-int16_t temp_adc_tab[10]; // Petit tableau tempon pour le moyennage par 10 des valeurs de l'ADC
 int16_t temp=0; // Une valeur temporaire
-//ALEXIS//
-int16_t tempAdc=0;
-//
+int16_t tempAdc=0; // valeur tampon pour le moyennage par 10 des valeurs de l'ADC
 
 void FFTInit()
 {
@@ -213,21 +210,15 @@ void TC3_Handler() // Récupération périodique des valeurs de l'ADC toute les 
 	static int j=0; // Incrépenteur secondaire [0;10]
 	
 	uint32_t tab[3] = {0,SAMD21_ADC_MUX_AIN2,SAMD21_ADC_MUX_AIN3};
-	//ALEXIS//
 	tempAdc+=read_adc(tab);
-	//
-	temp_adc_tab[j]=read_adc(tab); // On récupère les valeurs dans un tableau temporaire
 	
 	if (j==10) // quand on en a 10
 	{
 		int k=0;
-		for(k=0;k<ADCTABSIZE;k++) real[k]=real[k+1]; // On décale tout le tableau vers la gauche pour le FIFO
 		/* FIFO = First In First Out, ainsi on obtient un tableau "glissant" */
-		real[i]=(temp_adc_tab[0]+temp_adc_tab[1]+temp_adc_tab[2]+temp_adc_tab[3]+temp_adc_tab[4]+temp_adc_tab[5]+temp_adc_tab[6]+temp_adc_tab[7]+temp_adc_tab[8]+temp_adc_tab[9])/10; // ON en fait la moyenne et on charge dans le tableau
-		//ALEXIS//
-		real[i] = tempAdc/10;
+		for(k=0;k<ADCTABSIZE;k++) real[k]=real[k+1]; // On décale tout le tableau vers la gauche pour le FIFO
+		real[i] = tempAdc/10; // ON en fait la moyenne et on charge dans le tableau
 		tempAdc=0;
-		//
 		j=0;
 		i++;
 	}
