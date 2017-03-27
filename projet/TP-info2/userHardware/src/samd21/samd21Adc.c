@@ -1,9 +1,4 @@
-/*
- * Samd21Adc.c
- *
- * Created: 03/02/2017 13:32:53
- *  Author: simon
- */ 
+
 #include "samd21Adc.h"
 #define TRUE 1
 #define FALSE 0
